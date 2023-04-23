@@ -1,0 +1,96 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "chefbook-backend-api-gateway.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "chefbook-backend-api-gateway.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "chefbook-backend-api-gateway.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "chefbook-backend-api-gateway.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: ENVIRONMENT
+              value: {{ if eq .Values.debug true }}debug{{ else }}production{{ end }}
+            - name: PORT
+              value: {{ quote .Values.service.port }}
+            - name: LOGS_PATH
+              value: {{ quote .Values.logsPath }}
+
+            # Domains
+
+            - name: FRONTEND_DOMAIN
+              value: {{ .Values.domains.frontend }}
+            - name: BACKEND_DOMAIN
+              value: {{ .Values.domains.backend }}
+
+            # Limiter
+
+            - name: LIMITER_RPS
+              value: {{ quote .Values.limiter.rps }}
+            - name: LIMITER_BURST
+              value: {{ quote .Values.limiter.burst }}
+            - name: LIMITER_TTL
+              value: {{ .Values.limiter.ttl }}
+
+            # Auth Microservice
+
+            - name: AUTH_ADDR
+              value: "{{ .Values.authService.name }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.authService.port }}"
+            - name: ACCESS_TOKEN_KEY_TTL
+              value: {{ .Values.authService.accessTokenKeyFetchInterval }}
+
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: {{ .Values.service.port }}
+            initialDelaySeconds: 60
+            periodSeconds: 60
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: {{ .Values.service.port }}
+            initialDelaySeconds: 15
+            periodSeconds: 60
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

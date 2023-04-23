@@ -7,7 +7,8 @@ import (
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/service"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/helpers/request"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/helpers/response"
-	v1 "github.com/mephistolie/chefbook-backend-auth/api/proto/implementation/v1"
+	auth "github.com/mephistolie/chefbook-backend-auth/api/proto/implementation/v1"
+	"github.com/mephistolie/chefbook-backend-common/log"
 	"github.com/mephistolie/chefbook-backend-common/tokens/access"
 	"strings"
 	"sync"
@@ -23,10 +24,21 @@ type Middleware struct {
 }
 
 func NewMiddleware(service service.Auth, keyUpdateInterval time.Duration) (*Middleware, error) {
-	res, err := service.GetAccessTokenPublicKey(context.Background(), &v1.GetAccessTokenPublicKeyRequest{})
+	var res *auth.GetAccessTokenPublicKeyResponse = nil
+	var err error
+
+	for i := 0; i < 6; i++ {
+		if res, err = service.GetAccessTokenPublicKey(context.Background(), &auth.GetAccessTokenPublicKeyRequest{}); err == nil {
+			break
+		} else if i+1 < 6 {
+			log.Warn("failed to retrieve access token signing key; retry in 10 seconds...")
+			time.Sleep(10 * time.Second)
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
+
 	parser, err := access.NewParserByKey(res.PublicKey)
 	if err != nil {
 		return nil, err
@@ -72,7 +84,7 @@ func (m *Middleware) parseAuthHeader(c *gin.Context) (access.Payload, error) {
 func (m *Middleware) fetchPublicKey() access.Parser {
 	m.Lock()
 	if time.Now().UnixMilli()-m.keyUpdateTimestamp.UnixMilli() > m.keyUpdateInterval.Milliseconds() {
-		if res, err := m.authService.GetAccessTokenPublicKey(context.Background(), &v1.GetAccessTokenPublicKeyRequest{}); err == nil {
+		if res, err := m.authService.GetAccessTokenPublicKey(context.Background(), &auth.GetAccessTokenPublicKeyRequest{}); err == nil {
 			if parser, err := access.NewParserByKey(res.PublicKey); err == nil {
 				m.tokenParser = parser
 			}

@@ -7,19 +7,22 @@ import (
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/middleware/auth"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/middleware/log"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/router/docs"
+	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/router/health"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/router/v1"
 	"github.com/mephistolie/chefbook-backend-api-gateway/pkg/limiter"
 )
 
 type Router struct {
-	v1   v1.Router
-	docs docs.Router
+	v1     v1.Router
+	docs   docs.Router
+	health health.Router
 }
 
 func NewRouter(handler *handler.Handler, authMiddleware *auth.Middleware) *Router {
 	return &Router{
-		v1:   *v1.NewRouter(handler.V1, authMiddleware),
-		docs: *docs.NewRouter(),
+		v1:     *v1.NewRouter(handler.V1, authMiddleware),
+		docs:   *docs.NewRouter(),
+		health: *health.NewRouter(),
 	}
 }
 
@@ -34,7 +37,7 @@ func (r *Router) Init(cfg *config.Config) *gin.Engine {
 
 	engine.Use(
 		gin.Recovery(),
-		log.Middleware(),
+		log.Middleware([]string{"/healthz", "/doc"}),
 		limiter.Limit(*cfg.Limiter.RPS, *cfg.Limiter.Burst, *cfg.Limiter.TTL),
 	)
 
@@ -47,6 +50,8 @@ func (r *Router) initAPI(router *gin.Engine) {
 	api := router.Group("/")
 	{
 		r.v1.Init(api)
+
+		r.health.Init(api)
 
 		if gin.Mode() != gin.ReleaseMode {
 			r.docs.Init(api)

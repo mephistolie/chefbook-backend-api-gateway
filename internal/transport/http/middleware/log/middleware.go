@@ -21,7 +21,17 @@ var format = func(param gin.LogFormatterParams) string {
 	)
 }
 
-func Middleware() gin.HandlerFunc {
+func Middleware(skipPath []string) gin.HandlerFunc {
+	var skip map[string]struct{}
+
+	if length := len(skipPath); length > 0 {
+		skip = make(map[string]struct{}, length)
+
+		for _, path := range skipPath {
+			skip[path] = struct{}{}
+		}
+	}
+
 	return func(c *gin.Context) {
 		// Start timer
 		start := time.Now()
@@ -30,25 +40,26 @@ func Middleware() gin.HandlerFunc {
 
 		// Process request
 		c.Next()
+		if _, ok := skip[path]; !ok {
+			param := gin.LogFormatterParams{
+				Request: c.Request,
+				Keys:    c.Keys,
+			}
 
-		param := gin.LogFormatterParams{
-			Request: c.Request,
-			Keys:    c.Keys,
+			param.Latency = time.Now().Sub(start)
+
+			param.ClientIP = c.ClientIP()
+			param.Method = c.Request.Method
+			param.StatusCode = c.Writer.Status()
+			param.ErrorMessage = c.Errors.ByType(gin.ErrorTypePrivate).String()
+
+			if raw != "" {
+				path = path + "?" + raw
+			}
+
+			param.Path = path
+
+			log.Info(format(param))
 		}
-
-		param.Latency = time.Now().Sub(start)
-
-		param.ClientIP = c.ClientIP()
-		param.Method = c.Request.Method
-		param.StatusCode = c.Writer.Status()
-		param.ErrorMessage = c.Errors.ByType(gin.ErrorTypePrivate).String()
-
-		if raw != "" {
-			path = path + "?" + raw
-		}
-
-		param.Path = path
-
-		log.Info(format(param))
 	}
 }
