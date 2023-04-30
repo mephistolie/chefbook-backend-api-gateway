@@ -4,9 +4,3 @@ description: ChefBook Auth Microservice Helm chart
 type: application
 version: 0.1.0
 appVersion: "0.1.0"
-
-dependencies:
-  - name: chefbook-backend-auth-service
-    version: 1.1.0
-    repository: "@chefbook-helm-repository"
-    condition: authService.dependencyEnabled

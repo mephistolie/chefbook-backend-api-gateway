@@ -16,7 +16,7 @@ import (
 )
 
 func Run(cfg *config.Config) {
-	log.Init(*cfg.LogsPath, *cfg.Environment == config.EnvDebug)
+	log.Init(*cfg.LogsPath, *cfg.Environment == config.EnvDev)
 	cfg.Print()
 
 	services, err := service.NewServices(cfg)

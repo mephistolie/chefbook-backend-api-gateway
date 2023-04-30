@@ -13,7 +13,7 @@ import (
 func main() {
 	fs := flag.NewFlagSet("", flag.ContinueOnError)
 	cfg := config.Config{
-		Environment: fs.String("environment", "debug", "service environment"),
+		Environment: fs.String("environment", "develop", "service environment"),
 		Port:        fs.Int("port", 8080, "service port"),
 		LogsPath:    fs.String("logs-path", "", "logs file path"),
 

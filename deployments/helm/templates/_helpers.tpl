@@ -39,6 +39,8 @@ helm.sh/chart: {{ include "chefbook-backend-api-gateway.chart" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
+app.kubernetes.io/component: api-gateway
+app.kubernetes.io/part-of: chefbook-backend
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
@@ -48,4 +50,16 @@ Selector labels
 {{- define "chefbook-backend-api-gateway.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "chefbook-backend-api-gateway.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+environment: {{ include "chefbook-backend-api-gateway.environment" . }}
+{{- end }}
+
+{{/*
+Choose Environment
+*/}}
+{{- define "chefbook-backend-api-gateway.environment" -}}
+{{- if .Values.config.develop }}
+{{- print "develop" }}
+{{- else }}
+{{- print "production" }}
+{{- end }}
 {{- end }}

@@ -57,7 +57,6 @@ cd deployments/helm || exit
 
 sed -i '' "s,$repositoryAlias,$repositoryUrl,g" Chart.yaml
 
-helm dependency update
 helm package . --version "$version"
 helm push "$chartArchive" "$repositoryUrl"
 

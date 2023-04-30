@@ -31,38 +31,38 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.registry }}/{{ .Values.image.container }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: ENVIRONMENT
-              value: {{ if eq .Values.debug true }}debug{{ else }}production{{ end }}
+              value: {{ include "chefbook-backend-api-gateway.environment" . }}
             - name: PORT
               value: {{ quote .Values.service.port }}
             - name: LOGS_PATH
-              value: {{ quote .Values.logsPath }}
+              value: {{ quote .Values.config.logsPath }}
 
             # Domains
 
             - name: FRONTEND_DOMAIN
-              value: {{ .Values.domains.frontend }}
+              value: {{ .Values.config.domains.frontend }}
             - name: BACKEND_DOMAIN
-              value: {{ .Values.domains.backend }}
+              value: {{ .Values.config.domains.backend }}
 
             # Limiter
 
             - name: LIMITER_RPS
-              value: {{ quote .Values.limiter.rps }}
+              value: {{ quote .Values.config.limiter.rps }}
             - name: LIMITER_BURST
-              value: {{ quote .Values.limiter.burst }}
+              value: {{ quote .Values.config.limiter.burst }}
             - name: LIMITER_TTL
-              value: {{ .Values.limiter.ttl }}
+              value: {{ .Values.config.limiter.ttl }}
 
             # Auth Microservice
 
             - name: AUTH_ADDR
-              value: "{{ .Values.authService.name }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.authService.port }}"
+              value: "{{ .Values.services.auth.name }}.{{ .Values.services.auth.namespace | default .Release.Namespace }}.svc.cluster.local:{{ .Values.services.auth.port }}"
             - name: ACCESS_TOKEN_KEY_TTL
-              value: {{ .Values.authService.accessTokenKeyFetchInterval }}
+              value: {{ .Values.config.auth.accessTokenKeyFetchInterval }}
 
           ports:
             - name: http

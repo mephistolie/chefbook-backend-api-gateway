@@ -6,8 +6,8 @@ import (
 )
 
 const (
-	EnvDebug = "debug"
-	EnvProd  = "production"
+	EnvDev  = "develop"
+	EnvProd = "production"
 )
 
 type Config struct {
@@ -38,7 +38,7 @@ type AuthService struct {
 
 func (c Config) Validate() error {
 	if *c.Environment != EnvProd {
-		*c.Environment = EnvDebug
+		*c.Environment = EnvDev
 	}
 	return nil
 }
