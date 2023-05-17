@@ -29,7 +29,7 @@ func Run(cfg *config.Config) {
 		log.Fatal("error during auth middleware initialization: ", err)
 	}
 
-	h := handler.NewHandler(*services, cfg)
+	h := handler.NewHandler(services, cfg)
 	r := router.NewRouter(h, authMiddleware)
 
 	srv := server.NewServer(*cfg.Port, r.Init(cfg))

@@ -15,9 +15,10 @@ type Config struct {
 	Port        *int
 	LogsPath    *string
 
-	Domains     Domains
-	Limiter     Limiter
-	AuthService AuthService
+	Domains             Domains
+	Limiter             Limiter
+	AuthService         AuthService
+	ShoppingListService ShoppingListService
 }
 
 type Domains struct {
@@ -34,6 +35,10 @@ type Limiter struct {
 type AuthService struct {
 	Addr                         *string
 	AccessTokenKeyUpdateInterval *time.Duration
+}
+
+type ShoppingListService struct {
+	Addr *string
 }
 
 func (c Config) Validate() error {
@@ -54,11 +59,12 @@ func (c Config) Print() {
 		"Limiter Burst: %v\n"+
 		"Limiter TTL: %v\n\n"+
 		"Access Token Key Refresh Interval: %v\n\n"+
-		"Auth Service Address: %v\n\n",
+		"Auth Service Address: %v\n"+
+		"Shopping List Service Address: %v\n\n",
 		*c.Environment, *c.Port, *c.LogsPath,
 		*c.Domains.Frontend, *c.Domains.Backend,
 		*c.Limiter.RPS, *c.Limiter.Burst, *c.Limiter.TTL,
 		*c.AuthService.AccessTokenKeyUpdateInterval,
-		*c.AuthService.Addr,
+		*c.AuthService.Addr, *c.ShoppingListService.Addr,
 	)
 }

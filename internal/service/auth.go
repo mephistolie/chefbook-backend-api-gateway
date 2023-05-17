@@ -1,13 +1,13 @@
 package service
 
 import (
-	auth "github.com/mephistolie/chefbook-backend-auth/api/proto/implementation/v1"
+	api "github.com/mephistolie/chefbook-backend-auth/api/proto/implementation/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
 
 type Auth struct {
-	auth.AuthServiceClient
+	api.AuthServiceClient
 	Conn *grpc.ClientConn
 }
 
@@ -18,7 +18,7 @@ func NewAuth(addr string) (*Auth, error) {
 		return nil, err
 	}
 	return &Auth{
-		AuthServiceClient: auth.NewAuthServiceClient(conn),
+		AuthServiceClient: api.NewAuthServiceClient(conn),
 		Conn:              conn,
 	}, nil
 }

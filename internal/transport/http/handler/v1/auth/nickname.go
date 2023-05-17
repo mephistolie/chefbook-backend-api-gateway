@@ -2,8 +2,8 @@ package auth
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/dto/request_body"
-	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/dto/response_body"
+	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/handler/v1/auth/dto/request_body"
+	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/handler/v1/auth/dto/response_body"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/helpers/request"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/helpers/response"
 	api "github.com/mephistolie/chefbook-backend-auth/api/proto/implementation/v1"
@@ -26,7 +26,7 @@ import (
 func (h *Handler) CheckNicknameAvailability(c *gin.Context) {
 	var body request_body.Nickname
 	if err := c.BindJSON(&body); err != nil {
-		response.Fail(c, response_body.InvalidBody)
+		response.Fail(c, response.InvalidBody)
 		return
 	}
 
@@ -48,21 +48,20 @@ func (h *Handler) CheckNicknameAvailability(c *gin.Context) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			input				body		request_body.Nickname	true	"Nickname"
-//	@Success		200					{object}	response_body.Message
+//	@Success		200					{object}	response.MessageBody
 //	@Failure		400					{object}	fail.Response
 //	@Failure		401					{object}	fail.Response
 //	@Failure		500					{object}	fail.Response
 //	@Router			/v1/auth/nickname 	[post]
 func (h *Handler) SetNickname(c *gin.Context) {
-	payload, err := request.GetUserPayload(c)
+	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
-		response.Unknown(c, err)
 		return
 	}
 
 	var body request_body.Nickname
 	if err := c.BindJSON(&body); err != nil {
-		response.Fail(c, response_body.InvalidBody)
+		response.Fail(c, response.InvalidBody)
 		return
 	}
 

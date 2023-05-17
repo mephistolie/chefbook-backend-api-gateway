@@ -32,6 +32,10 @@ func main() {
 			Addr:                         fs.String("auth-addr", "", "auth service address"),
 			AccessTokenKeyUpdateInterval: fs.Duration("access-token-key-ttl", 10*time.Minute, "Access token public key fetch interval"),
 		},
+
+		ShoppingListService: config.ShoppingListService{
+			Addr: fs.String("shopping-list-addr", "", "shopping list service address"),
+		},
 	}
 	if err := ff.Parse(fs, os.Args[1:], ff.WithEnvVars()); err != nil {
 		panic(err)

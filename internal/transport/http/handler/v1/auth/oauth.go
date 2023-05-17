@@ -2,8 +2,8 @@ package auth
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/dto/request_body"
-	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/dto/response_body"
+	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/handler/v1/auth/dto/request_body"
+	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/handler/v1/auth/dto/response_body"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/helpers/request"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/helpers/response"
 	api "github.com/mephistolie/chefbook-backend-auth/api/proto/implementation/v1"
@@ -16,7 +16,7 @@ import (
 //	@Tags			auth
 //	@Accept			json
 //	@Produce		json
-//	@Success		200						{object}	response_body.Link
+//	@Success		200						{object}	response.LinkBody
 //	@Failure		500						{object}	fail.Response
 //	@Router			/v1/auth/google/request	[get]
 func (h *Handler) RequestGoogleOAuth(c *gin.Context) {
@@ -46,7 +46,7 @@ func (h *Handler) RequestGoogleOAuth(c *gin.Context) {
 func (h *Handler) SignInGoogle(c *gin.Context) {
 	var body request_body.OAuthCode
 	if err := c.BindJSON(&body); err != nil {
-		response.Fail(c, response_body.InvalidBody)
+		response.Fail(c, response.InvalidBody)
 		return
 	}
 
@@ -78,21 +78,20 @@ func (h *Handler) SignInGoogle(c *gin.Context) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			input			body		request_body.OAuthCode	true	"Credentials"
-//	@Success		200				{object}	response_body.Message
+//	@Success		200				{object}	response.MessageBody
 //	@Failure		400				{object}	fail.Response
 //	@Failure		401				{object}	fail.Response
 //	@Failure		500				{object}	fail.Response
 //	@Router			/v1/auth/google	[put]
 func (h *Handler) ConnectGoogle(c *gin.Context) {
-	payload, err := request.GetUserPayload(c)
+	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
-		response.Unknown(c, err)
 		return
 	}
 
 	var body request_body.OAuthCode
 	if err := c.BindJSON(&body); err != nil {
-		response.Fail(c, response_body.InvalidBody)
+		response.Fail(c, response.InvalidBody)
 		return
 	}
 
@@ -118,15 +117,14 @@ func (h *Handler) ConnectGoogle(c *gin.Context) {
 //	@Security		ApiKeyAuth
 //	@Accept			json
 //	@Produce		json
-//	@Success		200				{object}	response_body.Message
+//	@Success		200				{object}	response.MessageBody
 //	@Failure		400				{object}	fail.Response
 //	@Failure		401				{object}	fail.Response
 //	@Failure		500				{object}	fail.Response
 //	@Router			/v1/auth/google	[delete]
 func (h *Handler) DeleteGoogleConnection(c *gin.Context) {
-	payload, err := request.GetUserPayload(c)
+	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
-		response.Unknown(c, err)
 		return
 	}
 
@@ -148,7 +146,7 @@ func (h *Handler) DeleteGoogleConnection(c *gin.Context) {
 //	@Produce		json
 //	@Param			display				query		string	false	"Display"
 //	@Param			response_type		query		string	false	"Response type"
-//	@Success		200					{object}	response_body.Link
+//	@Success		200					{object}	response.LinkBody
 //	@Failure		500					{object}	fail.Response
 //	@Router			/v1/auth/vk/request	[get]
 func (h *Handler) RequestVkOAuth(c *gin.Context) {
@@ -180,7 +178,7 @@ func (h *Handler) RequestVkOAuth(c *gin.Context) {
 func (h *Handler) SignInVk(c *gin.Context) {
 	var body request_body.OAuthCode
 	if err := c.BindJSON(&body); err != nil {
-		response.Fail(c, response_body.InvalidBody)
+		response.Fail(c, response.InvalidBody)
 		return
 	}
 
@@ -212,21 +210,20 @@ func (h *Handler) SignInVk(c *gin.Context) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			input		body		request_body.OAuthCode	true	"Credentials"
-//	@Success		200			{object}	response_body.Message
+//	@Success		200			{object}	response.MessageBody
 //	@Failure		400			{object}	fail.Response
 //	@Failure		401			{object}	fail.Response
 //	@Failure		500			{object}	fail.Response
 //	@Router			/v1/auth/vk	[put]
 func (h *Handler) ConnectVk(c *gin.Context) {
-	payload, err := request.GetUserPayload(c)
+	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
-		response.Unknown(c, err)
 		return
 	}
 
 	var body request_body.OAuthCode
 	if err := c.BindJSON(&body); err != nil {
-		response.Fail(c, response_body.InvalidBody)
+		response.Fail(c, response.InvalidBody)
 		return
 	}
 
@@ -252,15 +249,14 @@ func (h *Handler) ConnectVk(c *gin.Context) {
 //	@Security		ApiKeyAuth
 //	@Accept			json
 //	@Produce		json
-//	@Success		200			{object}	response_body.Message
+//	@Success		200			{object}	response.MessageBody
 //	@Failure		400			{object}	fail.Response
 //	@Failure		401			{object}	fail.Response
 //	@Failure		500			{object}	fail.Response
 //	@Router			/v1/auth/vk	[delete]
 func (h *Handler) DeleteVkConnection(c *gin.Context) {
-	payload, err := request.GetUserPayload(c)
+	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
-		response.Unknown(c, err)
 		return
 	}
 

@@ -1,7 +1,9 @@
 package v1
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/handler/v1/shopping_list"
 
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/handler/v1"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/middleware/auth"
@@ -24,6 +26,7 @@ func (r *Router) Init(api *gin.RouterGroup) {
 	{
 		r.initAuthRoutes(routerGroup)
 		r.initProfileRoutes(routerGroup)
+		r.initShoppingListRoutes(routerGroup)
 	}
 }
 
@@ -59,8 +62,28 @@ func (r *Router) initAuthRoutes(api *gin.RouterGroup) {
 }
 
 func (r *Router) initProfileRoutes(api *gin.RouterGroup) {
-	authGroup := api.Group("/profile", r.authMiddleware.AuthorizeUser)
+	profileGroup := api.Group("/profile", r.authMiddleware.AuthorizeUser)
 	{
-		authGroup.DELETE("", r.handler.Profile.DeleteProfile)
+		profileGroup.DELETE("", r.handler.Profile.DeleteProfile)
+	}
+}
+
+func (r *Router) initShoppingListRoutes(api *gin.RouterGroup) {
+	shoppingListGroup := api.Group("/shopping-lists", r.authMiddleware.AuthorizeUser)
+	{
+		shoppingListGroup.GET("", r.handler.ShoppingList.GetShoppingLists)
+
+		shoppingListGroup.POST("", r.handler.ShoppingList.CreateSharedShoppingList)
+		shoppingListGroup.GET("/personal", r.handler.ShoppingList.GetPersonalShoppingList)
+		shoppingListGroup.GET(fmt.Sprintf("/:%s", shopping_list.ParamShoppingListId), r.handler.ShoppingList.GetShoppingList)
+		shoppingListGroup.PUT(fmt.Sprintf("/:%s/name", shopping_list.ParamShoppingListId), r.handler.ShoppingList.SetShoppingListName)
+		shoppingListGroup.PUT(fmt.Sprintf("/:%s", shopping_list.ParamShoppingListId), r.handler.ShoppingList.SetShoppingList)
+		shoppingListGroup.PATCH(fmt.Sprintf("/:%s", shopping_list.ParamShoppingListId), r.handler.ShoppingList.AddToShoppingList)
+		shoppingListGroup.DELETE(fmt.Sprintf("/:%s", shopping_list.ParamShoppingListId), r.handler.ShoppingList.DeleteSharedShoppingList)
+
+		shoppingListGroup.GET(fmt.Sprintf("/:%s/link", shopping_list.ParamShoppingListId), r.handler.ShoppingList.GetSharedShoppingListLink)
+		shoppingListGroup.GET(fmt.Sprintf("/:%s/users", shopping_list.ParamShoppingListId), r.handler.ShoppingList.GetShoppingListUsers)
+		shoppingListGroup.POST(fmt.Sprintf("/:%s/users", shopping_list.ParamShoppingListId), r.handler.ShoppingList.JoinShoppingList)
+		shoppingListGroup.DELETE(fmt.Sprintf("/:%s/users", shopping_list.ParamShoppingListId), r.handler.ShoppingList.DeleteUserFromShoppingList)
 	}
 }

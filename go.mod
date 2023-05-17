@@ -5,11 +5,12 @@ go 1.20
 require (
 	github.com/gin-gonic/gin v1.9.0
 	github.com/google/uuid v1.3.0
-	github.com/mephistolie/chefbook-backend-auth/api v1.0.0
+	github.com/mephistolie/chefbook-backend-auth/api v1.3.1
 	github.com/mephistolie/chefbook-backend-common/log v0.1.0
-	github.com/mephistolie/chefbook-backend-common/responses v0.1.0
+	github.com/mephistolie/chefbook-backend-common/responses v0.7.0
 	github.com/mephistolie/chefbook-backend-common/shutdown v0.1.0
 	github.com/mephistolie/chefbook-backend-common/tokens v0.1.0
+	github.com/mephistolie/chefbook-backend-shopping-list/api/v2 v2.1.4
 	github.com/peterbourgon/ff/v3 v3.3.0
 	github.com/swaggo/files v1.0.1
 	github.com/swaggo/gin-swagger v1.6.0

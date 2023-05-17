@@ -2,18 +2,25 @@ package response
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/dto/response_body"
 	"net/http"
 )
+
+type MessageBody struct {
+	Message string `json:"message"`
+}
+
+type LinkBody struct {
+	Link string `json:"link"`
+}
 
 func Success(c *gin.Context, data interface{}) {
 	c.JSON(http.StatusOK, data)
 }
 
 func Message(c *gin.Context, message string) {
-	Success(c, response_body.Message{Message: message})
+	Success(c, MessageBody{Message: message})
 }
 
 func Link(c *gin.Context, link string) {
-	Success(c, response_body.Link{Link: link})
+	Success(c, LinkBody{Link: link})
 }

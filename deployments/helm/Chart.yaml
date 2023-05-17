@@ -1,6 +1,6 @@
 apiVersion: v2
 name: chefbook-backend-api-gateway
-description: ChefBook Auth Microservice Helm chart
+description: ChefBook API Gateway Helm chart
 type: application
-version: 0.1.0
-appVersion: "0.1.0"
+version: 0.2.0
+appVersion: "0.2.0"

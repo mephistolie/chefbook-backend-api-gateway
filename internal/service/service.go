@@ -5,20 +5,25 @@ import (
 )
 
 type Services struct {
-	Auth Auth
+	Auth         *Auth
+	ShoppingList *ShoppingList
 }
 
 func NewServices(cfg *config.Config) (*Services, error) {
 	authService, err := NewAuth(*cfg.AuthService.Addr)
+	shoppingList, err := NewShoppingList(*cfg.ShoppingListService.Addr)
 	if err != nil {
 		return nil, err
 	}
 
 	return &Services{
-		Auth: *authService,
+		Auth:         authService,
+		ShoppingList: shoppingList,
 	}, nil
 }
 
 func (s *Services) Stop() error {
-	return s.Auth.Conn.Close()
+	_ = s.Auth.Conn.Close()
+	_ = s.ShoppingList.Conn.Close()
+	return nil
 }

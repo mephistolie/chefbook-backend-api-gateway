@@ -23,7 +23,7 @@ type Handler struct {
 //	@securityDefinitions.apiKey	ApiKeyAuth
 //	@in							header
 //	@name						Authorization
-func NewHandler(services service.Services, cfg *config.Config) *Handler {
+func NewHandler(services *service.Services, cfg *config.Config) *Handler {
 	return &Handler{
 		V1: *v1.NewHandler(services, cfg),
 	}

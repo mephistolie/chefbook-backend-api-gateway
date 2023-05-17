@@ -45,7 +45,7 @@ echo
 
 # Containers
 
-#docker build --platform linux/amd64 -f Dockerfile $app_tags . && docker push --all-tags "$app_image"
+docker build --platform linux/amd64 -f Dockerfile $app_tags . && docker push --all-tags "$app_image"
 
 # Helm Chart
 

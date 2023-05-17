@@ -30,6 +30,10 @@ services:
     name: chefbook-backend-auth-service
     namespace: ""
     port: 8080
+  shoppingList:
+    name: chefbook-backend-shopping-list-service
+    namespace: ""
+    port: 8080
 
 service:
   type: ClusterIP

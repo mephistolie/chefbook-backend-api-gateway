@@ -2,8 +2,7 @@ package auth
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/dto/request_body"
-	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/dto/response_body"
+	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/handler/v1/auth/dto/request_body"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/helpers/request"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/helpers/response"
 	api "github.com/mephistolie/chefbook-backend-auth/api/proto/implementation/v1"
@@ -17,14 +16,14 @@ import (
 //	@Accept			json
 //	@Produce		json
 //	@Param			input				body		request_body.RequestPasswordReset	true	"Profile identifier"
-//	@Success		200					{object}	response_body.Message
+//	@Success		200					{object}	response.MessageBody
 //	@Failure		400					{object}	fail.Response
 //	@Failure		500					{object}	fail.Response
 //	@Router			/v1/auth/password	[get]
 func (h *Handler) RequestPasswordReset(c *gin.Context) {
 	var body request_body.RequestPasswordReset
 	if err := c.BindJSON(&body); err != nil {
-		response.Fail(c, response_body.InvalidBody)
+		response.Fail(c, response.InvalidBody)
 		return
 	}
 
@@ -49,14 +48,14 @@ func (h *Handler) RequestPasswordReset(c *gin.Context) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			input				body		request_body.ResetPassword	true	"Code and new password"
-//	@Success		200					{object}	response_body.Message
+//	@Success		200					{object}	response.MessageBody
 //	@Failure		400					{object}	fail.Response
 //	@Failure		500					{object}	fail.Response
 //	@Router			/v1/auth/password	[post]
 func (h *Handler) ResetPassword(c *gin.Context) {
 	var body request_body.ResetPassword
 	if err := c.BindJSON(&body); err != nil {
-		response.Fail(c, response_body.InvalidBody)
+		response.Fail(c, response.InvalidBody)
 		return
 	}
 
@@ -82,21 +81,20 @@ func (h *Handler) ResetPassword(c *gin.Context) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			input				body		request_body.ChangePassword	true	"Code and new password"
-//	@Success		200					{object}	response_body.Message
+//	@Success		200					{object}	response.MessageBody
 //	@Failure		400					{object}	fail.Response
 //	@Failure		401					{object}	fail.Response
 //	@Failure		500					{object}	fail.Response
 //	@Router			/v1/auth/password	[put]
 func (h *Handler) ChangePassword(c *gin.Context) {
-	payload, err := request.GetUserPayload(c)
+	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
-		response.Unknown(c, err)
 		return
 	}
 
 	var body request_body.ChangePassword
 	if err := c.BindJSON(&body); err != nil {
-		response.Fail(c, response_body.InvalidBody)
+		response.Fail(c, response.InvalidBody)
 		return
 	}
 

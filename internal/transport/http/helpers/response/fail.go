@@ -6,6 +6,10 @@ import (
 	"net/http"
 )
 
+var (
+	InvalidBody = fail.Response{Code: http.StatusBadRequest, ErrorType: fail.TypeInvalidBody, Message: "invalid body"}
+)
+
 func Unauthorized(c *gin.Context, err error) {
 	response := fail.Response{
 		Code:      http.StatusUnauthorized,

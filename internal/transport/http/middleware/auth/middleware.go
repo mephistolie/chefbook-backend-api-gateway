@@ -17,13 +17,13 @@ import (
 
 type Middleware struct {
 	sync.RWMutex
-	authService        service.Auth
+	authService        *service.Auth
 	tokenParser        *access.Parser
 	keyUpdateTimestamp time.Time
 	keyUpdateInterval  time.Duration
 }
 
-func NewMiddleware(service service.Auth, keyUpdateInterval time.Duration) (*Middleware, error) {
+func NewMiddleware(service *service.Auth, keyUpdateInterval time.Duration) (*Middleware, error) {
 	var res *auth.GetAccessTokenPublicKeyResponse = nil
 	var err error
 

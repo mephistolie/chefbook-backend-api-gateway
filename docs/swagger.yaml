@@ -1,4 +1,3 @@
-basePath: /
 definitions:
   fail.Response:
     properties:
@@ -7,45 +6,45 @@ definitions:
       message:
         type: string
     type: object
-  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_request_body.ChangePassword:
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.ChangePassword:
     properties:
       newPassword:
         type: string
       oldPassword:
         type: string
     type: object
-  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_request_body.DeleteProfile:
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.DeleteProfile:
     properties:
       password:
         type: string
     type: object
-  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_request_body.Nickname:
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.Nickname:
     properties:
       nickname:
         type: string
     type: object
-  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_request_body.OAuthCode:
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.OAuthCode:
     properties:
       code:
         type: string
       state:
         type: string
     type: object
-  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_request_body.RefreshToken:
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.RefreshToken:
     properties:
       refreshToken:
         type: string
     required:
     - refreshToken
     type: object
-  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_request_body.RequestPasswordReset:
-    properties:
+  ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.RequestPasswordReset
+  : properties:
       email:
         type: string
       nickname:
         type: string
     type: object
-  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_request_body.ResetPassword:
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.ResetPassword:
     properties:
       newPassword:
         type: string
@@ -54,7 +53,7 @@ definitions:
       userId:
         type: string
     type: object
-  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_request_body.SignIn:
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.SignIn:
     properties:
       email:
         type: string
@@ -63,7 +62,7 @@ definitions:
       password:
         type: string
     type: object
-  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_request_body.SignUp:
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.SignUp:
     properties:
       email:
         type: string
@@ -72,22 +71,12 @@ definitions:
       userId:
         type: string
     type: object
-  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_response_body.CheckNickname:
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_response_body.CheckNickname:
     properties:
       available:
         type: boolean
     type: object
-  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_response_body.Link:
-    properties:
-      link:
-        type: string
-    type: object
-  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_response_body.Message:
-    properties:
-      message:
-        type: string
-    type: object
-  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_response_body.Session:
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_response_body.Session:
     properties:
       accessPoint:
         type: string
@@ -104,7 +93,7 @@ definitions:
       mobile:
         type: boolean
     type: object
-  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_response_body.SignUp:
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_response_body.SignUp:
     properties:
       activated:
         type: boolean
@@ -113,7 +102,7 @@ definitions:
       userId:
         type: string
     type: object
-  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_response_body.Tokens:
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_response_body.Tokens:
     properties:
       accessToken:
         type: string
@@ -122,14 +111,119 @@ definitions:
       refreshToken:
         type: string
     type: object
-host: api.chefbook.io
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_common_body.Purchase:
+    properties:
+      amount:
+        type: integer
+      measureUnit:
+        type: string
+      multiplier:
+        type: integer
+      name:
+        type: string
+      purchaseId:
+        type: string
+      purchased:
+        type: boolean
+      recipeId:
+        type: string
+      recipeName:
+        type: string
+    required:
+    - name
+    - purchaseId
+    type: object
+  ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_request_body.CreateSharedShoppingList
+  : properties:
+      name:
+        type: string
+      shoppingListId:
+        type: string
+    type: object
+  ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_request_body.DeleteUserFromShoppingList
+  : properties:
+      userId:
+        type: string
+    type: object
+  ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_request_body.GetShoppingList
+  : properties:
+      key:
+        type: string
+    type: object
+  ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_request_body.JoinShoppingList
+  : properties:
+      key:
+        type: string
+    type: object
+  ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_request_body.SetShoppingList
+  : properties:
+      lastVersion:
+        type: integer
+      purchases:
+        items:
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_common_body.Purchase'
+        type: array
+      recipeNames:
+        additionalProperties:
+          type: string
+        type: object
+    type: object
+  ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_response_body.GetShoppingListBody
+  : properties:
+      name:
+        type: string
+      ownerId:
+        type: string
+      purchases:
+        items:
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_common_body.Purchase'
+        type: array
+      recipeNames:
+        additionalProperties:
+          type: string
+        type: object
+      shoppingListId:
+        type: string
+      type:
+        type: string
+      version:
+        type: integer
+    type: object
+  ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_response_body.GetShoppingListLink
+  : properties:
+      expiresAt:
+        type: string
+      link:
+        type: string
+    type: object
+  ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_response_body.SetShoppingList
+  : properties:
+      version:
+        type: integer
+    type: object
+  ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_response_body.ShoppingListInfo
+  : properties:
+      name:
+        type: string
+      ownerId:
+        type: string
+      shoppingListId:
+        type: string
+      type:
+        type: string
+    type: object
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.LinkBody:
+    properties:
+      link:
+        type: string
+    type: object
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody:
+    properties:
+      message:
+        type: string
+    type: object
 info:
-  contact:
-    email: support@chefbook.space
-    name: ChefBook API Support
-  description: ChefBook API Server
-  title: ChefBook API
-  version: "1.0"
+  contact: {}
 paths:
   /v1/auth/activate:
     get:
@@ -153,7 +247,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_response_body.Message'
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
         "400":
           description: Bad Request
           schema:
@@ -176,7 +270,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_response_body.Message'
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
         "400":
           description: Bad Request
           schema:
@@ -204,14 +298,14 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_request_body.OAuthCode'
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.OAuthCode'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_response_body.Tokens'
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_response_body.Tokens'
         "400":
           description: Bad Request
           schema:
@@ -233,14 +327,14 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_request_body.OAuthCode'
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.OAuthCode'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_response_body.Message'
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
         "400":
           description: Bad Request
           schema:
@@ -269,7 +363,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_response_body.Link'
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.LinkBody'
         "500":
           description: Internal Server Error
           schema:
@@ -288,14 +382,14 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_request_body.Nickname'
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.Nickname'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_response_body.CheckNickname'
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_response_body.CheckNickname'
         "400":
           description: Bad Request
           schema:
@@ -324,14 +418,14 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_request_body.Nickname'
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.Nickname'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_response_body.Message'
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
         "400":
           description: Bad Request
           schema:
@@ -361,14 +455,14 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_request_body.RequestPasswordReset'
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.RequestPasswordReset'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_response_body.Message'
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
         "400":
           description: Bad Request
           schema:
@@ -390,14 +484,14 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_request_body.ResetPassword'
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.ResetPassword'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_response_body.Message'
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
         "400":
           description: Bad Request
           schema:
@@ -419,14 +513,14 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_request_body.ChangePassword'
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.ChangePassword'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_response_body.Message'
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
         "400":
           description: Bad Request
           schema:
@@ -455,14 +549,14 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_request_body.RefreshToken'
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.RefreshToken'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_response_body.Tokens'
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_response_body.Tokens'
         "400":
           description: Bad Request
           schema:
@@ -485,7 +579,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_response_body.Message'
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
         "400":
           description: Bad Request
           schema:
@@ -514,7 +608,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_response_body.Session'
+              $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_response_body.Session'
             type: array
         "400":
           description: Bad Request
@@ -544,14 +638,14 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_request_body.SignIn'
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.SignIn'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_response_body.Tokens'
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_response_body.Tokens'
         "400":
           description: Bad Request
           schema:
@@ -574,14 +668,14 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_request_body.RefreshToken'
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.RefreshToken'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_response_body.Message'
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
         "400":
           description: Bad Request
           schema:
@@ -604,14 +698,14 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_request_body.SignUp'
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.SignUp'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_response_body.SignUp'
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_response_body.SignUp'
         "400":
           description: Bad Request
           schema:
@@ -634,7 +728,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_response_body.Message'
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
         "400":
           description: Bad Request
           schema:
@@ -662,14 +756,14 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_request_body.OAuthCode'
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.OAuthCode'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_response_body.Tokens'
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_response_body.Tokens'
         "400":
           description: Bad Request
           schema:
@@ -691,14 +785,14 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_request_body.OAuthCode'
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.OAuthCode'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_response_body.Message'
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
         "400":
           description: Bad Request
           schema:
@@ -736,7 +830,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_response_body.Link'
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.LinkBody'
         "500":
           description: Internal Server Error
           schema:
@@ -755,14 +849,14 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_request_body.DeleteProfile'
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.DeleteProfile'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_dto_response_body.Message'
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
         "400":
           description: Bad Request
           schema:
@@ -781,9 +875,399 @@ paths:
       tags:
       - auth
       - profile
-securityDefinitions:
-  ApiKeyAuth:
-    in: header
-    name: Authorization
-    type: apiKey
+  /v1/shopping-lists:
+    get:
+      consumes:
+      - application/json
+      description: Get personal shopping list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_response_body.ShoppingListInfo'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Get personal shopping list
+      tags:
+      - shopping-list
+    post:
+      consumes:
+      - application/json
+      description: Create shared shopping list
+      parameters:
+      - description: Params
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_request_body.CreateSharedShoppingList'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_response_body.GetShoppingListBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Create shared shopping list
+      tags:
+      - shopping-list
+  /v1/shopping-lists/{shopping_list_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete shared shopping list
+      parameters:
+      - description: shopping list ID
+        in: path
+        name: shopping_list_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete shared shopping list
+      tags:
+      - shopping-list
+    get:
+      consumes:
+      - application/json
+      description: Get shopping list
+      parameters:
+      - description: Shopping list ID
+        in: path
+        name: shopping_list_id
+        required: true
+        type: integer
+      - description: Key
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_request_body.GetShoppingList'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_response_body.GetShoppingListBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Get shopping list
+      tags:
+      - shopping-list
+    patch:
+      consumes:
+      - application/json
+      description: Add new purchases to shopping list
+      parameters:
+      - description: Shopping list ID
+        in: path
+        name: shopping_list_id
+        required: true
+        type: integer
+      - description: Purchases
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_request_body.SetShoppingList'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_response_body.SetShoppingList'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Add to shopping list
+      tags:
+      - shopping-list
+    put:
+      consumes:
+      - application/json
+      description: Set shopping list
+      parameters:
+      - description: Shopping list ID
+        in: path
+        name: shopping_list_id
+        required: true
+        type: integer
+      - description: Shopping list
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_request_body.SetShoppingList'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_response_body.SetShoppingList'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Set shopping list
+      tags:
+      - shopping-list
+  /v1/shopping-lists/{shopping_list_id}/link:
+    get:
+      consumes:
+      - application/json
+      description: Get shared shopping list link
+      parameters:
+      - description: shopping list ID
+        in: path
+        name: shopping_list_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_response_body.GetShoppingListLink'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Get shared shopping list link
+      tags:
+      - shopping-list
+  /v1/shopping-lists/{shopping_list_id}/name:
+    put:
+      consumes:
+      - application/json
+      description: Set shopping list
+      parameters:
+      - description: Shopping list ID
+        in: path
+        name: shopping_list_id
+        required: true
+        type: integer
+      - description: Shopping list
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_request_body.SetShoppingList'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_response_body.SetShoppingList'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Set shopping list
+      tags:
+      - shopping-list
+  /v1/shopping-lists/{shopping_list_id}/users:
+    delete:
+      consumes:
+      - application/json
+      description: Delete user from shared shopping list
+      parameters:
+      - description: shopping list ID
+        in: path
+        name: shopping_list_id
+        required: true
+        type: integer
+      - description: User ID
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_request_body.DeleteUserFromShoppingList'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete user from shared shopping list
+      tags:
+      - shopping-list
+    get:
+      consumes:
+      - application/json
+      description: Get shopping list users
+      parameters:
+      - description: shopping list ID
+        in: path
+        name: shopping_list_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Get shopping list users
+      tags:
+      - shopping-list
+    post:
+      consumes:
+      - application/json
+      description: Join shared shopping list
+      parameters:
+      - description: shopping list ID
+        in: path
+        name: shopping_list_id
+        required: true
+        type: integer
+      - description: Key
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_request_body.JoinShoppingList'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Join shared shopping list
+      tags:
+      - shopping-list
+  /v1/shopping-lists/personal:
+    get:
+      consumes:
+      - application/json
+      description: Get personal shopping list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_response_body.GetShoppingListBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Get personal shopping list
+      tags:
+      - shopping-list
 swagger: "2.0"

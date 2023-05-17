@@ -64,6 +64,11 @@ spec:
             - name: ACCESS_TOKEN_KEY_TTL
               value: {{ .Values.config.auth.accessTokenKeyFetchInterval }}
 
+            # Shopping List Microservice
+
+            - name: SHOPPING_LIST_ADDR
+              value: "{{ .Values.services.shoppingList.name }}.{{ .Values.services.shoppingList.namespace | default .Release.Namespace }}.svc.cluster.local:{{ .Values.services.shoppingList.port }}"
+
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
