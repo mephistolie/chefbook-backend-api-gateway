@@ -64,6 +64,11 @@ spec:
             - name: ACCESS_TOKEN_KEY_TTL
               value: {{ .Values.config.auth.accessTokenKeyFetchInterval }}
 
+            # User Microservice
+
+            - name: USER_ADDR
+              value: "{{ .Values.services.user.name }}.{{ .Values.services.user.namespace | default .Release.Namespace }}.svc.cluster.local:{{ .Values.services.user.port }}"
+
             # Shopping List Microservice
 
             - name: SHOPPING_LIST_ADDR

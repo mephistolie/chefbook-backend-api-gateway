@@ -983,7 +983,7 @@ const docTemplate = `{
                     "auth",
                     "profile"
                 ],
-                "summary": "Delete Profile",
+                "summary": "Delete profile",
                 "parameters": [
                     {
                         "description": "Profile password",
@@ -992,6 +992,270 @@ const docTemplate = `{
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.DeleteProfile"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/profile/avatar": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Confirm avatar uploading",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user",
+                    "profile"
+                ],
+                "summary": "Confirm avatar uploading",
+                "parameters": [
+                    {
+                        "description": "Avatar ID",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_request_body.ConfirmAvatarUploading"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Delete avatar",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user",
+                    "profile"
+                ],
+                "summary": "Delete avatar",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.LinkBody"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Delete avatar",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user",
+                    "profile"
+                ],
+                "summary": "Delete avatar",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/profile/description": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Set profile description",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user",
+                    "profile"
+                ],
+                "summary": "Set description",
+                "parameters": [
+                    {
+                        "description": "Description",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_request_body.SetDescription"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/profile/name": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Set profile name",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user",
+                    "profile"
+                ],
+                "summary": "Set name",
+                "parameters": [
+                    {
+                        "description": "Name",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_request_body.SetName"
                         }
                     }
                 ],
@@ -1288,7 +1552,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "shopping list ID",
+                        "description": "Shopping list ID",
                         "name": "shopping_list_id",
                         "in": "path",
                         "required": true
@@ -1393,7 +1657,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "shopping list ID",
+                        "description": "Shopping list ID",
                         "name": "shopping_list_id",
                         "in": "path",
                         "required": true
@@ -1500,7 +1764,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "shopping list ID",
+                        "description": "Shopping list ID",
                         "name": "shopping_list_id",
                         "in": "path",
                         "required": true
@@ -1550,7 +1814,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "shopping list ID",
+                        "description": "Shopping list ID",
                         "name": "shopping_list_id",
                         "in": "path",
                         "required": true
@@ -1606,7 +1870,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "shopping list ID",
+                        "description": "Shopping list ID",
                         "name": "shopping_list_id",
                         "in": "path",
                         "required": true
@@ -1816,6 +2080,33 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "refreshToken": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_request_body.ConfirmAvatarUploading": {
+            "type": "object",
+            "properties": {
+                "avatarId": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_request_body.SetDescription": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_request_body.SetName": {
+            "type": "object",
+            "properties": {
+                "firstName": {
+                    "type": "string"
+                },
+                "lastName": {
                     "type": "string"
                 }
             }

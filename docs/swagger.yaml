@@ -111,6 +111,23 @@ definitions:
       refreshToken:
         type: string
     type: object
+  ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_request_body.ConfirmAvatarUploading
+  : properties:
+      avatarId:
+        type: string
+    type: object
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_request_body.SetDescription:
+    properties:
+      description:
+        type: string
+    type: object
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_request_body.SetName:
+    properties:
+      firstName:
+        type: string
+      lastName:
+        type: string
+    type: object
   github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_common_body.Purchase:
     properties:
       amount:
@@ -871,9 +888,178 @@ paths:
             $ref: '#/definitions/fail.Response'
       security:
       - ApiKeyAuth: []
-      summary: Delete Profile
+      summary: Delete profile
       tags:
       - auth
+      - profile
+  /v1/profile/avatar:
+    delete:
+      consumes:
+      - application/json
+      description: Delete avatar
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete avatar
+      tags:
+      - user
+      - profile
+    post:
+      consumes:
+      - application/json
+      description: Delete avatar
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.LinkBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete avatar
+      tags:
+      - user
+      - profile
+    put:
+      consumes:
+      - application/json
+      description: Confirm avatar uploading
+      parameters:
+      - description: Avatar ID
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_request_body.ConfirmAvatarUploading'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Confirm avatar uploading
+      tags:
+      - user
+      - profile
+  /v1/profile/description:
+    put:
+      consumes:
+      - application/json
+      description: Set profile description
+      parameters:
+      - description: Description
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_request_body.SetDescription'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Set description
+      tags:
+      - user
+      - profile
+  /v1/profile/name:
+    put:
+      consumes:
+      - application/json
+      description: Set profile name
+      parameters:
+      - description: Name
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_request_body.SetName'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Set name
+      tags:
+      - user
       - profile
   /v1/shopping-lists:
     get:
@@ -939,7 +1125,7 @@ paths:
       - application/json
       description: Delete shared shopping list
       parameters:
-      - description: shopping list ID
+      - description: Shopping list ID
         in: path
         name: shopping_list_id
         required: true
@@ -1078,7 +1264,7 @@ paths:
       - application/json
       description: Get shared shopping list link
       parameters:
-      - description: shopping list ID
+      - description: Shopping list ID
         in: path
         name: shopping_list_id
         required: true
@@ -1146,7 +1332,7 @@ paths:
       - application/json
       description: Delete user from shared shopping list
       parameters:
-      - description: shopping list ID
+      - description: Shopping list ID
         in: path
         name: shopping_list_id
         required: true
@@ -1182,7 +1368,7 @@ paths:
       - application/json
       description: Get shopping list users
       parameters:
-      - description: shopping list ID
+      - description: Shopping list ID
         in: path
         name: shopping_list_id
         required: true
@@ -1214,7 +1400,7 @@ paths:
       - application/json
       description: Join shared shopping list
       parameters:
-      - description: shopping list ID
+      - description: Shopping list ID
         in: path
         name: shopping_list_id
         required: true

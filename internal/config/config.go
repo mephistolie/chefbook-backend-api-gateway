@@ -18,6 +18,7 @@ type Config struct {
 	Domains             Domains
 	Limiter             Limiter
 	AuthService         AuthService
+	UserService         UserService
 	ShoppingListService ShoppingListService
 }
 
@@ -35,6 +36,10 @@ type Limiter struct {
 type AuthService struct {
 	Addr                         *string
 	AccessTokenKeyUpdateInterval *time.Duration
+}
+
+type UserService struct {
+	Addr *string
 }
 
 type ShoppingListService struct {
@@ -60,6 +65,7 @@ func (c Config) Print() {
 		"Limiter TTL: %v\n\n"+
 		"Access Token Key Refresh Interval: %v\n\n"+
 		"Auth Service Address: %v\n"+
+		"User Service Address: %v\n"+
 		"Shopping List Service Address: %v\n\n",
 		*c.Environment, *c.Port, *c.LogsPath,
 		*c.Domains.Frontend, *c.Domains.Backend,

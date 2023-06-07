@@ -48,6 +48,12 @@ func GetShoppingList(shoppingList *api.GetShoppingListResponse) GetShoppingListB
 			continue
 		}
 
+		var multiplierPtr *int = nil
+		if purchase.Multiplier > 0 {
+			multiplier := int(purchase.Multiplier)
+			multiplierPtr = &multiplier
+		}
+
 		var amountPtr *int = nil
 		if purchase.Amount > 0 {
 			amount := int(purchase.Amount)
@@ -68,7 +74,7 @@ func GetShoppingList(shoppingList *api.GetShoppingListResponse) GetShoppingListB
 		dtos[i] = common_body.Purchase{
 			Id:          id,
 			Name:        purchase.Name,
-			Multiplier:  int(purchase.Multiplier),
+			Multiplier:  multiplierPtr,
 			Purchased:   purchase.Purchased,
 			Amount:      amountPtr,
 			MeasureUnit: measureUnitPtr,

@@ -30,6 +30,10 @@ services:
     name: chefbook-backend-auth-service
     namespace: ""
     port: 8080
+  user:
+    name: chefbook-backend-user-service
+    namespace: ""
+    port: 8080
   shoppingList:
     name: chefbook-backend-shopping-list-service
     namespace: ""
