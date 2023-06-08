@@ -37,6 +37,10 @@ func main() {
 			Addr: fs.String("user-addr", "", "user service address"),
 		},
 
+		ProfileService: config.ProfileService{
+			Addr: fs.String("profile-addr", "", "profile service address"),
+		},
+
 		ShoppingListService: config.ShoppingListService{
 			Addr: fs.String("shopping-list-addr", "", "shopping list service address"),
 		},

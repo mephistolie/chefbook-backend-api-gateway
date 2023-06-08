@@ -17,7 +17,7 @@ type Handler struct {
 func NewHandler(services *service.Services, cfg *config.Config) *Handler {
 	return &Handler{
 		Auth:         auth.NewHandler(services.Auth, cfg.Domains),
-		Profile:      profile.NewHandler(services.Auth, services.User),
+		Profile:      profile.NewHandler(services.Auth, services.User, services.Profile),
 		ShoppingList: shopping_list.NewHandler(services.ShoppingList, cfg.Domains),
 	}
 }

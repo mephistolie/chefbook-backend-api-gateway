@@ -10,6 +10,7 @@ require (
 	github.com/mephistolie/chefbook-backend-common/responses v0.7.0
 	github.com/mephistolie/chefbook-backend-common/shutdown v0.1.0
 	github.com/mephistolie/chefbook-backend-common/tokens v0.1.0
+	github.com/mephistolie/chefbook-backend-profile/api v1.0.1
 	github.com/mephistolie/chefbook-backend-shopping-list/api/v2 v2.1.8
 	github.com/mephistolie/chefbook-backend-user/api v1.1.2
 	github.com/peterbourgon/ff/v3 v3.3.0

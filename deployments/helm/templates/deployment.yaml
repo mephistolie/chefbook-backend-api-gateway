@@ -69,6 +69,11 @@ spec:
             - name: USER_ADDR
               value: "{{ .Values.services.user.name }}.{{ .Values.services.user.namespace | default .Release.Namespace }}.svc.cluster.local:{{ .Values.services.user.port }}"
 
+            # Profile Microservice
+
+            - name: PROFILE_ADDR
+              value: "{{ .Values.services.profile.name }}.{{ .Values.services.profile.namespace | default .Release.Namespace }}.svc.cluster.local:{{ .Values.services.profile.port }}"
+
             # Shopping List Microservice
 
             - name: SHOPPING_LIST_ADDR

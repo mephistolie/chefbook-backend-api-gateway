@@ -19,6 +19,7 @@ type Config struct {
 	Limiter             Limiter
 	AuthService         AuthService
 	UserService         UserService
+	ProfileService      ProfileService
 	ShoppingListService ShoppingListService
 }
 
@@ -39,6 +40,10 @@ type AuthService struct {
 }
 
 type UserService struct {
+	Addr *string
+}
+
+type ProfileService struct {
 	Addr *string
 }
 
