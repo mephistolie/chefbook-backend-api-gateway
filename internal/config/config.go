@@ -20,6 +20,7 @@ type Config struct {
 	AuthService         AuthService
 	UserService         UserService
 	ProfileService      ProfileService
+	CategoryService     CategoryService
 	ShoppingListService ShoppingListService
 }
 
@@ -47,6 +48,10 @@ type ProfileService struct {
 	Addr *string
 }
 
+type CategoryService struct {
+	Addr *string
+}
+
 type ShoppingListService struct {
 	Addr *string
 }
@@ -71,11 +76,13 @@ func (c Config) Print() {
 		"Access Token Key Refresh Interval: %v\n\n"+
 		"Auth Service Address: %v\n"+
 		"User Service Address: %v\n"+
+		"Profile Service Address: %v\n"+
+		"Category Service Address: %v\n"+
 		"Shopping List Service Address: %v\n\n",
 		*c.Environment, *c.Port, *c.LogsPath,
 		*c.Domains.Frontend, *c.Domains.Backend,
 		*c.Limiter.RPS, *c.Limiter.Burst, *c.Limiter.TTL,
 		*c.AuthService.AccessTokenKeyUpdateInterval,
-		*c.AuthService.Addr, *c.ShoppingListService.Addr,
+		*c.AuthService.Addr, *c.UserService.Addr, *c.ProfileService.Addr, *c.CategoryService.Addr, *c.ShoppingListService.Addr,
 	)
 }

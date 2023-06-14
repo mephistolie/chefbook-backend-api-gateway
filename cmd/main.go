@@ -32,15 +32,15 @@ func main() {
 			Addr:                         fs.String("auth-addr", "", "auth service address"),
 			AccessTokenKeyUpdateInterval: fs.Duration("access-token-key-ttl", 10*time.Minute, "Access token public key fetch interval"),
 		},
-
 		UserService: config.UserService{
 			Addr: fs.String("user-addr", "", "user service address"),
 		},
-
 		ProfileService: config.ProfileService{
 			Addr: fs.String("profile-addr", "", "profile service address"),
 		},
-
+		CategoryService: config.CategoryService{
+			Addr: fs.String("category-addr", "", "category service address"),
+		},
 		ShoppingListService: config.ShoppingListService{
 			Addr: fs.String("shopping-list-addr", "", "shopping list service address"),
 		},

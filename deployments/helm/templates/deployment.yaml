@@ -74,6 +74,11 @@ spec:
             - name: PROFILE_ADDR
               value: "{{ .Values.services.profile.name }}.{{ .Values.services.profile.namespace | default .Release.Namespace }}.svc.cluster.local:{{ .Values.services.profile.port }}"
 
+            # Category Microservice
+
+            - name: CATEGORY_ADDR
+              value: "{{ .Values.services.category.name }}.{{ .Values.services.category.namespace | default .Release.Namespace }}.svc.cluster.local:{{ .Values.services.category.port }}"
+
             # Shopping List Microservice
 
             - name: SHOPPING_LIST_ADDR

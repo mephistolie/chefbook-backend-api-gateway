@@ -98,6 +98,8 @@ github.com/mattn/go-isatty v0.0.18 h1:DOKFKCQ7FNG2L1rbrmstDN4QVRdS89Nkh85u68Uwp9
 github.com/mattn/go-isatty v0.0.18/go.mod h1:W+V8PltTTMOvKvAeJH7IuucS94S2C6jfK/D7dTCTo3Y=
 github.com/mephistolie/chefbook-backend-auth/api v1.3.1 h1:phNb50WuxknWERVyU64Q/fzo0r4Qwy8raulH1wfqLDE=
 github.com/mephistolie/chefbook-backend-auth/api v1.3.1/go.mod h1:r6ZBfZg8xZ1WtnZYxrZ3zSjoA0YmTQkee99nDbq5pP4=
+github.com/mephistolie/chefbook-backend-category/api v1.0.2 h1:+wdFV50l2C3eVFzaXDSEVHGpXkH4Qv/Q3ORdkwMqPYI=
+github.com/mephistolie/chefbook-backend-category/api v1.0.2/go.mod h1:oRZn7/Hc5EhIsTi+lFw2BbX0r/Ws0sZbyfYZ1iYxz1I=
 github.com/mephistolie/chefbook-backend-common/log v0.1.0 h1:dPHvDO98cJPaHSG6DM3gwYFIKAIv52MhB9h6/9nq3Bg=
 github.com/mephistolie/chefbook-backend-common/log v0.1.0/go.mod h1:+X8G15pzJU74a+CF5nsqwszvCWlLoBb2qCuaT0O+690=
 github.com/mephistolie/chefbook-backend-common/responses v0.7.0 h1:omG/LW3fiUOyOtJ0l8ESricoj5a820U7QOx6YAt5krQ=

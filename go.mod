@@ -6,6 +6,7 @@ require (
 	github.com/gin-gonic/gin v1.9.0
 	github.com/google/uuid v1.3.0
 	github.com/mephistolie/chefbook-backend-auth/api v1.3.1
+	github.com/mephistolie/chefbook-backend-category/api v1.0.2
 	github.com/mephistolie/chefbook-backend-common/log v0.1.0
 	github.com/mephistolie/chefbook-backend-common/responses v0.7.0
 	github.com/mephistolie/chefbook-backend-common/shutdown v0.1.0

@@ -38,6 +38,10 @@ services:
     name: chefbook-backend-user-service
     namespace: ""
     port: 8080
+  category:
+    name: chefbook-backend-category-service
+    namespace: ""
+    port: 8080
   shoppingList:
     name: chefbook-backend-shopping-list-service
     namespace: ""

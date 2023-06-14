@@ -17,7 +17,7 @@ import (
 //	@Security		ApiKeyAuth
 //	@Accept			json
 //	@Produce		json
-//	@Param			profile_id	path		int						true	"Shopping list ID"
+//	@Param			profile_id	path		int	true	"Shopping list ID"
 //	@Success		200			{object}	response.MessageBody
 //	@Failure		400			{object}	fail.Response
 //	@Failure		401			{object}	fail.Response
