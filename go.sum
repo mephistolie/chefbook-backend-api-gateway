@@ -112,6 +112,8 @@ github.com/mephistolie/chefbook-backend-profile/api v1.0.1 h1:kAhBr33+GDSQYVaL4i
 github.com/mephistolie/chefbook-backend-profile/api v1.0.1/go.mod h1:P4oEm3oJNBzlpxnvni4aHnGK0eE79PluLl3mYJ5kX84=
 github.com/mephistolie/chefbook-backend-shopping-list/api/v2 v2.1.8 h1:TchoF6x5siaKKzMOs9PPZ+8jajOBFRTJxAb5Tlu9Ce0=
 github.com/mephistolie/chefbook-backend-shopping-list/api/v2 v2.1.8/go.mod h1:pICOlHjgx5cBZu8Gk23ylWDHoLU/Go4v6b8McfvxI1E=
+github.com/mephistolie/chefbook-backend-tag/api v1.0.0 h1:jBj0dT0GCCOfvHRa53PGdlhwVPxthwUvLaGKJTvMKaI=
+github.com/mephistolie/chefbook-backend-tag/api v1.0.0/go.mod h1:KMzEfLrCkRWrx+bSr+1EkcdVm4L9b43FQY6LBMMaAiY=
 github.com/mephistolie/chefbook-backend-user/api v1.1.2 h1:AzRKHkfzjKLLQS87mvMyiBGe1YgsfdXGqocVDoqsUE0=
 github.com/mephistolie/chefbook-backend-user/api v1.1.2/go.mod h1:B55lO7soVO87Ntcwyt54fxtXsSohFESKrEFUAUJWZ7U=
 github.com/modern-go/concurrent v0.0.0-20180228061459-e0a39a4cb421/go.mod h1:6dJC0mAP4ikYIbvyc7fijjWJddQyLn8Ig3JB5CqoB9Q=

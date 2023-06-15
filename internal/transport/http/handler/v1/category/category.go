@@ -12,15 +12,15 @@ import (
 // GetCategories Swagger Documentation
 //
 //	@Summary		Get user categories
-//	@Description	Get user categories
-//	@Tags			category
+//	@Description	Get user recipe categories
+//	@Tags			category, recipe
 //	@Security		ApiKeyAuth
 //	@Accept			json
 //	@Produce		json
-//	@Success		200				{object}	[]response_body.Category
-//	@Failure		400				{object}	fail.Response
-//	@Failure		500				{object}	fail.Response
-//	@Router			/v1/categories	[get]
+//	@Success		200						{object}	[]response_body.Category
+//	@Failure		400						{object}	fail.Response
+//	@Failure		500						{object}	fail.Response
+//	@Router			/v1/recipes/categories	[get]
 func (h *Handler) GetCategories(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
@@ -39,16 +39,16 @@ func (h *Handler) GetCategories(c *gin.Context) {
 // AddCategory Swagger Documentation
 //
 //	@Summary		Add category
-//	@Description	Add category
-//	@Tags			category
+//	@Description	Add recipe category
+//	@Tags			category, recipe
 //	@Security		ApiKeyAuth
 //	@Accept			json
 //	@Produce		json
-//	@Param			input			body		request_body.AddCategory	true	"Input"
-//	@Success		200				{object}	response_body.AddCategory
-//	@Failure		400				{object}	fail.Response
-//	@Failure		500				{object}	fail.Response
-//	@Router			/v1/categories	[post]
+//	@Param			input					body		request_body.AddCategory	true	"Input"
+//	@Success		200						{object}	response_body.AddCategory
+//	@Failure		400						{object}	fail.Response
+//	@Failure		500						{object}	fail.Response
+//	@Router			/v1/recipes/categories	[post]
 func (h *Handler) AddCategory(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
@@ -87,16 +87,16 @@ func (h *Handler) AddCategory(c *gin.Context) {
 // GetCategory Swagger Documentation
 //
 //	@Summary		Get category
-//	@Description	Get category
-//	@Tags			category
+//	@Description	Get recipe category
+//	@Tags			category, recipe
 //	@Security		ApiKeyAuth
 //	@Accept			json
 //	@Produce		json
-//	@Param			category_id						path		string	true	"Category ID"
-//	@Success		200								{object}	response_body.Category
-//	@Failure		400								{object}	fail.Response
-//	@Failure		500								{object}	fail.Response
-//	@Router			/v1/categories/{category_id}	[get]
+//	@Param			category_id								path		string	true	"Category ID"
+//	@Success		200										{object}	response_body.Category
+//	@Failure		400										{object}	fail.Response
+//	@Failure		500										{object}	fail.Response
+//	@Router			/v1/recipes/categories/{category_id}	[get]
 func (h *Handler) GetCategory(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
@@ -127,17 +127,17 @@ func (h *Handler) GetCategory(c *gin.Context) {
 // UpdateCategory Swagger Documentation
 //
 //	@Summary		Update category
-//	@Description	Update category
-//	@Tags			category
+//	@Description	Update recipe category
+//	@Tags			category, recipe
 //	@Security		ApiKeyAuth
 //	@Accept			json
 //	@Produce		json
-//	@Param			category_id						path		int							true	"Category ID"
-//	@Param			input							body		request_body.UpdateCategory	true	"Input"
-//	@Success		200								{object}	response.MessageBody
-//	@Failure		400								{object}	fail.Response
-//	@Failure		500								{object}	fail.Response
-//	@Router			/v1/categories/{category_id}	[put]
+//	@Param			category_id								path		int							true	"Category ID"
+//	@Param			input									body		request_body.UpdateCategory	true	"Input"
+//	@Success		200										{object}	response.MessageBody
+//	@Failure		400										{object}	fail.Response
+//	@Failure		500										{object}	fail.Response
+//	@Router			/v1/recipes/categories/{category_id}	[put]
 func (h *Handler) UpdateCategory(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
@@ -172,16 +172,16 @@ func (h *Handler) UpdateCategory(c *gin.Context) {
 // DeleteCategory Swagger Documentation
 //
 //	@Summary		Delete category
-//	@Description	Delete category
+//	@Description	Delete recipe category
 //	@Tags			category
 //	@Security		ApiKeyAuth
 //	@Accept			json
 //	@Produce		json
-//	@Param			category_id						path		int	true	"Category ID"
-//	@Success		200								{object}	response.MessageBody
-//	@Failure		400								{object}	fail.Response
-//	@Failure		500								{object}	fail.Response
-//	@Router			/v1/categories/{category_id}	[delete]
+//	@Param			category_id								path		int	true	"Category ID"
+//	@Success		200										{object}	response.MessageBody
+//	@Failure		400										{object}	fail.Response
+//	@Failure		500										{object}	fail.Response
+//	@Router			/v1/recipes/categories/{category_id}	[delete]
 func (h *Handler) DeleteCategory(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {

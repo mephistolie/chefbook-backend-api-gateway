@@ -38,6 +38,9 @@ func main() {
 		ProfileService: config.ProfileService{
 			Addr: fs.String("profile-addr", "", "profile service address"),
 		},
+		TagService: config.TagService{
+			Addr: fs.String("tag-addr", "", "tag service address"),
+		},
 		CategoryService: config.CategoryService{
 			Addr: fs.String("category-addr", "", "category service address"),
 		},

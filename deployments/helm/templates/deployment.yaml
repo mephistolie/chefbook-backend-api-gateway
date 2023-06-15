@@ -74,6 +74,11 @@ spec:
             - name: PROFILE_ADDR
               value: "{{ .Values.services.profile.name }}.{{ .Values.services.profile.namespace | default .Release.Namespace }}.svc.cluster.local:{{ .Values.services.profile.port }}"
 
+            # Tag Microservice
+
+            - name: TAG_ADDR
+              value: "{{ .Values.services.tag.name }}.{{ .Values.services.tag.namespace | default .Release.Namespace }}.svc.cluster.local:{{ .Values.services.tag.port }}"
+
             # Category Microservice
 
             - name: CATEGORY_ADDR

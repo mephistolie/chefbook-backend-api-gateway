@@ -20,6 +20,7 @@ type Config struct {
 	AuthService         AuthService
 	UserService         UserService
 	ProfileService      ProfileService
+	TagService          TagService
 	CategoryService     CategoryService
 	ShoppingListService ShoppingListService
 }
@@ -45,6 +46,10 @@ type UserService struct {
 }
 
 type ProfileService struct {
+	Addr *string
+}
+
+type TagService struct {
 	Addr *string
 }
 

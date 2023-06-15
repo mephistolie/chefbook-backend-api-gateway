@@ -296,6 +296,41 @@ definitions:
       type:
         type: string
     type: object
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_tag_dto_response_body.Tag:
+    properties:
+      emoji:
+        type: string
+      groupId:
+        type: string
+      name:
+        type: string
+      tagId:
+        type: string
+    type: object
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_tag_dto_response_body.TagWithGroupName:
+    properties:
+      emoji:
+        type: string
+      groupId:
+        type: string
+      groupName:
+        type: string
+      name:
+        type: string
+      tagId:
+        type: string
+    type: object
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_tag_dto_response_body.TagsAndGroups:
+    properties:
+      groups:
+        additionalProperties:
+          type: string
+        type: object
+      tags:
+        items:
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_tag_dto_response_body.Tag'
+        type: array
+    type: object
   github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.LinkBody:
     properties:
       link:
@@ -922,161 +957,6 @@ paths:
       summary: Request VK OAuth
       tags:
       - auth
-  /v1/categories:
-    get:
-      consumes:
-      - application/json
-      description: Get user categories
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_category_dto_response_body.Category'
-            type: array
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/fail.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/fail.Response'
-      security:
-      - ApiKeyAuth: []
-      summary: Get user categories
-      tags:
-      - category
-    post:
-      consumes:
-      - application/json
-      description: Add category
-      parameters:
-      - description: Input
-        in: body
-        name: input
-        required: true
-        schema:
-          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_category_dto_request_body.AddCategory'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_category_dto_response_body.AddCategory'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/fail.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/fail.Response'
-      security:
-      - ApiKeyAuth: []
-      summary: Add category
-      tags:
-      - category
-  /v1/categories/{category_id}:
-    delete:
-      consumes:
-      - application/json
-      description: Delete category
-      parameters:
-      - description: Category ID
-        in: path
-        name: category_id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/fail.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/fail.Response'
-      security:
-      - ApiKeyAuth: []
-      summary: Delete category
-      tags:
-      - category
-    get:
-      consumes:
-      - application/json
-      description: Get category
-      parameters:
-      - description: Category ID
-        in: path
-        name: category_id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_category_dto_response_body.Category'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/fail.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/fail.Response'
-      security:
-      - ApiKeyAuth: []
-      summary: Get category
-      tags:
-      - category
-    put:
-      consumes:
-      - application/json
-      description: Update category
-      parameters:
-      - description: Category ID
-        in: path
-        name: category_id
-        required: true
-        type: integer
-      - description: Input
-        in: body
-        name: input
-        required: true
-        schema:
-          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_category_dto_request_body.UpdateCategory'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/fail.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/fail.Response'
-      security:
-      - ApiKeyAuth: []
-      summary: Update category
-      tags:
-      - category
   /v1/profile:
     delete:
       consumes:
@@ -1356,6 +1236,272 @@ paths:
       - profile
       - auth
       - user
+  /v1/recipes/categories:
+    get:
+      consumes:
+      - application/json
+      description: Get user recipe categories
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_category_dto_response_body.Category'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Get user categories
+      tags:
+      - category
+      - recipe
+    post:
+      consumes:
+      - application/json
+      description: Add recipe category
+      parameters:
+      - description: Input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_category_dto_request_body.AddCategory'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_category_dto_response_body.AddCategory'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Add category
+      tags:
+      - category
+      - recipe
+  /v1/recipes/categories/{category_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete recipe category
+      parameters:
+      - description: Category ID
+        in: path
+        name: category_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete category
+      tags:
+      - category
+    get:
+      consumes:
+      - application/json
+      description: Get recipe category
+      parameters:
+      - description: Category ID
+        in: path
+        name: category_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_category_dto_response_body.Category'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Get category
+      tags:
+      - category
+      - recipe
+    put:
+      consumes:
+      - application/json
+      description: Update recipe category
+      parameters:
+      - description: Category ID
+        in: path
+        name: category_id
+        required: true
+        type: integer
+      - description: Input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_category_dto_request_body.UpdateCategory'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Update category
+      tags:
+      - category
+      - recipe
+  /v1/recipes/tags:
+    get:
+      consumes:
+      - application/json
+      description: Get recipe tags
+      parameters:
+      - description: Language code
+        in: query
+        name: language
+        type: string
+      - collectionFormat: csv
+        description: Tag groups
+        in: query
+        items:
+          type: string
+        name: group
+        type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_tag_dto_response_body.TagsAndGroups'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Get tags
+      tags:
+      - tag
+      - recipe
+  /v1/recipes/tags/{tag_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get recipe tag
+      parameters:
+      - description: Tag ID
+        in: path
+        name: tag_id
+        required: true
+        type: string
+      - description: Language code
+        in: query
+        name: language
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_tag_dto_response_body.TagWithGroupName'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Get tag
+      tags:
+      - tag
+      - recipe
+  /v1/recipes/tags/groups:
+    get:
+      consumes:
+      - application/json
+      description: Get recipe tag groups
+      parameters:
+      - description: Language code
+        in: query
+        name: language
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Get tag groups
+      tags:
+      - tag
+      - recipe
   /v1/shopping-lists:
     get:
       consumes:
