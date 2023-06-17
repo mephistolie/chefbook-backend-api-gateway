@@ -6,8 +6,14 @@ import (
 	"net/http"
 )
 
+const (
+	TypeProfileDeleting = "profile_deleting"
+)
+
 var (
 	InvalidBody = fail.Response{Code: http.StatusBadRequest, ErrorType: fail.TypeInvalidBody, Message: "invalid body"}
+
+	ProfileDeleting = fail.Response{Code: http.StatusBadRequest, ErrorType: TypeProfileDeleting, Message: "profile is being deleted"}
 )
 
 func Unauthorized(c *gin.Context, err error) {

@@ -9,7 +9,8 @@ type SignUp struct {
 }
 
 type Tokens struct {
-	Access    string    `json:"accessToken"`
-	Refresh   string    `json:"refreshToken"`
-	ExpiresAt time.Time `json:"expiresAt"`
+	Access            string     `json:"accessToken"`
+	Refresh           string     `json:"refreshToken"`
+	ExpiresAt         time.Time  `json:"expiresAt"`
+	ProfileDeletingAt *time.Time `json:"profileDeletingAt,omitempty"`
 }

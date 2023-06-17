@@ -13,11 +13,6 @@ definitions:
       oldPassword:
         type: string
     type: object
-  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.DeleteProfile:
-    properties:
-      password:
-        type: string
-    type: object
   github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.Nickname:
     properties:
       nickname:
@@ -108,6 +103,8 @@ definitions:
         type: string
       expiresAt:
         type: string
+      profileDeletingAt:
+        type: string
       refreshToken:
         type: string
     type: object
@@ -151,6 +148,13 @@ definitions:
       avatarId:
         type: string
     type: object
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_request_body.DeleteProfile:
+    properties:
+      password:
+        type: string
+      withSharedData:
+        type: boolean
+    type: object
   github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_request_body.SetDescription:
     properties:
       description:
@@ -161,6 +165,11 @@ definitions:
       firstName:
         type: string
       lastName:
+        type: string
+    type: object
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_response_body.DeleteProfile:
+    properties:
+      deletionTimestamp:
         type: string
     type: object
   github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_response_body.OAuth:
@@ -193,6 +202,13 @@ definitions:
       registeredAt:
         type: string
       role:
+        type: string
+    type: object
+  ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_response_body.ProfileDeletionStatus
+  : properties:
+      deleted:
+        type: boolean
+      deletionTimestamp:
         type: string
     type: object
   github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_common_body.Purchase:
@@ -958,42 +974,6 @@ paths:
       tags:
       - auth
   /v1/profile:
-    delete:
-      consumes:
-      - application/json
-      description: Delete profile
-      parameters:
-      - description: Profile password
-        in: body
-        name: input
-        required: true
-        schema:
-          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.DeleteProfile'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/fail.Response'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/fail.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/fail.Response'
-      security:
-      - ApiKeyAuth: []
-      summary: Delete profile
-      tags:
-      - auth
-      - profile
     get:
       consumes:
       - application/json
@@ -1124,6 +1104,101 @@ paths:
       summary: Confirm avatar uploading
       tags:
       - user
+      - profile
+  /v1/profile/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Cancel profile deletion request
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Cancel profile deletion
+      tags:
+      - auth
+      - profile
+    get:
+      consumes:
+      - application/json
+      description: Get profile deletion status
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_response_body.ProfileDeletionStatus'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Get profile deletion status
+      tags:
+      - auth
+      - profile
+    post:
+      consumes:
+      - application/json
+      description: Request profile deletion
+      parameters:
+      - description: Profile password
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_request_body.DeleteProfile'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_response_body.DeleteProfile'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete profile
+      tags:
+      - auth
       - profile
   /v1/profile/description:
     put:

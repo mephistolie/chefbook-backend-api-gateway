@@ -1020,62 +1020,6 @@ const docTemplate = `{
                         }
                     }
                 }
-            },
-            "delete": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Delete profile",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "auth",
-                    "profile"
-                ],
-                "summary": "Delete profile",
-                "parameters": [
-                    {
-                        "description": "Profile password",
-                        "name": "input",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.DeleteProfile"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/fail.Response"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "schema": {
-                            "$ref": "#/definitions/fail.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/fail.Response"
-                        }
-                    }
-                }
             }
         },
         "/v1/profile/avatar": {
@@ -1198,6 +1142,154 @@ const docTemplate = `{
                     "profile"
                 ],
                 "summary": "Delete avatar",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/profile/delete": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Get profile deletion status",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth",
+                    "profile"
+                ],
+                "summary": "Get profile deletion status",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_response_body.ProfileDeletionStatus"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Request profile deletion",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth",
+                    "profile"
+                ],
+                "summary": "Delete profile",
+                "parameters": [
+                    {
+                        "description": "Profile password",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_request_body.DeleteProfile"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_response_body.DeleteProfile"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Cancel profile deletion request",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth",
+                    "profile"
+                ],
+                "summary": "Cancel profile deletion",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -2458,14 +2550,6 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.DeleteProfile": {
-            "type": "object",
-            "properties": {
-                "password": {
-                    "type": "string"
-                }
-            }
-        },
         "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.Nickname": {
             "type": "object",
             "properties": {
@@ -2606,6 +2690,9 @@ const docTemplate = `{
                 "expiresAt": {
                     "type": "string"
                 },
+                "profileDeletingAt": {
+                    "type": "string"
+                },
                 "refreshToken": {
                     "type": "string"
                 }
@@ -2673,6 +2760,17 @@ const docTemplate = `{
                 }
             }
         },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_request_body.DeleteProfile": {
+            "type": "object",
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "withSharedData": {
+                    "type": "boolean"
+                }
+            }
+        },
         "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_request_body.SetDescription": {
             "type": "object",
             "properties": {
@@ -2688,6 +2786,14 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "lastName": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_response_body.DeleteProfile": {
+            "type": "object",
+            "properties": {
+                "deletionTimestamp": {
                     "type": "string"
                 }
             }
@@ -2737,6 +2843,17 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "role": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_response_body.ProfileDeletionStatus": {
+            "type": "object",
+            "properties": {
+                "deleted": {
+                    "type": "boolean"
+                },
+                "deletionTimestamp": {
                     "type": "string"
                 }
             }

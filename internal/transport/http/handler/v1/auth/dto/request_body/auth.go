@@ -19,7 +19,3 @@ type SignIn struct {
 type RefreshToken struct {
 	RefreshToken string `json:"refreshToken" binding:"required"`
 }
-
-type DeleteProfile struct {
-	Password string `json:"password"`
-}

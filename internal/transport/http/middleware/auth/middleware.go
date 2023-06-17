@@ -39,7 +39,7 @@ func NewMiddleware(service *service.Auth, keyUpdateInterval time.Duration) (*Mid
 		return nil, err
 	}
 
-	parser, err := access.NewParserByKey(res.PublicKey)
+	parser, err := access.NewParserByRawKey(res.PublicKey)
 	if err != nil {
 		return nil, err
 	}
@@ -53,12 +53,22 @@ func NewMiddleware(service *service.Auth, keyUpdateInterval time.Duration) (*Mid
 }
 
 func (m *Middleware) AuthorizeUser(c *gin.Context) {
+	m.authorizeUser(c, false)
+}
+
+func (m *Middleware) AuthorizeDeletedUser(c *gin.Context) {
+	m.authorizeUser(c, true)
+}
+
+func (m *Middleware) authorizeUser(c *gin.Context, allowDeleted bool) {
 	payload, err := m.parseAuthHeader(c)
 	if err != nil {
 		response.Unauthorized(c, err)
 	}
+	if !allowDeleted && payload.Deleted {
+		response.Fail(c, response.ProfileDeleting)
+	}
 	request.PutUserPayload(c, payload)
-
 }
 
 func (m *Middleware) parseAuthHeader(c *gin.Context) (access.Payload, error) {
@@ -85,7 +95,7 @@ func (m *Middleware) fetchPublicKey() access.Parser {
 	m.Lock()
 	if time.Now().UnixMilli()-m.keyUpdateTimestamp.UnixMilli() > m.keyUpdateInterval.Milliseconds() {
 		if res, err := m.authService.GetAccessTokenPublicKey(context.Background(), &auth.GetAccessTokenPublicKeyRequest{}); err == nil {
-			if parser, err := access.NewParserByKey(res.PublicKey); err == nil {
+			if parser, err := access.NewParserByRawKey(res.PublicKey); err == nil {
 				m.tokenParser = parser
 			}
 		}
