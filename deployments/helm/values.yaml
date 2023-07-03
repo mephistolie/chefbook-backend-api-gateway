@@ -46,6 +46,14 @@ services:
     name: chefbook-backend-category-service
     namespace: ""
     port: 8080
+  recipe:
+    name: chefbook-backend-recipe-service
+    namespace: ""
+    port: 8080
+  encryption:
+    name: chefbook-backend-encryption-service
+    namespace: ""
+    port: 8080
   shoppingList:
     name: chefbook-backend-shopping-list-service
     namespace: ""

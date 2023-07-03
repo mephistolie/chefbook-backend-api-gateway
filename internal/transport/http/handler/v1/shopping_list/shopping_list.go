@@ -163,9 +163,9 @@ func (h *Handler) GetShoppingList(c *gin.Context) {
 //	@Security		ApiKeyAuth
 //	@Accept			json
 //	@Produce		json
-//	@Param			shopping_list_id							path		int								true	"Shopping list ID"
+//	@Param			shopping_list_id							path		string							true	"Shopping list ID"
 //	@Param			input										body		request_body.SetShoppingList	true	"Shopping list"
-//	@Success		200											{object}	response_body.SetShoppingList
+//	@Success		200											{object}	response.MessageBody
 //	@Failure		400											{object}	fail.Response
 //	@Failure		500											{object}	fail.Response
 //	@Router			/v1/shopping-lists/{shopping_list_id}/name	[put]
@@ -206,7 +206,7 @@ func (h *Handler) SetShoppingListName(c *gin.Context) {
 //	@Security		ApiKeyAuth
 //	@Accept			json
 //	@Produce		json
-//	@Param			shopping_list_id						path		int								true	"Shopping list ID"
+//	@Param			shopping_list_id						path		string							true	"Shopping list ID"
 //	@Param			input									body		request_body.SetShoppingList	true	"Shopping list"
 //	@Success		200										{object}	response_body.SetShoppingList
 //	@Failure		400										{object}	fail.Response
@@ -251,7 +251,7 @@ func (h *Handler) SetShoppingList(c *gin.Context) {
 //	@Security		ApiKeyAuth
 //	@Accept			json
 //	@Produce		json
-//	@Param			shopping_list_id						path		int								true	"Shopping list ID"
+//	@Param			shopping_list_id						path		string							true	"Shopping list ID"
 //	@Param			input									body		request_body.SetShoppingList	true	"Purchases"
 //	@Success		200										{object}	response_body.SetShoppingList
 //	@Failure		400										{object}	fail.Response
@@ -296,7 +296,7 @@ func (h *Handler) AddToShoppingList(c *gin.Context) {
 //	@Security		ApiKeyAuth
 //	@Accept			json
 //	@Produce		json
-//	@Param			shopping_list_id						path		int	true	"Shopping list ID"
+//	@Param			shopping_list_id						path		string	true	"Shopping list ID"
 //	@Success		200										{object}	response.MessageBody
 //	@Failure		400										{object}	fail.Response
 //	@Failure		500										{object}	fail.Response

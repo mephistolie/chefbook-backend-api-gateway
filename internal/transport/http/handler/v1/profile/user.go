@@ -35,18 +35,11 @@ func (h *Handler) SetName(c *gin.Context) {
 		response.Fail(c, response.InvalidBody)
 		return
 	}
-	firstName, lastName := "", ""
-	if body.FirstName != nil {
-		firstName = *body.FirstName
-	}
-	if body.LastName != nil {
-		lastName = *body.LastName
-	}
 
 	res, err := h.user.SetUserName(c, &api.SetUserNameRequest{
 		UserId:    payload.UserId.String(),
-		FirstName: firstName,
-		LastName:  lastName,
+		FirstName: body.FirstName,
+		LastName:  body.LastName,
 	})
 	if err != nil {
 		response.FailGrpc(c, err)
@@ -81,14 +74,10 @@ func (h *Handler) SetDescription(c *gin.Context) {
 		response.Fail(c, response.InvalidBody)
 		return
 	}
-	description := ""
-	if body.Description != nil {
-		description = *body.Description
-	}
 
 	res, err := h.user.SetUserDescription(c, &api.SetUserDescriptionRequest{
 		UserId:      payload.UserId.String(),
-		Description: description,
+		Description: body.Description,
 	})
 	if err != nil {
 		response.FailGrpc(c, err)

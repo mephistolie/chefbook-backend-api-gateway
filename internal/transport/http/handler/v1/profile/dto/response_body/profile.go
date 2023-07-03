@@ -6,7 +6,7 @@ import (
 )
 
 type Profile struct {
-	Id                    *string    `json:"profileId,omitempty"`
+	Id                    string     `json:"profileId,omitempty"`
 	Nickname              *string    `json:"nickname,omitempty"`
 	Email                 *string    `json:"email,omitempty"`
 	Role                  *string    `json:"role,omitempty"`
@@ -26,46 +26,25 @@ type OAuth struct {
 
 func GetProfile(profile *api.GetProfileResponse) Profile {
 	res := Profile{
-		IsBlocked: profile.IsBlocked,
-	}
-	if len(profile.Id) > 0 {
-		res.Id = &profile.Id
-	}
-	if len(profile.Email) > 0 {
-		res.Email = &profile.Email
-	}
-	if len(profile.Nickname) > 0 {
-		res.Nickname = &profile.Nickname
-	}
-	if len(profile.Role) > 0 {
-		res.Role = &profile.Role
+		Id:          profile.Id,
+		Nickname:    profile.Nickname,
+		Email:       profile.Email,
+		Role:        profile.Role,
+		IsBlocked:   profile.IsBlocked,
+		FirstName:   profile.FirstName,
+		LastName:    profile.LastName,
+		Description: profile.Description,
+		Avatar:      profile.Avatar,
 	}
 	if profile.OAuth != nil {
-		oAuth := OAuth{}
-		if len(profile.OAuth.GoogleId) > 0 {
-			oAuth.GoogleId = &profile.OAuth.GoogleId
+		res.OAuth = &OAuth{
+			GoogleId: profile.OAuth.GoogleId,
+			VkId:     profile.OAuth.VkId,
 		}
-		if profile.OAuth.VkId > 0 {
-			oAuth.VkId = &profile.OAuth.VkId
-		}
-		res.OAuth = &oAuth
 	}
 	if profile.RegistrationTimestamp != nil {
 		t := profile.RegistrationTimestamp.AsTime()
 		res.RegistrationTimestamp = &t
-	}
-
-	if len(profile.FirstName) > 0 {
-		res.FirstName = &profile.FirstName
-	}
-	if len(profile.LastName) > 0 {
-		res.LastName = &profile.LastName
-	}
-	if len(profile.Description) > 0 {
-		res.Description = &profile.Description
-	}
-	if len(profile.Avatar) > 0 {
-		res.Avatar = &profile.Avatar
 	}
 
 	return res

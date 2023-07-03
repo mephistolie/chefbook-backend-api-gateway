@@ -5,22 +5,25 @@ go 1.20
 require (
 	github.com/gin-gonic/gin v1.9.0
 	github.com/google/uuid v1.3.0
-	github.com/mephistolie/chefbook-backend-auth/api v1.4.2
-	github.com/mephistolie/chefbook-backend-category/api v1.0.2
+	github.com/mephistolie/chefbook-backend-auth/api v1.6.0
+	github.com/mephistolie/chefbook-backend-category/api v1.1.0
 	github.com/mephistolie/chefbook-backend-common/log v0.1.0
 	github.com/mephistolie/chefbook-backend-common/responses v0.7.0
 	github.com/mephistolie/chefbook-backend-common/shutdown v0.1.0
 	github.com/mephistolie/chefbook-backend-common/tokens v0.9.0
-	github.com/mephistolie/chefbook-backend-profile/api v1.0.1
+	github.com/mephistolie/chefbook-backend-encryption/api v1.0.3
+	github.com/mephistolie/chefbook-backend-profile/api v1.2.3
+	github.com/mephistolie/chefbook-backend-recipe/api v1.1.2
 	github.com/mephistolie/chefbook-backend-shopping-list/api/v2 v2.1.8
-	github.com/mephistolie/chefbook-backend-tag/api v1.0.0
-	github.com/mephistolie/chefbook-backend-user/api v1.1.2
+	github.com/mephistolie/chefbook-backend-tag/api v1.1.0
+	github.com/mephistolie/chefbook-backend-user/api v1.3.0
 	github.com/peterbourgon/ff/v3 v3.3.0
 	github.com/swaggo/files v1.0.1
 	github.com/swaggo/gin-swagger v1.6.0
 	github.com/swaggo/swag v1.8.12
 	golang.org/x/time v0.3.0
 	google.golang.org/grpc v1.54.0
+	google.golang.org/protobuf v1.30.0
 )
 
 require (
@@ -58,6 +61,5 @@ require (
 	golang.org/x/text v0.9.0 // indirect
 	golang.org/x/tools v0.8.0 // indirect
 	google.golang.org/genproto v0.0.0-20230410155749-daa745c078e1 // indirect
-	google.golang.org/protobuf v1.30.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

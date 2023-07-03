@@ -7,7 +7,7 @@ import (
 )
 
 func (r *Router) initCategoriesRoutes(api *gin.RouterGroup) {
-	categoriesGroup := api.Group("/categories", r.authMiddleware.AuthorizeUser)
+	categoriesGroup := api.Group("/categories")
 	{
 		categoriesGroup.GET("", r.handler.Category.GetCategories)
 		categoriesGroup.POST("", r.handler.Category.AddCategory)

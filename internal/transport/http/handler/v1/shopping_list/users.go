@@ -17,7 +17,7 @@ import (
 //	@Security		ApiKeyAuth
 //	@Accept			json
 //	@Produce		json
-//	@Param			shopping_list_id							path		int	true	"Shopping list ID"
+//	@Param			shopping_list_id							path		string	true	"Shopping list ID"
 //	@Success		200											{object}	[]string
 //	@Failure		400											{object}	fail.Response
 //	@Failure		500											{object}	fail.Response
@@ -80,7 +80,7 @@ func (h *Handler) GetSharedShoppingListLink(c *gin.Context) {
 //	@Security		ApiKeyAuth
 //	@Accept			json
 //	@Produce		json
-//	@Param			shopping_list_id							path		int								true	"Shopping list ID"
+//	@Param			shopping_list_id							path		string							true	"Shopping list ID"
 //	@Param			input										body		request_body.JoinShoppingList	true	"Key"
 //	@Success		200											{object}	response.MessageBody
 //	@Failure		400											{object}	fail.Response
@@ -119,7 +119,7 @@ func (h *Handler) JoinShoppingList(c *gin.Context) {
 //	@Security		ApiKeyAuth
 //	@Accept			json
 //	@Produce		json
-//	@Param			shopping_list_id							path		int										true	"Shopping list ID"
+//	@Param			shopping_list_id							path		string									true	"Shopping list ID"
 //	@Param			input										body		request_body.DeleteUserFromShoppingList	true	"User ID"
 //	@Success		200											{object}	response.MessageBody
 //	@Failure		400											{object}	fail.Response

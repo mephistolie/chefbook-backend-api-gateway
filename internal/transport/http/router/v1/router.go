@@ -24,6 +24,7 @@ func (r *Router) Init(api *gin.RouterGroup) {
 		r.initAuthRoutes(routerGroup)
 		r.initProfileRoutes(routerGroup)
 		r.initRecipesRoutes(routerGroup)
+		r.initEncryptionRoutes(routerGroup)
 		r.initShoppingListsRoutes(routerGroup)
 	}
 }

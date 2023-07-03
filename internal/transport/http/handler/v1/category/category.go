@@ -61,20 +61,11 @@ func (h *Handler) AddCategory(c *gin.Context) {
 		return
 	}
 
-	categoryId := ""
-	if body.Id != nil {
-		categoryId = body.Id.String()
-	}
-	emoji := ""
-	if body.Emoji != nil {
-		emoji = *body.Emoji
-	}
-
-	res, err := h.service.AddCategory(c, &api.AddCategoryRequest{
+	res, err := h.service.CreateCategory(c, &api.CreateCategoryRequest{
 		UserId:     payload.UserId.String(),
-		CategoryId: categoryId,
+		CategoryId: body.Id,
 		Name:       body.Name,
-		Emoji:      emoji,
+		Emoji:      body.Emoji,
 	})
 	if err != nil {
 		response.FailGrpc(c, err)
@@ -112,15 +103,10 @@ func (h *Handler) GetCategory(c *gin.Context) {
 		return
 	}
 
-	var emoji *string
-	if len(res.Emoji) > 0 {
-		emoji = &res.Emoji
-	}
-
 	response.Success(c, response_body.Category{
 		Id:    res.CategoryId,
 		Name:  res.Name,
-		Emoji: emoji,
+		Emoji: res.Emoji,
 	})
 }
 
@@ -150,16 +136,11 @@ func (h *Handler) UpdateCategory(c *gin.Context) {
 		return
 	}
 
-	emoji := ""
-	if body.Emoji != nil {
-		emoji = *body.Emoji
-	}
-
 	res, err := h.service.UpdateCategory(c, &api.UpdateCategoryRequest{
 		UserId:     payload.UserId.String(),
 		CategoryId: c.Param(ParamCategoryId),
 		Name:       body.Name,
-		Emoji:      emoji,
+		Emoji:      body.Emoji,
 	})
 	if err != nil {
 		response.FailGrpc(c, err)

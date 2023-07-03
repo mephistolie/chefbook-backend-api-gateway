@@ -44,6 +44,12 @@ func main() {
 		CategoryService: config.CategoryService{
 			Addr: fs.String("category-addr", "", "category service address"),
 		},
+		RecipeService: config.RecipeService{
+			Addr: fs.String("recipe-addr", "", "recipe service address"),
+		},
+		EncryptionService: config.EncryptionService{
+			Addr: fs.String("encryption-addr", "", "encryption service address"),
+		},
 		ShoppingListService: config.ShoppingListService{
 			Addr: fs.String("shopping-list-addr", "", "shopping list service address"),
 		},

@@ -22,6 +22,8 @@ type Config struct {
 	ProfileService      ProfileService
 	TagService          TagService
 	CategoryService     CategoryService
+	RecipeService       RecipeService
+	EncryptionService   EncryptionService
 	ShoppingListService ShoppingListService
 }
 
@@ -57,6 +59,14 @@ type CategoryService struct {
 	Addr *string
 }
 
+type RecipeService struct {
+	Addr *string
+}
+
+type EncryptionService struct {
+	Addr *string
+}
+
 type ShoppingListService struct {
 	Addr *string
 }
@@ -82,12 +92,18 @@ func (c Config) Print() {
 		"Auth Service Address: %v\n"+
 		"User Service Address: %v\n"+
 		"Profile Service Address: %v\n"+
+		"Tag Service Address: %v\n"+
 		"Category Service Address: %v\n"+
+		"Recipe Service Address: %v\n"+
+		"Encryption Service Address: %v\n"+
 		"Shopping List Service Address: %v\n\n",
 		*c.Environment, *c.Port, *c.LogsPath,
 		*c.Domains.Frontend, *c.Domains.Backend,
 		*c.Limiter.RPS, *c.Limiter.Burst, *c.Limiter.TTL,
 		*c.AuthService.AccessTokenKeyUpdateInterval,
-		*c.AuthService.Addr, *c.UserService.Addr, *c.ProfileService.Addr, *c.CategoryService.Addr, *c.ShoppingListService.Addr,
+		*c.AuthService.Addr, *c.UserService.Addr, *c.ProfileService.Addr,
+		*c.TagService.Addr, *c.CategoryService.Addr, *c.RecipeService.Addr,
+		*c.EncryptionService.Addr,
+		*c.ShoppingListService.Addr,
 	)
 }

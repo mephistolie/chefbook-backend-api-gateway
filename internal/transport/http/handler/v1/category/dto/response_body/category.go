@@ -13,15 +13,10 @@ type Category struct {
 func GetCategories(response *api.GetUserCategoriesResponse) []Category {
 	categories := make([]Category, len(response.Categories))
 	for i, category := range response.Categories {
-		var emoji *string
-		if len(category.Emoji) > 0 {
-			emoji = &category.Emoji
-		}
-
 		categories[i] = Category{
 			Id:    category.CategoryId,
 			Name:  category.Name,
-			Emoji: emoji,
+			Emoji: category.Emoji,
 		}
 	}
 	return categories

@@ -84,6 +84,16 @@ spec:
             - name: CATEGORY_ADDR
               value: "{{ .Values.services.category.name }}.{{ .Values.services.category.namespace | default .Release.Namespace }}.svc.cluster.local:{{ .Values.services.category.port }}"
 
+            # Recipe Microservice
+
+            - name: RECIPE_ADDR
+              value: "{{ .Values.services.recipe.name }}.{{ .Values.services.recipe.namespace | default .Release.Namespace }}.svc.cluster.local:{{ .Values.services.recipe.port }}"
+
+            # Encryption Microservice
+
+            - name: ENCRYPTION_ADDR
+              value: "{{ .Values.services.encryption.name }}.{{ .Values.services.encryption.namespace | default .Release.Namespace }}.svc.cluster.local:{{ .Values.services.encryption.port }}"
+
             # Shopping List Microservice
 
             - name: SHOPPING_LIST_ADDR

@@ -5,7 +5,9 @@ import (
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/service"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/handler/v1/auth"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/handler/v1/category"
+	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/handler/v1/encryption"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/handler/v1/profile"
+	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/handler/v1/recipe"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/handler/v1/shopping_list"
 	tag "github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/handler/v1/tag"
 )
@@ -15,6 +17,8 @@ type Handler struct {
 	Profile      *profile.Handler
 	Tag          *tag.Handler
 	Category     *category.Handler
+	Recipe       *recipe.Handler
+	Encryption   *encryption.Handler
 	ShoppingList *shopping_list.Handler
 }
 
@@ -24,6 +28,8 @@ func NewHandler(services *service.Services, cfg *config.Config) *Handler {
 		Profile:      profile.NewHandler(services.Auth, services.User, services.Profile),
 		Tag:          tag.NewHandler(services.Tag),
 		Category:     category.NewHandler(services.Category),
+		Recipe:       recipe.NewHandler(services.Recipe),
+		Encryption:   encryption.NewHandler(services.Encryption),
 		ShoppingList: shopping_list.NewHandler(services.ShoppingList, cfg.Domains),
 	}
 }

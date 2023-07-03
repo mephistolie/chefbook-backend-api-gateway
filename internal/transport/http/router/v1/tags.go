@@ -7,7 +7,7 @@ import (
 )
 
 func (r *Router) initTagsRoutes(api *gin.RouterGroup) {
-	tagsGroup := api.Group("/tags", r.authMiddleware.AuthorizeUser)
+	tagsGroup := api.Group("/tags")
 	{
 		tagsGroup.GET("", r.handler.Tag.GetTags)
 		tagsGroup.GET(fmt.Sprintf("/:%s", tag.ParamTagId), r.handler.Tag.GetTag)

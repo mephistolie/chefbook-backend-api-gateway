@@ -965,6 +965,523 @@ const docTemplate = `{
                 }
             }
         },
+        "/v1/encryption/recipes/{recipe_id}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Get recipe encrypted key",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "encryption",
+                    "recipe"
+                ],
+                "summary": "Get recipe key",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Recipe ID",
+                        "name": "recipe_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_encryption_dto_response_body.GetRecipeKey"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Set recipe owner key",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "encryption",
+                    "recipe"
+                ],
+                "summary": "Set recipe owner key",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Recipe ID",
+                        "name": "recipe_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Key",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_encryption_dto_request_body.SetRecipeKey"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/encryption/recipes/{recipe_id}/users": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Get recipe key access requests",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "encryption",
+                    "recipe"
+                ],
+                "summary": "Get recipe key requests",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Recipe ID",
+                        "name": "recipe_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_encryption_dto_response_body.RecipeKeyRequest"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Request recipe key access",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "encryption",
+                    "recipe"
+                ],
+                "summary": "Request recipe key access",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Recipe ID",
+                        "name": "recipe_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/encryption/recipes/{recipe_id}/users/{user_id}": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Set recipe user key",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "encryption",
+                    "recipe"
+                ],
+                "summary": "Set recipe user key",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Recipe ID",
+                        "name": "recipe_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Key",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_encryption_dto_request_body.SetRecipeKey"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Delete recipe key",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "encryption",
+                    "recipe"
+                ],
+                "summary": "Delete recipe key",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Recipe ID",
+                        "name": "recipe_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/encryption/vault": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Get profile  encrypted vault key",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "encryption",
+                    "profile"
+                ],
+                "summary": "Get encrypted vault key",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_encryption_dto_response_body.GetEncryptedVaultKey"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Create profile encrypted vault",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "encryption",
+                    "profile"
+                ],
+                "summary": "Create encrypted vault",
+                "parameters": [
+                    {
+                        "description": "Keys",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_encryption_dto_request_body.CreateEncryptedVault"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Delete profile encrypted vault",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "encryption",
+                    "profile"
+                ],
+                "summary": "Delete encrypted vault",
+                "parameters": [
+                    {
+                        "description": "Keys",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_encryption_dto_request_body.CreateEncryptedVault"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/encryption/vault/delete": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Request profile encrypted vault deletion",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "encryption",
+                    "profile"
+                ],
+                "summary": "Request encrypted vault deletion",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/profile": {
             "get": {
                 "security": [
@@ -1491,6 +2008,154 @@ const docTemplate = `{
                 }
             }
         },
+        "/v1/recipes": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Get recipes by query",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recipe"
+                ],
+                "summary": "Get recipes",
+                "parameters": [
+                    {
+                        "description": "Query",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_request_body.GetRecipes"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.GetRecipesResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Create recipe",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recipe"
+                ],
+                "summary": "Create recipe",
+                "parameters": [
+                    {
+                        "description": "Input",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_request_body.RecipeInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.CreateRecipe"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/recipes/book": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Get user recipe book",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recipe"
+                ],
+                "summary": "Get recipe book",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User language code",
+                        "name": "user_language",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.GetRecipeBookResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/recipes/categories": {
             "get": {
                 "security": [
@@ -1739,6 +2404,64 @@ const docTemplate = `{
                 }
             }
         },
+        "/v1/recipes/random": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Get random recipe",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recipe"
+                ],
+                "summary": "Get random recipe",
+                "parameters": [
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "Recipe language codes",
+                        "name": "recipe_language",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "User language code",
+                        "name": "user_language",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.GetRecipeResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/recipes/tags": {
             "get": {
                 "security": [
@@ -1889,6 +2612,450 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_tag_dto_response_body.TagWithGroupName"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/recipes/{recipe_id}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Get recipe",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "shopping-list"
+                ],
+                "summary": "Get recipe",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Recipe ID",
+                        "name": "recipe_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.GetRecipeResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Delete recipe",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recipe"
+                ],
+                "summary": "Delete recipe",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Recipe ID",
+                        "name": "recipe_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Input",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_request_body.RecipeInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.UpdateRecipe"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Delete recipe",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recipe"
+                ],
+                "summary": "Delete recipe",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Recipe ID",
+                        "name": "recipe_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/recipes/{recipe_id}/categories": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Set recipe categories",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recipe"
+                ],
+                "summary": "Set recipe categories",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Recipe ID",
+                        "name": "recipe_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/recipes/{recipe_id}/favourite": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Add recipe to favourite",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recipe"
+                ],
+                "summary": "Add recipe to favourite",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Recipe ID",
+                        "name": "recipe_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Remove recipe from favourite",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recipe"
+                ],
+                "summary": "Remove recipe from favourite",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Recipe ID",
+                        "name": "recipe_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/recipes/{recipe_id}/rate": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Rate recipe",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recipe"
+                ],
+                "summary": "Rate recipe",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Recipe ID",
+                        "name": "recipe_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/recipes/{recipe_id}/save": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Save recipe to user's recipe book",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recipe"
+                ],
+                "summary": "Save recipe",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Recipe ID",
+                        "name": "recipe_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/recipes{recipe_id}/save": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Remove recipe from recipe book",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recipe"
+                ],
+                "summary": "Remove recipe from recipe book",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Recipe ID",
+                        "name": "recipe_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody"
                         }
                     },
                     "400": {
@@ -2114,7 +3281,7 @@ const docTemplate = `{
                 "summary": "Set shopping list",
                 "parameters": [
                     {
-                        "type": "integer",
+                        "type": "string",
                         "description": "Shopping list ID",
                         "name": "shopping_list_id",
                         "in": "path",
@@ -2170,7 +3337,7 @@ const docTemplate = `{
                 "summary": "Delete shared shopping list",
                 "parameters": [
                     {
-                        "type": "integer",
+                        "type": "string",
                         "description": "Shopping list ID",
                         "name": "shopping_list_id",
                         "in": "path",
@@ -2217,7 +3384,7 @@ const docTemplate = `{
                 "summary": "Add to shopping list",
                 "parameters": [
                     {
-                        "type": "integer",
+                        "type": "string",
                         "description": "Shopping list ID",
                         "name": "shopping_list_id",
                         "in": "path",
@@ -2324,7 +3491,7 @@ const docTemplate = `{
                 "summary": "Set shopping list",
                 "parameters": [
                     {
-                        "type": "integer",
+                        "type": "string",
                         "description": "Shopping list ID",
                         "name": "shopping_list_id",
                         "in": "path",
@@ -2344,7 +3511,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_response_body.SetShoppingList"
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody"
                         }
                     },
                     "400": {
@@ -2382,7 +3549,7 @@ const docTemplate = `{
                 "summary": "Get shopping list users",
                 "parameters": [
                     {
-                        "type": "integer",
+                        "type": "string",
                         "description": "Shopping list ID",
                         "name": "shopping_list_id",
                         "in": "path",
@@ -2432,7 +3599,7 @@ const docTemplate = `{
                 "summary": "Join shared shopping list",
                 "parameters": [
                     {
-                        "type": "integer",
+                        "type": "string",
                         "description": "Shopping list ID",
                         "name": "shopping_list_id",
                         "in": "path",
@@ -2488,7 +3655,7 @@ const docTemplate = `{
                 "summary": "Delete user from shared shopping list",
                 "parameters": [
                     {
-                        "type": "integer",
+                        "type": "string",
                         "description": "Shopping list ID",
                         "name": "shopping_list_id",
                         "in": "path",
@@ -2752,6 +3919,61 @@ const docTemplate = `{
                 }
             }
         },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_encryption_dto_request_body.CreateEncryptedVault": {
+            "type": "object",
+            "properties": {
+                "privateKey": {
+                    "type": "string"
+                },
+                "publicKey": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_encryption_dto_request_body.SetRecipeKey": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_encryption_dto_response_body.GetEncryptedVaultKey": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_encryption_dto_response_body.GetRecipeKey": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_encryption_dto_response_body.RecipeKeyRequest": {
+            "type": "object",
+            "properties": {
+                "publicKey": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "userAvatar": {
+                    "type": "string"
+                },
+                "userId": {
+                    "type": "string"
+                },
+                "userName": {
+                    "type": "string"
+                }
+            }
+        },
         "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_request_body.ConfirmAvatarUploading": {
             "type": "object",
             "properties": {
@@ -2855,6 +4077,530 @@ const docTemplate = `{
                 },
                 "deletionTimestamp": {
                     "type": "string"
+                }
+            }
+        },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_common_body.CookingItem": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "pictures": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "recipeId": {
+                    "type": "string"
+                },
+                "text": {
+                    "type": "string"
+                },
+                "time": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_common_body.IngredientItem": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "recipeId": {
+                    "type": "string"
+                },
+                "text": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "unit": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_common_body.Macronutrients": {
+            "type": "object",
+            "properties": {
+                "carbohydrates": {
+                    "type": "integer"
+                },
+                "fats": {
+                    "type": "integer"
+                },
+                "protein": {
+                    "type": "integer"
+                }
+            }
+        },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_request_body.GetRecipes": {
+            "type": "object",
+            "properties": {
+                "authorId": {
+                    "type": "string"
+                },
+                "lastCalories": {
+                    "type": "integer"
+                },
+                "lastCreationTimestamp": {
+                    "type": "string"
+                },
+                "lastRating": {
+                    "type": "number"
+                },
+                "lastRecipeId": {
+                    "type": "string"
+                },
+                "lastTime": {
+                    "type": "integer"
+                },
+                "lastUpdateTimestamp": {
+                    "type": "string"
+                },
+                "lastVotes": {
+                    "type": "integer"
+                },
+                "maxCalories": {
+                    "type": "integer"
+                },
+                "maxRating": {
+                    "type": "integer"
+                },
+                "maxServings": {
+                    "type": "integer"
+                },
+                "maxTime": {
+                    "type": "integer"
+                },
+                "minCalories": {
+                    "type": "integer"
+                },
+                "minRating": {
+                    "type": "integer"
+                },
+                "minServings": {
+                    "type": "integer"
+                },
+                "minTime": {
+                    "type": "integer"
+                },
+                "owned": {
+                    "type": "boolean"
+                },
+                "pageSize": {
+                    "type": "integer"
+                },
+                "recipeLanguages": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "saved": {
+                    "type": "boolean"
+                },
+                "search": {
+                    "type": "string"
+                },
+                "sorting": {
+                    "type": "string"
+                },
+                "userLanguage": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_request_body.RecipeInput": {
+            "type": "object",
+            "required": [
+                "cooking",
+                "ingredients",
+                "name"
+            ],
+            "properties": {
+                "calories": {
+                    "type": "integer"
+                },
+                "cooking": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_common_body.CookingItem"
+                    }
+                },
+                "description": {
+                    "type": "string"
+                },
+                "encrypted": {
+                    "type": "boolean"
+                },
+                "ingredients": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_common_body.IngredientItem"
+                    }
+                },
+                "language": {
+                    "type": "string"
+                },
+                "macronutrients": {
+                    "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_common_body.Macronutrients"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "recipeId": {
+                    "type": "string"
+                },
+                "servings": {
+                    "type": "integer"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "time": {
+                    "type": "integer"
+                },
+                "version": {
+                    "type": "integer"
+                },
+                "visibility": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Category": {
+            "type": "object",
+            "properties": {
+                "emoji": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.CreateRecipe": {
+            "type": "object",
+            "properties": {
+                "recipeId": {
+                    "type": "string"
+                },
+                "version": {
+                    "type": "integer"
+                }
+            }
+        },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.GetRecipeBookResponse": {
+            "type": "object",
+            "properties": {
+                "categories": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Category"
+                    }
+                },
+                "recipes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.RecipeState"
+                    }
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Tag"
+                    }
+                }
+            }
+        },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.GetRecipeResponse": {
+            "type": "object",
+            "properties": {
+                "categories": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Category"
+                    }
+                },
+                "recipe": {
+                    "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Recipe"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Tag"
+                    }
+                }
+            }
+        },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.GetRecipesResponse": {
+            "type": "object",
+            "properties": {
+                "categories": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Category"
+                    }
+                },
+                "recipes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.RecipeInfo"
+                    }
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Tag"
+                    }
+                }
+            }
+        },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Recipe": {
+            "type": "object",
+            "properties": {
+                "calories": {
+                    "type": "integer"
+                },
+                "categories": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "cooking": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_common_body.CookingItem"
+                    }
+                },
+                "creationTimestamp": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "encrypted": {
+                    "type": "boolean"
+                },
+                "favourite": {
+                    "type": "boolean"
+                },
+                "ingredients": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_common_body.IngredientItem"
+                    }
+                },
+                "language": {
+                    "type": "string"
+                },
+                "macronutrients": {
+                    "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_common_body.Macronutrients"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "owned": {
+                    "type": "boolean"
+                },
+                "ownerAvatar": {
+                    "type": "string"
+                },
+                "ownerId": {
+                    "type": "string"
+                },
+                "ownerName": {
+                    "type": "string"
+                },
+                "preview": {
+                    "type": "string"
+                },
+                "rating": {
+                    "type": "number"
+                },
+                "recipeId": {
+                    "type": "string"
+                },
+                "saved": {
+                    "type": "boolean"
+                },
+                "score": {
+                    "type": "integer"
+                },
+                "servings": {
+                    "type": "integer"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "time": {
+                    "type": "integer"
+                },
+                "updateTimestamp": {
+                    "type": "string"
+                },
+                "version": {
+                    "type": "integer"
+                },
+                "visibility": {
+                    "type": "string"
+                },
+                "votes": {
+                    "type": "integer"
+                }
+            }
+        },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.RecipeInfo": {
+            "type": "object",
+            "properties": {
+                "calories": {
+                    "type": "integer"
+                },
+                "categories": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "creationTimestamp": {
+                    "type": "string"
+                },
+                "encrypted": {
+                    "type": "boolean"
+                },
+                "favourite": {
+                    "type": "boolean"
+                },
+                "language": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "owned": {
+                    "type": "boolean"
+                },
+                "ownerAvatar": {
+                    "type": "string"
+                },
+                "ownerId": {
+                    "type": "string"
+                },
+                "ownerName": {
+                    "type": "string"
+                },
+                "preview": {
+                    "type": "string"
+                },
+                "rating": {
+                    "type": "number"
+                },
+                "recipeId": {
+                    "type": "string"
+                },
+                "saved": {
+                    "type": "boolean"
+                },
+                "score": {
+                    "type": "integer"
+                },
+                "servings": {
+                    "type": "integer"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "time": {
+                    "type": "integer"
+                },
+                "updateTimestamp": {
+                    "type": "string"
+                },
+                "version": {
+                    "type": "integer"
+                },
+                "visibility": {
+                    "type": "string"
+                },
+                "votes": {
+                    "type": "integer"
+                }
+            }
+        },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.RecipeState": {
+            "type": "object",
+            "properties": {
+                "categories": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "favourite": {
+                    "type": "boolean"
+                },
+                "ownerAvatar": {
+                    "type": "string"
+                },
+                "ownerName": {
+                    "type": "string"
+                },
+                "preview": {
+                    "type": "string"
+                },
+                "rating": {
+                    "type": "number"
+                },
+                "recipeId": {
+                    "type": "string"
+                },
+                "score": {
+                    "type": "integer"
+                },
+                "version": {
+                    "type": "integer"
+                },
+                "votes": {
+                    "type": "integer"
+                }
+            }
+        },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Tag": {
+            "type": "object",
+            "properties": {
+                "emoji": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.UpdateRecipe": {
+            "type": "object",
+            "properties": {
+                "version": {
+                    "type": "integer"
                 }
             }
         },

@@ -42,20 +42,11 @@ func GetTag(tag *api.Tag, group *string) TagWithGroupName {
 }
 
 func newTag(tag *api.Tag) Tag {
-	var emoji *string
-	if len(tag.Emoji) > 0 {
-		emoji = &tag.Emoji
-	}
-	var groupId *string
-	if len(tag.GroupId) > 0 {
-		groupId = &tag.GroupId
-	}
-
 	return Tag{
 		Id:      tag.TagId,
 		Name:    tag.Name,
-		Emoji:   emoji,
-		GroupId: groupId,
+		Emoji:   tag.Emoji,
+		GroupId: tag.GroupId,
 	}
 }
 
