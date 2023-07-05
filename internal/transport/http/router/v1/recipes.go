@@ -23,6 +23,9 @@ func (r *Router) initBaseRecipesRoutes(recipesGroup *gin.RouterGroup) {
 	recipesGroup.PUT(fmt.Sprintf("/:%s", recipe.ParamRecipeId), r.handler.Recipe.UpdateRecipe)
 	recipesGroup.DELETE(fmt.Sprintf("/:%s", recipe.ParamRecipeId), r.handler.Recipe.DeleteRecipe)
 
+	recipesGroup.POST(fmt.Sprintf("/:%s/pictures", recipe.ParamRecipeId), r.handler.Recipe.GenerateRecipePicturesUploadLinks)
+	recipesGroup.PUT(fmt.Sprintf("/:%s/pictures", recipe.ParamRecipeId), r.handler.Recipe.SetRecipePictures)
+
 	recipesGroup.POST(fmt.Sprintf("/:%s/rate", recipe.ParamRecipeId), r.handler.Recipe.RateRecipe)
 	recipesGroup.POST(fmt.Sprintf("/:%s/save", recipe.ParamRecipeId), r.handler.Recipe.SaveRecipe)
 	recipesGroup.DELETE(fmt.Sprintf("/:%s/save", recipe.ParamRecipeId), r.handler.Recipe.RemoveRecipeFromRecipeBook)
