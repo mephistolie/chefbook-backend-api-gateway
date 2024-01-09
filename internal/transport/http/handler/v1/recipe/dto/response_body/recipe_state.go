@@ -1,22 +1,20 @@
 package response_body
 
 import (
+	"github.com/mephistolie/chefbook-backend-common/log"
 	api "github.com/mephistolie/chefbook-backend-recipe/api/proto/implementation/v1"
 )
 
 type RecipeState struct {
-	Id string `json:"recipeId"`
+	Id string `json:"id"`
 
-	OwnerName   *string `json:"ownerName,omitempty"`
-	OwnerAvatar *string `json:"ownerAvatar,omitempty"`
-
-	Preview *string `json:"preview,omitempty"`
+	Owner *ProfileInfo `json:"owner,omitempty"`
 
 	Version int32 `json:"version"`
 
-	Rating float32 `json:"rating"`
-	Score  *int32  `json:"score,omitempty"`
-	Votes  int32   `json:"votes"`
+	Translations []string `json:"translations"`
+
+	Rating Rating `json:"rating"`
 
 	Categories  []string `json:"categories,omitempty"`
 	IsFavourite bool     `json:"favourite"`
@@ -37,6 +35,7 @@ func GetRecipeBook(response *api.GetRecipeBookResponse) GetRecipeBookResponse {
 }
 
 func newRecipeStates(response []*api.RecipeState) []RecipeState {
+	log.Debugf("got %d recipes by request", len(response))
 	recipes := make([]RecipeState, len(response))
 	for id, recipe := range response {
 		recipes[id] = newRecipeState(recipe)
@@ -45,17 +44,28 @@ func newRecipeStates(response []*api.RecipeState) []RecipeState {
 }
 
 func newRecipeState(response *api.RecipeState) RecipeState {
+	var owner *ProfileInfo
+	if response.OwnerName != nil || response.OwnerAvatar != nil {
+		owner = &ProfileInfo{
+			Name:   response.OwnerName,
+			Avatar: response.OwnerAvatar,
+		}
+	}
+
 	return RecipeState{
 		Id: response.RecipeId,
 
-		OwnerName:   response.OwnerName,
-		OwnerAvatar: response.OwnerAvatar,
+		Owner: owner,
 
 		Version: response.Version,
 
-		Rating: response.Rating,
-		Score:  response.Score,
-		Votes:  response.Votes,
+		Translations: response.Translations,
+
+		Rating: Rating{
+			Index: response.Rating,
+			Score: response.Score,
+			Votes: response.Votes,
+		},
 
 		Categories:  response.Categories,
 		IsFavourite: response.IsFavourite,

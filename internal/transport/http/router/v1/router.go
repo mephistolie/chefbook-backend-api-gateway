@@ -22,6 +22,7 @@ func (r *Router) Init(api *gin.RouterGroup) {
 	routerGroup := api.Group("/v1")
 	{
 		r.initAuthRoutes(routerGroup)
+		r.initSubscriptionRoutes(routerGroup)
 		r.initProfileRoutes(routerGroup)
 		r.initRecipesRoutes(routerGroup)
 		r.initEncryptionRoutes(routerGroup)

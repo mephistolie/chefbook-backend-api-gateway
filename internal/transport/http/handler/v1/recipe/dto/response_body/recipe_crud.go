@@ -12,29 +12,25 @@ type CreateRecipe struct {
 }
 
 type Recipe struct {
-	Id   string `json:"recipeId"`
+	Id   string `json:"id"`
 	Name string `json:"name"`
 
-	OwnerId     string  `json:"ownerId"`
-	OwnerName   *string `json:"ownerName,omitempty"`
-	OwnerAvatar *string `json:"ownerAvatar,omitempty"`
+	Owner Profile `json:"owner"`
 
 	IsOwned     bool   `json:"owned"`
 	IsSaved     bool   `json:"saved"`
 	Visibility  string `json:"visibility"`
 	IsEncrypted bool   `json:"encrypted"`
 
-	Language    string  `json:"language"`
-	Description *string `json:"description,omitempty"`
-	Preview     *string `json:"preview,omitempty"`
+	Language     string                         `json:"language"`
+	Translations map[string][]RecipeTranslation `json:"translations"`
+	Description  *string                        `json:"description,omitempty"`
 
 	CreationTimestamp time.Time `json:"creationTimestamp"`
 	UpdateTimestamp   time.Time `json:"updateTimestamp"`
 	Version           int32     `json:"version"`
 
-	Rating float32 `json:"rating"`
-	Score  *int32  `json:"score,omitempty"`
-	Votes  int32   `json:"votes"`
+	Rating Rating `json:"rating"`
 
 	Tags        []string `json:"tags"`
 	Categories  []string `json:"categories,omitempty"`
@@ -48,6 +44,7 @@ type Recipe struct {
 
 	Ingredients []common_body.IngredientItem `json:"ingredients"`
 	Cooking     []common_body.CookingItem    `json:"cooking"`
+	Pictures    *common_body.RecipePictures  `json:"pictures"`
 }
 
 type GetRecipeResponse struct {
@@ -69,26 +66,30 @@ func newRecipe(response *api.Recipe) Recipe {
 		Id:   response.RecipeId,
 		Name: response.Name,
 
-		OwnerId:     response.OwnerId,
-		OwnerName:   response.OwnerName,
-		OwnerAvatar: response.OwnerAvatar,
+		Owner: Profile{
+			Id:     response.OwnerId,
+			Name:   response.OwnerName,
+			Avatar: response.OwnerAvatar,
+		},
 
 		IsOwned:     response.IsOwned,
 		IsSaved:     response.IsSaved,
 		Visibility:  response.Visibility,
 		IsEncrypted: response.IsEncrypted,
 
-		Language:    response.Language,
-		Description: response.Description,
-		Preview:     response.Preview,
+		Language:     response.Language,
+		Translations: newRecipeTranslations(response.Translations),
+		Description:  response.Description,
 
 		CreationTimestamp: response.CreationTimestamp.AsTime(),
 		UpdateTimestamp:   response.UpdateTimestamp.AsTime(),
 		Version:           response.Version,
 
-		Rating: response.Rating,
-		Score:  response.Score,
-		Votes:  response.Votes,
+		Rating: Rating{
+			Index: response.Rating,
+			Score: response.Score,
+			Votes: response.Votes,
+		},
 
 		Tags:        response.Tags,
 		Categories:  response.Categories,
@@ -102,6 +103,7 @@ func newRecipe(response *api.Recipe) Recipe {
 
 		Ingredients: newIngredients(response.Ingredients),
 		Cooking:     newCooking(response.Cooking),
+		Pictures:    newPictures(response.Pictures),
 	}
 }
 

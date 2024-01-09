@@ -13,8 +13,9 @@ require (
 	github.com/mephistolie/chefbook-backend-common/tokens v0.9.0
 	github.com/mephistolie/chefbook-backend-encryption/api v1.0.3
 	github.com/mephistolie/chefbook-backend-profile/api v1.2.3
-	github.com/mephistolie/chefbook-backend-recipe/api v1.2.3
+	github.com/mephistolie/chefbook-backend-recipe/api v1.4.3
 	github.com/mephistolie/chefbook-backend-shopping-list/api/v2 v2.1.8
+	github.com/mephistolie/chefbook-backend-subscription/api v1.0.0
 	github.com/mephistolie/chefbook-backend-tag/api v1.1.0
 	github.com/mephistolie/chefbook-backend-user/api v1.3.0
 	github.com/peterbourgon/ff/v3 v3.3.0

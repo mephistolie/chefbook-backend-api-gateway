@@ -10,8 +10,7 @@ import (
 )
 
 const (
-	queryRecipeLanguages = "recipe_language"
-	queryUserLanguage    = "user_language"
+	queryLanguage = "language"
 )
 
 // GetRecipes Swagger Documentation
@@ -56,8 +55,8 @@ func (h *Handler) GetRecipes(c *gin.Context) {
 //	@Security		ApiKeyAuth
 //	@Accept			json
 //	@Produce		json
-//	@Param			recipe_language		query		[]string	false	"Recipe language codes"
-//	@Param			user_language		query		string		false	"User language code"
+//	@Param			recipeLanguage		query		[]string	false	"Recipe language codes"
+//	@Param			userLanguage		query		string		false	"User language code"
 //	@Success		200					{object}	response_body.GetRecipeResponse
 //	@Failure		400					{object}	fail.Response
 //	@Failure		500					{object}	fail.Response
@@ -69,14 +68,14 @@ func (h *Handler) GetRandomRecipe(c *gin.Context) {
 	}
 
 	var languagePtr *string
-	language := c.Query(queryUserLanguage)
+	language := c.Query(queryLanguage)
 	if len(language) > 0 {
 		languagePtr = &language
 	}
 
 	res, err := h.service.GetRandomRecipe(c, &api.GetRandomRecipeRequest{
 		UserId:          payload.UserId.String(),
-		RecipeLanguages: c.QueryArray(queryRecipeLanguages),
+		RecipeLanguages: c.QueryArray(queryLanguage),
 		UserLanguage:    languagePtr,
 	})
 	if err != nil {
@@ -107,7 +106,7 @@ func (h *Handler) GetRecipeBook(c *gin.Context) {
 	}
 
 	var languagePtr *string
-	language := c.Query(queryUserLanguage)
+	language := c.Query(queryLanguage)
 	if len(language) > 0 {
 		languagePtr = &language
 	}

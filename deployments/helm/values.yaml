@@ -34,6 +34,10 @@ services:
     name: chefbook-backend-user-service
     namespace: ""
     port: 8080
+  subscription:
+    name: chefbook-backend-subscription-service
+    namespace: ""
+    port: 8080
   profile:
     name: chefbook-backend-user-service
     namespace: ""

@@ -32,4 +32,7 @@ func (r *Router) initBaseRecipesRoutes(recipesGroup *gin.RouterGroup) {
 	recipesGroup.POST(fmt.Sprintf("/:%s/favourite", recipe.ParamRecipeId), r.handler.Recipe.AddRecipeToFavourite)
 	recipesGroup.DELETE(fmt.Sprintf("/:%s/favourite", recipe.ParamRecipeId), r.handler.Recipe.RemoveRecipeFromFavourite)
 	recipesGroup.PUT(fmt.Sprintf("/:%s/categories", recipe.ParamRecipeId), r.handler.Recipe.SetRecipeCategories)
+
+	recipesGroup.POST(fmt.Sprintf("/:%s/translations", recipe.ParamRecipeId), r.handler.Recipe.TranslateRecipe)
+	recipesGroup.DELETE(fmt.Sprintf("/:%s/translations/:%s", recipe.ParamRecipeId, recipe.ParamLanguageCode), r.handler.Recipe.DeleteRecipeTranslation)
 }

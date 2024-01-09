@@ -35,6 +35,9 @@ func main() {
 		UserService: config.UserService{
 			Addr: fs.String("user-addr", "", "user service address"),
 		},
+		SubscriptionService: config.SubscriptionService{
+			Addr: fs.String("subscription-addr", "", "subscription service address"),
+		},
 		ProfileService: config.ProfileService{
 			Addr: fs.String("profile-addr", "", "profile service address"),
 		},

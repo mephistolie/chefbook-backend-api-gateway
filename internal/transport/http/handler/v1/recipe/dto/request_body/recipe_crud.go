@@ -6,13 +6,8 @@ import (
 	api "github.com/mephistolie/chefbook-backend-recipe/api/proto/implementation/v1"
 )
 
-type GetRecipe struct {
-	UserLanguage *string `json:"userLanguage,omitempty"`
-	Translate    bool    `json:"translate,omitempty"`
-}
-
 type RecipeInput struct {
-	Id   *string `json:"recipeId"`
+	Id   *string `json:"id"`
 	Name string  `json:"name" binding:"required"`
 
 	Visibility  string `json:"visibility,omitempty"`

@@ -5,7 +5,8 @@ import (
 )
 
 const (
-	ParamRecipeId = "recipe_id"
+	ParamRecipeId     = "recipe_id"
+	ParamLanguageCode = "language_code"
 )
 
 type Handler struct {

@@ -6,28 +6,25 @@ import (
 )
 
 type RecipeInfo struct {
-	Id   string `json:"recipeId"`
+	Id   string `json:"id"`
 	Name string `json:"name"`
 
-	OwnerId     string  `json:"ownerId"`
-	OwnerName   *string `json:"ownerName,omitempty"`
-	OwnerAvatar *string `json:"ownerAvatar,omitempty"`
+	Owner Profile `json:"owner"`
 
 	IsOwned     bool   `json:"owned"`
 	IsSaved     bool   `json:"saved"`
 	Visibility  string `json:"visibility"`
 	IsEncrypted bool   `json:"encrypted,omitempty"`
 
-	Language string  `json:"language"`
-	Preview  *string `json:"preview,omitempty"`
+	Language     string   `json:"language"`
+	Translations []string `json:"translations"`
+	Preview      *string  `json:"preview,omitempty"`
 
 	CreationTimestamp time.Time `json:"creationTimestamp"`
 	UpdateTimestamp   time.Time `json:"updateTimestamp"`
 	Version           int32     `json:"version"`
 
-	Rating float32 `json:"rating"`
-	Score  *int32  `json:"score,omitempty"`
-	Votes  int32   `json:"votes"`
+	Rating Rating `json:"rating"`
 
 	Tags        []string `json:"tags,omitempty"`
 	Categories  []string `json:"categories,omitempty"`
@@ -66,25 +63,30 @@ func newRecipeInfo(response *api.RecipeInfo) RecipeInfo {
 		Id:   response.RecipeId,
 		Name: response.Name,
 
-		OwnerId:     response.OwnerId,
-		OwnerName:   response.OwnerName,
-		OwnerAvatar: response.OwnerAvatar,
+		Owner: Profile{
+			Id:     response.OwnerId,
+			Name:   response.OwnerName,
+			Avatar: response.OwnerAvatar,
+		},
 
 		IsOwned:     response.IsOwned,
 		IsSaved:     response.IsSaved,
 		Visibility:  response.Visibility,
 		IsEncrypted: response.IsEncrypted,
 
-		Language: response.Language,
-		Preview:  response.Preview,
+		Language:     response.Language,
+		Translations: response.Translations,
+		Preview:      response.Preview,
 
 		CreationTimestamp: response.CreationTimestamp.AsTime(),
 		UpdateTimestamp:   response.UpdateTimestamp.AsTime(),
 		Version:           response.Version,
 
-		Rating: response.Rating,
-		Score:  response.Score,
-		Votes:  response.Votes,
+		Rating: Rating{
+			Index: response.Rating,
+			Score: response.Score,
+			Votes: response.Votes,
+		},
 
 		Tags:        response.Tags,
 		Categories:  response.Categories,

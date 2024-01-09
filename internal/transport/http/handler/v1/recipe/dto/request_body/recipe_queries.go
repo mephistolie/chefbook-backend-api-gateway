@@ -10,7 +10,8 @@ import (
 type GetRecipes struct {
 	PageSize *int32 `json:"pageSize,omitempty"`
 
-	AuthorId *string `json:"authorId,omitempty"`
+	RecipeIds *[]string `json:"recipeIds,omitempty"`
+	AuthorId  *string   `json:"authorId,omitempty"`
 
 	Owned bool `json:"owned,omitempty"`
 	Saved bool `json:"saved,omitempty"`

@@ -55,6 +55,8 @@ func (h *Handler) CreateRecipe(c *gin.Context) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			recipe_id				path		string	true	"Recipe ID"
+//	@Param			userLanguage			query		string	false	"User language code"
+//	@Param			translated				query		boolean	false	"Translate recipe"
 //	@Success		200						{object}	response_body.GetRecipeResponse
 //	@Failure		400						{object}	fail.Response
 //	@Failure		500						{object}	fail.Response
@@ -65,17 +67,21 @@ func (h *Handler) GetRecipe(c *gin.Context) {
 		return
 	}
 
-	var body request_body.GetRecipe
-	if err = c.BindJSON(&body); err != nil {
-		response.Fail(c, response.InvalidBody)
-		return
+	var languagePtr *string
+	if language := c.Query(queryLanguage); len(language) > 0 {
+		languagePtr = &language
+	}
+	var translatorIdPtr *string
+	if translatorId := c.Query(queryTranslatorId); len(translatorId) > 0 {
+		translatorIdPtr = &translatorId
 	}
 
 	res, err := h.service.GetRecipe(c, &api.GetRecipeRequest{
 		RecipeId:         c.Param(ParamRecipeId),
 		UserId:           payload.UserId.String(),
-		UserLanguage:     body.UserLanguage,
-		Translate:        body.Translate,
+		Language:         languagePtr,
+		TranslatorId:     translatorIdPtr,
+		Translate:        c.Query(queryTranslated) == "true",
 		SubscriptionPlan: payload.SubscriptionPlan,
 	})
 	if err != nil {
@@ -88,8 +94,8 @@ func (h *Handler) GetRecipe(c *gin.Context) {
 
 // UpdateRecipe Swagger Documentation
 //
-//	@Summary		Delete recipe
-//	@Description	Delete recipe
+//	@Summary		Update recipe
+//	@Description	Update recipe
 //	@Tags			recipe
 //	@Security		ApiKeyAuth
 //	@Accept			json

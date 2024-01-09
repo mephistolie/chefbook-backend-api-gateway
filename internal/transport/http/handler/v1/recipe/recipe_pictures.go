@@ -17,7 +17,7 @@ import (
 //	@Security		ApiKeyAuth
 //	@Accept			json
 //	@Produce		json
-//	@Param			recipe_id				path		string	true	"Recipe ID"
+//	@Param			recipe_id	path		string											true	"Recipe ID"
 //	@Param			input		body		request_body.GenerateRecipePicturesUploadLinks	true	"Input"
 //	@Success		200			{object}	[]response_body.RecipePictureUpload
 //	@Failure		400			{object}	fail.Response
@@ -49,10 +49,10 @@ func (h *Handler) GenerateRecipePicturesUploadLinks(c *gin.Context) {
 	uploads := make([]response_body.RecipePictureUpload, len(res.Links))
 	for i, upload := range res.Links {
 		uploads[i] = response_body.RecipePictureUpload{
-			PictureId: upload.PictureId,
-			Link:      upload.Link,
-			FormData:  upload.FormData,
-			MaxSize:   upload.MaxSize,
+			PictureLink: upload.PictureLink,
+			UploadLink:  upload.UploadLink,
+			FormData:    upload.FormData,
+			MaxSize:     upload.MaxSize,
 		}
 	}
 
@@ -67,7 +67,7 @@ func (h *Handler) GenerateRecipePicturesUploadLinks(c *gin.Context) {
 //	@Security		ApiKeyAuth
 //	@Accept			json
 //	@Produce		json
-//	@Param			recipe_id				path		string	true	"Recipe ID"
+//	@Param			recipe_id	path		string							true	"Recipe ID"
 //	@Param			input		body		request_body.SetRecipePictures	true	"Pictures"
 //	@Success		200			{object}	response_body.SetRecipePictures
 //	@Failure		400			{object}	fail.Response

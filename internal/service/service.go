@@ -7,6 +7,7 @@ import (
 type Services struct {
 	Auth         *Auth
 	User         *User
+	Subscription *Subscription
 	Profile      *Profile
 	Tag          *Tag
 	Category     *Category
@@ -21,6 +22,10 @@ func NewServices(cfg *config.Config) (*Services, error) {
 		return nil, err
 	}
 	userService, err := NewUser(*cfg.UserService.Addr)
+	if err != nil {
+		return nil, err
+	}
+	subscriptionService, err := NewSubscription(*cfg.SubscriptionService.Addr)
 	if err != nil {
 		return nil, err
 	}
@@ -52,8 +57,9 @@ func NewServices(cfg *config.Config) (*Services, error) {
 	return &Services{
 		Auth:         authService,
 		User:         userService,
-		Tag:          tagService,
+		Subscription: subscriptionService,
 		Profile:      profileService,
+		Tag:          tagService,
 		Category:     categoryService,
 		Recipe:       recipeService,
 		Encryption:   encryptionService,
@@ -64,6 +70,7 @@ func NewServices(cfg *config.Config) (*Services, error) {
 func (s *Services) Stop() error {
 	_ = s.Auth.Conn.Close()
 	_ = s.User.Conn.Close()
+	_ = s.Subscription.Conn.Close()
 	_ = s.Profile.Conn.Close()
 	_ = s.Tag.Conn.Close()
 	_ = s.Category.Conn.Close()

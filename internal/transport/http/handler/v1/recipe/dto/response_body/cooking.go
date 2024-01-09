@@ -14,16 +14,11 @@ func newCooking(response []*api.CookingItem) []common_body.CookingItem {
 }
 
 func newCookingItem(response *api.CookingItem) common_body.CookingItem {
-	var pictures *[]string
-	if len(response.Pictures) > 0 {
-		pictures = &response.Pictures
-	}
 	return common_body.CookingItem{
 		Id:       response.Id,
 		Text:     response.Text,
 		Type:     response.Type,
 		Time:     response.Time,
-		Pictures: pictures,
 		RecipeId: response.RecipeId,
 	}
 }
