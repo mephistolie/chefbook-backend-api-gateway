@@ -339,6 +339,10 @@ definitions:
         type: boolean
       pageSize:
         type: integer
+      recipeIds:
+        items:
+          type: string
+        type: array
       recipeLanguages:
         items:
           type: string
@@ -351,6 +355,15 @@ definitions:
         type: string
       userLanguage:
         type: string
+    type: object
+  ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_request_body.IngredientTranslation
+  : properties:
+      text:
+        type: string
+      unit:
+        type: string
+    required:
+    - text
     type: object
   github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_request_body.RecipeInput:
     properties:
@@ -395,16 +408,32 @@ definitions:
     type: object
   github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_request_body.SetRecipePictures:
     properties:
-      cooking:
-        additionalProperties:
-          items:
-            type: string
-          type: array
-        type: object
-      preview:
-        type: string
+      pictures:
+        $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_common_body.RecipePictures'
       version:
         type: integer
+    type: object
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_request_body.TranslateRecipe:
+    properties:
+      cooking:
+        additionalProperties:
+          type: string
+        type: object
+      description:
+        type: string
+      ingredients:
+        additionalProperties:
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_request_body.IngredientTranslation'
+        type: object
+      language:
+        type: string
+      name:
+        type: string
+    required:
+    - cooking
+    - ingredients
+    - language
+    - name
     type: object
   github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Category:
     properties:
@@ -428,6 +457,8 @@ definitions:
         items:
           $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Category'
         type: array
+      isEncryptedVaultEnabled:
+        type: boolean
       recipes:
         items:
           $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.RecipeState'
@@ -464,15 +495,6 @@ definitions:
         additionalProperties:
           $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Tag'
         type: object
-    type: object
-  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Owner:
-    properties:
-      avatar:
-        type: string
-      id:
-        type: string
-      name:
-        type: string
     type: object
   github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.OwnerInfo:
     properties:
@@ -525,7 +547,7 @@ definitions:
       owned:
         type: boolean
       owner:
-        $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Owner'
+        $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.ProfileInfo'
       pictures:
         $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_common_body.RecipePictures'
       rating:
@@ -540,6 +562,12 @@ definitions:
         type: array
       time:
         type: integer
+      translations:
+        additionalProperties:
+          items:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.RecipeTranslation'
+          type: array
+        type: object
       updateTimestamp:
         type: string
       version:
@@ -570,7 +598,7 @@ definitions:
       owned:
         type: boolean
       owner:
-        $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Owner'
+        $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.ProfileInfo'
       preview:
         type: string
       rating:
@@ -585,6 +613,10 @@ definitions:
         type: array
       time:
         type: integer
+      translations:
+        items:
+          type: string
+        type: array
       updateTimestamp:
         type: string
       version:
@@ -619,11 +651,22 @@ definitions:
         $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.OwnerInfo'
       rating:
         $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Rating'
+      translations:
+        items:
+          type: string
+        type: array
       version:
         type: integer
     type: object
+  ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.RecipeTranslation
+  : properties:
+      author:
+        $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.ProfileInfo'
+    type: object
   ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.SetRecipePictures
   : properties:
+      pictures:
+        $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_common_body.RecipePictures'
       version:
         type: integer
     type: object
@@ -655,8 +698,6 @@ definitions:
         type: boolean
       recipeId:
         type: string
-      recipeName:
-        type: string
     required:
     - name
     - purchaseId
@@ -666,16 +707,6 @@ definitions:
       name:
         type: string
       shoppingListId:
-        type: string
-    type: object
-  ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_request_body.DeleteUserFromShoppingList
-  : properties:
-      userId:
-        type: string
-    type: object
-  ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_request_body.GetShoppingList
-  : properties:
-      key:
         type: string
     type: object
   ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_request_body.JoinShoppingList
@@ -691,17 +722,13 @@ definitions:
         items:
           $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_common_body.Purchase'
         type: array
-      recipeNames:
-        additionalProperties:
-          type: string
-        type: object
     type: object
   ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_response_body.GetShoppingListBody
   : properties:
       name:
         type: string
-      ownerId:
-        type: string
+      owner:
+        $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.ProfileInfo'
       purchases:
         items:
           $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_common_body.Purchase'
@@ -733,12 +760,14 @@ definitions:
   : properties:
       name:
         type: string
-      ownerId:
-        type: string
+      owner:
+        $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.ProfileInfo'
       shoppingListId:
         type: string
       type:
         type: string
+      version:
+        type: integer
     type: object
   ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_subscription_dto_request_body.ConfirmGoogleSubscription
   : properties:
@@ -803,6 +832,15 @@ definitions:
       message:
         type: string
     type: object
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.ProfileInfo:
+    properties:
+      avatar:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+    type: object
 info:
   contact: {}
 paths:
@@ -837,7 +875,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/fail.Response'
-      summary: Activate Profile
+      summary: Activate ProfileInfo
       tags:
       - auth
   /v1/auth/google:
@@ -1031,7 +1069,7 @@ paths:
       - application/json
       description: Request password reset
       parameters:
-      - description: Profile identifier
+      - description: ProfileInfo identifier
         in: body
         name: input
         required: true
@@ -1948,7 +1986,7 @@ paths:
       - application/json
       description: Request profile deletion
       parameters:
-      - description: Profile password
+      - description: ProfileInfo password
         in: body
         name: input
         required: true
@@ -2449,6 +2487,78 @@ paths:
       summary: Save recipe
       tags:
       - recipe
+  /v1/recipes/{recipe_id}/translations:
+    delete:
+      consumes:
+      - application/json
+      description: Delete recipe translation
+      parameters:
+      - description: Recipe ID
+        in: path
+        name: recipe_id
+        required: true
+        type: string
+      - description: Recipe ID
+        in: path
+        name: language_code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete recipe translation
+      tags:
+      - recipe
+    post:
+      consumes:
+      - application/json
+      description: Translate recipe
+      parameters:
+      - description: Recipe ID
+        in: path
+        name: recipe_id
+        required: true
+        type: string
+      - description: Input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_request_body.TranslateRecipe'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Translate recipe
+      tags:
+      - recipe
   /v1/recipes/book:
     get:
       consumes:
@@ -2912,12 +3022,6 @@ paths:
         name: shopping_list_id
         required: true
         type: string
-      - description: Key
-        in: body
-        name: input
-        required: true
-        schema:
-          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_request_body.GetShoppingList'
       produces:
       - application/json
       responses:
@@ -3079,42 +3183,6 @@ paths:
       tags:
       - shopping-list
   /v1/shopping-lists/{shopping_list_id}/users:
-    delete:
-      consumes:
-      - application/json
-      description: Delete user from shared shopping list
-      parameters:
-      - description: Shopping list ID
-        in: path
-        name: shopping_list_id
-        required: true
-        type: string
-      - description: User ID
-        in: body
-        name: input
-        required: true
-        schema:
-          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_request_body.DeleteUserFromShoppingList'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/fail.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/fail.Response'
-      security:
-      - ApiKeyAuth: []
-      summary: Delete user from shared shopping list
-      tags:
-      - shopping-list
     get:
       consumes:
       - application/json
@@ -3132,7 +3200,7 @@ paths:
           description: OK
           schema:
             items:
-              type: string
+              $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.ProfileInfo'
             type: array
         "400":
           description: Bad Request
@@ -3181,6 +3249,38 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Join shared shopping list
+      tags:
+      - shopping-list
+  /v1/shopping-lists/{shopping_list_id}/users/{user_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete user from shared shopping list
+      parameters:
+      - description: Shopping list ID
+        in: path
+        name: shopping_list_id
+        required: true
+        type: string
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete user from shared shopping list
       tags:
       - shopping-list
   /v1/shopping-lists/personal:

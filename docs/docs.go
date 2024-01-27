@@ -28,7 +28,7 @@ const docTemplate = `{
                 "tags": [
                     "auth"
                 ],
-                "summary": "Activate Profile",
+                "summary": "Activate ProfileInfo",
                 "parameters": [
                     {
                         "type": "string",
@@ -370,7 +370,7 @@ const docTemplate = `{
                 "summary": "Request Password Reset",
                 "parameters": [
                     {
-                        "description": "Profile identifier",
+                        "description": "ProfileInfo identifier",
                         "name": "input",
                         "in": "body",
                         "required": true,
@@ -1753,7 +1753,7 @@ const docTemplate = `{
                 "summary": "Delete profile",
                 "parameters": [
                     {
-                        "description": "Profile password",
+                        "description": "ProfileInfo password",
                         "name": "input",
                         "in": "body",
                         "required": true,
@@ -3094,6 +3094,118 @@ const docTemplate = `{
                 }
             }
         },
+        "/v1/recipes/{recipe_id}/translations": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Translate recipe",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recipe"
+                ],
+                "summary": "Translate recipe",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Recipe ID",
+                        "name": "recipe_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Input",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_request_body.TranslateRecipe"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Delete recipe translation",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recipe"
+                ],
+                "summary": "Delete recipe translation",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Recipe ID",
+                        "name": "recipe_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Recipe ID",
+                        "name": "language_code",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/recipes{recipe_id}/save": {
             "delete": {
                 "security": [
@@ -3300,15 +3412,6 @@ const docTemplate = `{
                         "name": "shopping_list_id",
                         "in": "path",
                         "required": true
-                    },
-                    {
-                        "description": "Key",
-                        "name": "input",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_request_body.GetShoppingList"
-                        }
                     }
                 ],
                 "responses": {
@@ -3632,7 +3735,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "type": "string"
+                                "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.ProfileInfo"
                             }
                         }
                     },
@@ -3705,7 +3808,9 @@ const docTemplate = `{
                         }
                     }
                 }
-            },
+            }
+        },
+        "/v1/shopping-lists/{shopping_list_id}/users/{user_id}": {
             "delete": {
                 "security": [
                     {
@@ -3732,22 +3837,14 @@ const docTemplate = `{
                         "required": true
                     },
                     {
+                        "type": "string",
                         "description": "User ID",
-                        "name": "input",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_request_body.DeleteUserFromShoppingList"
-                        }
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody"
-                        }
-                    },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -4386,6 +4483,12 @@ const docTemplate = `{
                 "pageSize": {
                     "type": "integer"
                 },
+                "recipeIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
                 "recipeLanguages": {
                     "type": "array",
                     "items": {
@@ -4402,6 +4505,20 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "userLanguage": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_request_body.IngredientTranslation": {
+            "type": "object",
+            "required": [
+                "text"
+            ],
+            "properties": {
+                "text": {
+                    "type": "string"
+                },
+                "unit": {
                     "type": "string"
                 }
             }
@@ -4470,20 +4587,43 @@ const docTemplate = `{
         "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_request_body.SetRecipePictures": {
             "type": "object",
             "properties": {
-                "cooking": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    }
-                },
-                "preview": {
-                    "type": "string"
+                "pictures": {
+                    "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_common_body.RecipePictures"
                 },
                 "version": {
                     "type": "integer"
+                }
+            }
+        },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_request_body.TranslateRecipe": {
+            "type": "object",
+            "required": [
+                "cooking",
+                "ingredients",
+                "language",
+                "name"
+            ],
+            "properties": {
+                "cooking": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "description": {
+                    "type": "string"
+                },
+                "ingredients": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_request_body.IngredientTranslation"
+                    }
+                },
+                "language": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
                 }
             }
         },
@@ -4520,6 +4660,9 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Category"
                     }
+                },
+                "isEncryptedVaultEnabled": {
+                    "type": "boolean"
                 },
                 "recipes": {
                     "type": "array",
@@ -4575,20 +4718,6 @@ const docTemplate = `{
                     "additionalProperties": {
                         "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Tag"
                     }
-                }
-            }
-        },
-        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Owner": {
-            "type": "object",
-            "properties": {
-                "avatar": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
                 }
             }
         },
@@ -4669,7 +4798,7 @@ const docTemplate = `{
                     "type": "boolean"
                 },
                 "owner": {
-                    "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Owner"
+                    "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.ProfileInfo"
                 },
                 "pictures": {
                     "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_common_body.RecipePictures"
@@ -4691,6 +4820,15 @@ const docTemplate = `{
                 },
                 "time": {
                     "type": "integer"
+                },
+                "translations": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.RecipeTranslation"
+                        }
+                    }
                 },
                 "updateTimestamp": {
                     "type": "string"
@@ -4737,7 +4875,7 @@ const docTemplate = `{
                     "type": "boolean"
                 },
                 "owner": {
-                    "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Owner"
+                    "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.ProfileInfo"
                 },
                 "preview": {
                     "type": "string"
@@ -4759,6 +4897,12 @@ const docTemplate = `{
                 },
                 "time": {
                     "type": "integer"
+                },
+                "translations": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "updateTimestamp": {
                     "type": "string"
@@ -4812,14 +4956,31 @@ const docTemplate = `{
                 "rating": {
                     "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Rating"
                 },
+                "translations": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
                 "version": {
                     "type": "integer"
+                }
+            }
+        },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.RecipeTranslation": {
+            "type": "object",
+            "properties": {
+                "author": {
+                    "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.ProfileInfo"
                 }
             }
         },
         "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.SetRecipePictures": {
             "type": "object",
             "properties": {
+                "pictures": {
+                    "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_common_body.RecipePictures"
+                },
                 "version": {
                     "type": "integer"
                 }
@@ -4871,9 +5032,6 @@ const docTemplate = `{
                 },
                 "recipeId": {
                     "type": "string"
-                },
-                "recipeName": {
-                    "type": "string"
                 }
             }
         },
@@ -4884,22 +5042,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "shoppingListId": {
-                    "type": "string"
-                }
-            }
-        },
-        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_request_body.DeleteUserFromShoppingList": {
-            "type": "object",
-            "properties": {
-                "userId": {
-                    "type": "string"
-                }
-            }
-        },
-        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_request_body.GetShoppingList": {
-            "type": "object",
-            "properties": {
-                "key": {
                     "type": "string"
                 }
             }
@@ -4923,12 +5065,6 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_common_body.Purchase"
                     }
-                },
-                "recipeNames": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    }
                 }
             }
         },
@@ -4938,8 +5074,8 @@ const docTemplate = `{
                 "name": {
                     "type": "string"
                 },
-                "ownerId": {
-                    "type": "string"
+                "owner": {
+                    "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.ProfileInfo"
                 },
                 "purchases": {
                     "type": "array",
@@ -4989,14 +5125,17 @@ const docTemplate = `{
                 "name": {
                     "type": "string"
                 },
-                "ownerId": {
-                    "type": "string"
+                "owner": {
+                    "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.ProfileInfo"
                 },
                 "shoppingListId": {
                     "type": "string"
                 },
                 "type": {
                     "type": "string"
+                },
+                "version": {
+                    "type": "integer"
                 }
             }
         },
@@ -5094,6 +5233,20 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.ProfileInfo": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
                     "type": "string"
                 }
             }

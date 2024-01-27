@@ -22,6 +22,6 @@ func (r *Router) initShoppingListsRoutes(api *gin.RouterGroup) {
 		shoppingListGroup.GET(fmt.Sprintf("/:%s/link", shopping_list.ParamShoppingListId), r.handler.ShoppingList.GetSharedShoppingListLink)
 		shoppingListGroup.GET(fmt.Sprintf("/:%s/users", shopping_list.ParamShoppingListId), r.handler.ShoppingList.GetShoppingListUsers)
 		shoppingListGroup.POST(fmt.Sprintf("/:%s/users", shopping_list.ParamShoppingListId), r.handler.ShoppingList.JoinShoppingList)
-		shoppingListGroup.DELETE(fmt.Sprintf("/:%s/users", shopping_list.ParamShoppingListId), r.handler.ShoppingList.DeleteUserFromShoppingList)
+		shoppingListGroup.DELETE(fmt.Sprintf("/:%s/users/:%s", shopping_list.ParamShoppingListId, shopping_list.ParamUserId), r.handler.ShoppingList.DeleteUserFromShoppingList)
 	}
 }

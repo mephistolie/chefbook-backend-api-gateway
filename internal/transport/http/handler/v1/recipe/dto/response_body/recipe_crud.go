@@ -2,6 +2,7 @@ package response_body
 
 import (
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/handler/v1/recipe/dto/common_body"
+	common "github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/helpers/response"
 	api "github.com/mephistolie/chefbook-backend-recipe/api/proto/implementation/v1"
 	"time"
 )
@@ -15,7 +16,7 @@ type Recipe struct {
 	Id   string `json:"id"`
 	Name string `json:"name"`
 
-	Owner Profile `json:"owner"`
+	Owner common.ProfileInfo `json:"owner"`
 
 	IsOwned     bool   `json:"owned"`
 	IsSaved     bool   `json:"saved"`
@@ -66,7 +67,7 @@ func newRecipe(response *api.Recipe) Recipe {
 		Id:   response.RecipeId,
 		Name: response.Name,
 
-		Owner: Profile{
+		Owner: common.ProfileInfo{
 			Id:     response.OwnerId,
 			Name:   response.OwnerName,
 			Avatar: response.OwnerAvatar,
@@ -103,7 +104,7 @@ func newRecipe(response *api.Recipe) Recipe {
 
 		Ingredients: newIngredients(response.Ingredients),
 		Cooking:     newCooking(response.Cooking),
-		Pictures:    newPictures(response.Pictures),
+		Pictures:    newPicturesResponse(response.Pictures),
 	}
 }
 

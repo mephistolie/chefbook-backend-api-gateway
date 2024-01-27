@@ -15,7 +15,7 @@ import (
 //	@Tags			auth
 //	@Accept			json
 //	@Produce		json
-//	@Param			input				body		request_body.RequestPasswordReset	true	"Profile identifier"
+//	@Param			input				body		request_body.RequestPasswordReset	true	"ProfileInfo identifier"
 //	@Success		200					{object}	response.MessageBody
 //	@Failure		400					{object}	fail.Response
 //	@Failure		500					{object}	fail.Response

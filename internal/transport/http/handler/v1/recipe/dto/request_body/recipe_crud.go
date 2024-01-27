@@ -7,7 +7,7 @@ import (
 )
 
 type RecipeInput struct {
-	Id   *string `json:"id"`
+	Id   *string `json:"recipeId"`
 	Name string  `json:"name" binding:"required"`
 
 	Visibility  string `json:"visibility,omitempty"`

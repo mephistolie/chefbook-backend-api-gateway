@@ -8,6 +8,7 @@ import (
 
 const (
 	ParamShoppingListId = "shopping_list_id"
+	ParamUserId         = "user_id"
 )
 
 type Handler struct {

@@ -8,7 +8,7 @@ import (
 type RecipeState struct {
 	Id string `json:"id"`
 
-	Owner *ProfileInfo `json:"owner,omitempty"`
+	Owner *OwnerInfo `json:"owner,omitempty"`
 
 	Version int32 `json:"version"`
 
@@ -21,16 +21,18 @@ type RecipeState struct {
 }
 
 type GetRecipeBookResponse struct {
-	Recipes    []RecipeState  `json:"recipes"`
-	Tags       map[string]Tag `json:"tags"`
-	Categories []Category     `json:"categories"`
+	Recipes                 []RecipeState  `json:"recipes"`
+	Tags                    map[string]Tag `json:"tags"`
+	Categories              []Category     `json:"categories"`
+	IsEncryptedVaultEnabled bool           `json:"isEncryptedVaultEnabled"`
 }
 
 func GetRecipeBook(response *api.GetRecipeBookResponse) GetRecipeBookResponse {
 	return GetRecipeBookResponse{
-		Recipes:    newRecipeStates(response.Recipes),
-		Tags:       newTags(response.Tags),
-		Categories: newCategories(response.Categories),
+		Recipes:                 newRecipeStates(response.Recipes),
+		Tags:                    newTags(response.Tags),
+		Categories:              newCategories(response.Categories),
+		IsEncryptedVaultEnabled: response.HasEncryptedVault,
 	}
 }
 
@@ -44,9 +46,9 @@ func newRecipeStates(response []*api.RecipeState) []RecipeState {
 }
 
 func newRecipeState(response *api.RecipeState) RecipeState {
-	var owner *ProfileInfo
+	var owner *OwnerInfo
 	if response.OwnerName != nil || response.OwnerAvatar != nil {
-		owner = &ProfileInfo{
+		owner = &OwnerInfo{
 			Name:   response.OwnerName,
 			Avatar: response.OwnerAvatar,
 		}

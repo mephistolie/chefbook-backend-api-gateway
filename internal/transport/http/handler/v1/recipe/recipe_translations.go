@@ -23,7 +23,7 @@ const (
 //	@Produce		json
 //	@Param			recipe_id								path		string							true	"Recipe ID"
 //	@Param			input									body		request_body.TranslateRecipe	true	"Input"
-//	@Success		200										{object}	response_body.CreateRecipe
+//	@Success		200										{object}	response.MessageBody
 //	@Failure		400										{object}	fail.Response
 //	@Failure		500										{object}	fail.Response
 //	@Router			/v1/recipes/{recipe_id}/translations	[post]

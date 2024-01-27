@@ -18,7 +18,7 @@ import (
 //	@Accept			json
 //	@Produce		json
 //	@Param			shopping_list_id							path		string	true	"Shopping list ID"
-//	@Success		200											{object}	[]string
+//	@Success		200											{object}	[]response.ProfileInfo
 //	@Failure		400											{object}	fail.Response
 //	@Failure		500											{object}	fail.Response
 //	@Router			/v1/shopping-lists/{shopping_list_id}/users	[get]
@@ -37,7 +37,7 @@ func (h *Handler) GetShoppingListUsers(c *gin.Context) {
 		return
 	}
 
-	response.Success(c, res.Users)
+	response.Success(c, response_body.ShoppingListUsers(res.Users))
 }
 
 // GetSharedShoppingListLink Swagger Documentation
@@ -119,27 +119,20 @@ func (h *Handler) JoinShoppingList(c *gin.Context) {
 //	@Security		ApiKeyAuth
 //	@Accept			json
 //	@Produce		json
-//	@Param			shopping_list_id							path		string									true	"Shopping list ID"
-//	@Param			input										body		request_body.DeleteUserFromShoppingList	true	"User ID"
-//	@Success		200											{object}	response.MessageBody
-//	@Failure		400											{object}	fail.Response
-//	@Failure		500											{object}	fail.Response
-//	@Router			/v1/shopping-lists/{shopping_list_id}/users	[delete]
+//	@Param			shopping_list_id										path		string	true	"Shopping list ID"
+//	@Param			user_id													path		string	true	"User ID"
+//	@Failure		400														{object}	fail.Response
+//	@Failure		500														{object}	fail.Response
+//	@Router			/v1/shopping-lists/{shopping_list_id}/users/{user_id}	[delete]
 func (h *Handler) DeleteUserFromShoppingList(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
 		return
 	}
 
-	var body request_body.DeleteUserFromShoppingList
-	if err = c.BindJSON(&body); err != nil {
-		response.Fail(c, response.InvalidBody)
-		return
-	}
-
 	res, err := h.service.DeleteUserFromShoppingList(c, &api.DeleteUserFromShoppingListRequest{
 		ShoppingListId: c.Param(ParamShoppingListId),
-		UserId:         body.UserId.String(),
+		UserId:         c.Param(ParamUserId),
 		RequesterId:    payload.UserId.String(),
 	})
 	if err != nil {

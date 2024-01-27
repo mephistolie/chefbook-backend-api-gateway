@@ -57,7 +57,7 @@ func (h *Handler) GetProfileDeletionStatus(c *gin.Context) {
 //	@Security		ApiKeyAuth
 //	@Accept			json
 //	@Produce		json
-//	@Param			input				body		request_body.DeleteProfile	true	"Profile password"
+//	@Param			input				body		request_body.DeleteProfile	true	"ProfileInfo password"
 //	@Success		200					{object}	response_body.DeleteProfile
 //	@Failure		400					{object}	fail.Response
 //	@Failure		401					{object}	fail.Response

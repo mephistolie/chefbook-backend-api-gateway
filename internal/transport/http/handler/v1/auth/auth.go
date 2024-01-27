@@ -58,7 +58,7 @@ func (h *Handler) SignUp(c *gin.Context) {
 
 // ActivateProfile Swagger Documentation
 //
-//	@Summary		Activate Profile
+//	@Summary		Activate ProfileInfo
 //	@Description	Activate profile
 //	@Tags			auth
 //	@Accept			json

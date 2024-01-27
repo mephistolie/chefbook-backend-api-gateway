@@ -60,17 +60,13 @@ func (h *Handler) CreateSharedShoppingList(c *gin.Context) {
 		response.Fail(c, response.InvalidBody)
 		return
 	}
-	shoppingListId := ""
-	if body.ShoppingListId != nil {
-		shoppingListId = body.ShoppingListId.String()
-	}
 	name := ""
 	if body.Name != nil {
 		name = *body.Name
 	}
 
 	res, err := h.service.CreateSharedShoppingList(c, &api.CreateSharedShoppingListRequest{
-		ShoppingListId:   shoppingListId,
+		ShoppingListId:   body.ShoppingListId,
 		Name:             name,
 		UserId:           payload.UserId.String(),
 		SubscriptionPlan: payload.SubscriptionPlan,
@@ -121,7 +117,6 @@ func (h *Handler) GetPersonalShoppingList(c *gin.Context) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			shopping_list_id						path		string							true	"Shopping list ID"
-//	@Param			input									body		request_body.GetShoppingList	true	"Key"
 //	@Success		200										{object}	response_body.GetShoppingListBody
 //	@Failure		400										{object}	fail.Response
 //	@Failure		500										{object}	fail.Response
@@ -132,20 +127,9 @@ func (h *Handler) GetShoppingList(c *gin.Context) {
 		return
 	}
 
-	var body request_body.GetShoppingList
-	if err = c.BindJSON(&body); err != nil {
-		response.Fail(c, response.InvalidBody)
-		return
-	}
-	key := ""
-	if body.Key != nil {
-		key = *body.Key
-	}
-
 	res, err := h.service.GetShoppingList(c, &api.GetShoppingListRequest{
 		ShoppingListId: c.Param(ParamShoppingListId),
 		UserId:         payload.UserId.String(),
-		Key:            key,
 	})
 	if err != nil {
 		response.FailGrpc(c, err)
@@ -180,15 +164,11 @@ func (h *Handler) SetShoppingListName(c *gin.Context) {
 		response.Fail(c, response.InvalidBody)
 		return
 	}
-	name := ""
-	if body.Name != nil {
-		name = *body.Name
-	}
 
 	res, err := h.service.SetShoppingListName(c, &api.SetShoppingListNameRequest{
 		ShoppingListId: c.Param(ParamShoppingListId),
 		UserId:         payload.UserId.String(),
-		Name:           name,
+		Name:           body.Name,
 	})
 	if err != nil {
 		response.FailGrpc(c, err)
@@ -232,7 +212,6 @@ func (h *Handler) SetShoppingList(c *gin.Context) {
 		ShoppingListId: c.Param(ParamShoppingListId),
 		EditorId:       payload.UserId.String(),
 		Purchases:      request_body.Purchases(body.Purchases),
-		RecipeNames:    body.RecipeNames,
 		LastVersion:    lastVersion,
 	})
 	if err != nil {
@@ -277,7 +256,6 @@ func (h *Handler) AddToShoppingList(c *gin.Context) {
 		ShoppingListId: c.Param(ParamShoppingListId),
 		EditorId:       payload.UserId.String(),
 		Purchases:      request_body.Purchases(body.Purchases),
-		RecipeNames:    body.RecipeNames,
 		LastVersion:    lastVersion,
 	})
 	if err != nil {

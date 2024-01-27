@@ -1,26 +1,32 @@
 package response_body
 
 import (
-	"github.com/google/uuid"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/handler/v1/shopping_list/dto/common_body"
+	common "github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/helpers/response"
 	api "github.com/mephistolie/chefbook-backend-shopping-list/api/v2/proto/implementation/v1"
 )
 
 type ShoppingListInfo struct {
-	Id      string `json:"shoppingListId"`
-	Name    string `json:"name,omitempty"`
-	Type    string `json:"type"`
-	OwnerId string `json:"ownerId"`
+	Id      string             `json:"shoppingListId"`
+	Name    *string            `json:"name,omitempty"`
+	Type    string             `json:"type"`
+	Owner   common.ProfileInfo `json:"owner"`
+	Version int32              `json:"version"`
 }
 
 func GetShoppingLists(response *api.GetShoppingListsResponse) []ShoppingListInfo {
 	shoppingLists := make([]ShoppingListInfo, len(response.ShoppingLists))
 	for i, shoppingList := range response.ShoppingLists {
 		shoppingLists[i] = ShoppingListInfo{
-			Id:      shoppingList.Id,
-			Name:    shoppingList.Name,
-			Type:    shoppingList.Type,
-			OwnerId: shoppingList.OwnerId,
+			Id:   shoppingList.Id,
+			Name: shoppingList.Name,
+			Type: shoppingList.Type,
+			Owner: common.ProfileInfo{
+				Id:     shoppingList.Owner.Id,
+				Name:   shoppingList.Owner.Name,
+				Avatar: shoppingList.Owner.Avatar,
+			},
+			Version: shoppingList.Version,
 		}
 	}
 	return shoppingLists
@@ -32,9 +38,9 @@ type CreateShoppingList struct {
 
 type GetShoppingListBody struct {
 	Id          string                 `json:"shoppingListId"`
-	Name        string                 `json:"name,omitempty"`
+	Name        *string                `json:"name,omitempty"`
 	Type        string                 `json:"type"`
-	OwnerId     string                 `json:"ownerId"`
+	Owner       common.ProfileInfo     `json:"owner"`
 	Purchases   []common_body.Purchase `json:"purchases"`
 	RecipeNames map[string]string      `json:"recipeNames"`
 	Version     int32                  `json:"version"`
@@ -43,48 +49,24 @@ type GetShoppingListBody struct {
 func GetShoppingList(shoppingList *api.GetShoppingListResponse) GetShoppingListBody {
 	dtos := make([]common_body.Purchase, len(shoppingList.Purchases))
 	for i, purchase := range shoppingList.Purchases {
-		id, err := uuid.Parse(purchase.Id)
-		if err != nil {
-			continue
-		}
-
-		var multiplierPtr *int = nil
-		if purchase.Multiplier > 0 {
-			multiplier := int(purchase.Multiplier)
-			multiplierPtr = &multiplier
-		}
-
-		var amountPtr *int = nil
-		if purchase.Amount > 0 {
-			amount := int(purchase.Amount)
-			amountPtr = &amount
-		}
-
-		var measureUnitPtr *string = nil
-		if len(purchase.MeasureUnit) > 0 {
-			measureUnit := purchase.MeasureUnit
-			measureUnitPtr = &measureUnit
-		}
-
-		var recipeIdPtr *uuid.UUID = nil
-		if recipeId, err := uuid.Parse(purchase.RecipeId); err == nil {
-			recipeIdPtr = &recipeId
-		}
-
 		dtos[i] = common_body.Purchase{
-			Id:          id,
+			Id:          purchase.Id,
 			Name:        purchase.Name,
-			Multiplier:  multiplierPtr,
+			Multiplier:  purchase.Multiplier,
 			Purchased:   purchase.Purchased,
-			Amount:      amountPtr,
-			MeasureUnit: measureUnitPtr,
-			RecipeId:    recipeIdPtr,
+			Amount:      purchase.Amount,
+			MeasureUnit: purchase.MeasureUnit,
+			RecipeId:    purchase.RecipeId,
 		}
 	}
 	return GetShoppingListBody{
-		Id:          shoppingList.Id,
-		Name:        shoppingList.Name,
-		OwnerId:     shoppingList.OwnerId,
+		Id:   shoppingList.Id,
+		Name: shoppingList.Name,
+		Owner: common.ProfileInfo{
+			Id:     shoppingList.Owner.Id,
+			Name:   shoppingList.Owner.Name,
+			Avatar: shoppingList.Owner.Avatar,
+		},
 		Type:        shoppingList.Type,
 		Purchases:   dtos,
 		RecipeNames: shoppingList.RecipeNames,

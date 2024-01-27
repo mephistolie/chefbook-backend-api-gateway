@@ -2,6 +2,7 @@ package recipe
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/handler/v1/recipe/dto/common_body"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/handler/v1/recipe/dto/request_body"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/handler/v1/recipe/dto/response_body"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/helpers/request"
@@ -85,35 +86,20 @@ func (h *Handler) SetRecipePictures(c *gin.Context) {
 		return
 	}
 
-	var previewPtr *string
-	if body.Preview != nil {
-		preview := body.Preview.String()
-		previewPtr = &preview
-	}
-
-	cooking := make(map[string]*api.StepPictures)
-	if body.Cooking != nil {
-		for step, pictures := range *body.Cooking {
-			var rawPictures []string
-			for _, picture := range pictures {
-				rawPictures = append(rawPictures, picture.String())
-			}
-			cooking[step.String()] = &api.StepPictures{Pictures: rawPictures}
-		}
-	}
-
 	res, err := h.service.SetRecipePictures(c, &api.SetRecipePicturesRequest{
-		RecipeId:           c.Param(ParamRecipeId),
-		UserId:             payload.UserId.String(),
-		Preview:            previewPtr,
-		CookingPicturesMap: cooking,
-		Subscription:       payload.SubscriptionPlan,
-		Version:            body.Version,
+		RecipeId:     c.Param(ParamRecipeId),
+		UserId:       payload.UserId.String(),
+		Pictures:     common_body.NewPicturesRequest(body.Pictures),
+		Subscription: payload.SubscriptionPlan,
+		Version:      body.Version,
 	})
 	if err != nil {
 		response.FailGrpc(c, err)
 		return
 	}
 
-	response.Success(c, response_body.SetRecipePictures{Version: res.Version})
+	response.Success(c, response_body.SetRecipePictures{
+		Pictures: common_body.NewPicturesResponse(res.Pictures),
+		Version:  res.Version,
+	})
 }

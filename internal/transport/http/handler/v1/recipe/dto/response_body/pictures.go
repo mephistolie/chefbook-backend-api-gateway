@@ -13,21 +13,15 @@ type RecipePictureUpload struct {
 }
 
 type SetRecipePictures struct {
-	Version int32 `json:"version"`
+	Pictures common_body.RecipePictures `json:"pictures"`
+	Version  int32                      `json:"version"`
 }
 
-func newPictures(pictures *api.RecipePictures) *common_body.RecipePictures {
+func newPicturesResponse(pictures *api.RecipePictures) *common_body.RecipePictures {
 	if pictures == nil {
 		return nil
 	}
+	res := common_body.NewPicturesResponse(pictures)
 
-	cooking := make(map[string][]string)
-	for stepId, stepPictures := range pictures.Cooking {
-		cooking[stepId] = stepPictures.Pictures
-	}
-
-	return &common_body.RecipePictures{
-		Preview: pictures.Preview,
-		Cooking: cooking,
-	}
+	return &res
 }
