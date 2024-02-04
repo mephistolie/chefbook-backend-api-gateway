@@ -1,7 +1,8 @@
 package response_body
 
 type GenerateAvatarUploadLink struct {
-	AvatarId string            `json:"avatarId"`
-	Link     string            `json:"link"`
-	FormData map[string]string `json:"formData"`
+	PictureLink string            `json:"pictureLink"`
+	UploadLink  string            `json:"uploadLink"`
+	FormData    map[string]string `json:"formData"`
+	MaxSize     int64             `json:"maxSize"`
 }

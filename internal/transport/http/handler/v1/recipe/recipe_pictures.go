@@ -73,7 +73,7 @@ func (h *Handler) GenerateRecipePicturesUploadLinks(c *gin.Context) {
 //	@Success		200			{object}	response_body.SetRecipePictures
 //	@Failure		400			{object}	fail.Response
 //	@Failure		500			{object}	fail.Response
-//	@Router			/v1/recipes/{recipe_id}/pictures [post]
+//	@Router			/v1/recipes/{recipe_id}/pictures [put]
 func (h *Handler) SetRecipePictures(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {

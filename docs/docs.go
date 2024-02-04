@@ -142,7 +142,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.OAuthCode"
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.GoogleOAuth"
                         }
                     }
                 ],
@@ -242,62 +242,6 @@ const docTemplate = `{
             }
         },
         "/v1/auth/nickname": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Check profile nickname availability",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "auth",
-                    "profile"
-                ],
-                "summary": "Check Nickname Availability",
-                "parameters": [
-                    {
-                        "description": "Nickname",
-                        "name": "input",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.Nickname"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_response_body.CheckNickname"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/fail.Response"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "schema": {
-                            "$ref": "#/definitions/fail.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/fail.Response"
-                        }
-                    }
-                }
-            },
             "post": {
                 "security": [
                     {
@@ -355,9 +299,14 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/auth/password": {
+        "/v1/auth/nickname/{nickname}": {
             "get": {
-                "description": "Request password reset",
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Check profile nickname availability",
                 "consumes": [
                     "application/json"
                 ],
@@ -365,29 +314,34 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "auth"
+                    "auth",
+                    "profile"
                 ],
-                "summary": "Request Password Reset",
+                "summary": "Check Nickname Availability",
                 "parameters": [
                     {
-                        "description": "ProfileInfo identifier",
-                        "name": "input",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.RequestPasswordReset"
-                        }
+                        "type": "string",
+                        "description": "Nickname",
+                        "name": "nickname",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody"
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_response_body.CheckNickname"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
                         "schema": {
                             "$ref": "#/definitions/fail.Response"
                         }
@@ -399,7 +353,9 @@ const docTemplate = `{
                         }
                     }
                 }
-            },
+            }
+        },
+        "/v1/auth/password": {
             "put": {
                 "security": [
                     {
@@ -456,6 +412,50 @@ const docTemplate = `{
                 }
             },
             "post": {
+                "description": "Request password reset",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Request Password Reset",
+                "parameters": [
+                    {
+                        "description": "ProfileInfo identifier",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.RequestPasswordReset"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            },
+            "patch": {
                 "description": "Reset password",
                 "consumes": [
                     "application/json"
@@ -1505,7 +1505,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "Shopping list ID",
+                        "description": "Profile ID",
                         "name": "profile_id",
                         "in": "path",
                         "required": true
@@ -2939,7 +2939,7 @@ const docTemplate = `{
             }
         },
         "/v1/recipes/{recipe_id}/pictures": {
-            "post": {
+            "put": {
                 "security": [
                     {
                         "ApiKeyAuth": []
@@ -2979,6 +2979,65 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.SetRecipePictures"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Generate recipe pictures upload links",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recipe"
+                ],
+                "summary": "Generate recipe pictures upload links",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Recipe ID",
+                        "name": "recipe_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Input",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_request_body.GenerateRecipePicturesUploadLinks"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.RecipePictureUpload"
+                            }
                         }
                     },
                     "400": {
@@ -3923,7 +3982,7 @@ const docTemplate = `{
                 "summary": "Confirm Google subscription",
                 "parameters": [
                     {
-                        "description": "Purchase Token",
+                        "description": "Purchase IdToken",
                         "name": "input",
                         "in": "body",
                         "required": true,
@@ -3978,6 +4037,20 @@ const docTemplate = `{
                 }
             }
         },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.GoogleOAuth": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "idToken": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                }
+            }
+        },
         "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.Nickname": {
             "type": "object",
             "properties": {
@@ -4021,6 +4094,11 @@ const docTemplate = `{
         },
         "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.ResetPassword": {
             "type": "object",
+            "required": [
+                "newPassword",
+                "resetCode",
+                "userId"
+            ],
             "properties": {
                 "newPassword": {
                     "type": "string"
@@ -4546,9 +4624,6 @@ const docTemplate = `{
                 "encrypted": {
                     "type": "boolean"
                 },
-                "id": {
-                    "type": "string"
-                },
                 "ingredients": {
                     "type": "array",
                     "items": {
@@ -4562,6 +4637,9 @@ const docTemplate = `{
                     "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_common_body.Macronutrients"
                 },
                 "name": {
+                    "type": "string"
+                },
+                "recipeId": {
                     "type": "string"
                 },
                 "servings": {

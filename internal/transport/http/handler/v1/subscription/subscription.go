@@ -44,7 +44,7 @@ func (h *Handler) GetSubscriptions(c *gin.Context) {
 //	@Security		ApiKeyAuth
 //	@Accept			json
 //	@Produce		json
-//	@Param			input						body		request_body.ConfirmGoogleSubscription	true	"Purchase Token"
+//	@Param			input						body		request_body.ConfirmGoogleSubscription	true	"Purchase IdToken"
 //	@Success		200							{object}	response.MessageBody
 //	@Failure		400							{object}	fail.Response
 //	@Failure		500							{object}	fail.Response

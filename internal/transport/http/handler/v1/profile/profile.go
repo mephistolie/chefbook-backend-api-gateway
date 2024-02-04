@@ -17,7 +17,6 @@ import (
 //	@Security		ApiKeyAuth
 //	@Accept			json
 //	@Produce		json
-//	@Param			profile_id	path		int	true	"Shopping list ID"
 //	@Success		200			{object}	response.MessageBody
 //	@Failure		400			{object}	fail.Response
 //	@Failure		401			{object}	fail.Response
@@ -32,7 +31,7 @@ func (h *Handler) GetProfile(c *gin.Context) {
 	h.getProfileByIdOrNickname(c, payload.UserId)
 }
 
-// getProfileById Swagger Documentation
+// getProfileByIdOrNickname Swagger Documentation
 //
 //	@Summary		Get profile by ID
 //	@Description	Get profile by ID or nickname

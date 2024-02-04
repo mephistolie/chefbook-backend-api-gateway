@@ -8,9 +8,9 @@ type RequestPasswordReset struct {
 }
 
 type ResetPassword struct {
-	Id          uuid.UUID `json:"userId"`
-	ResetCode   string    `json:"resetCode"`
-	NewPassword string    `json:"newPassword"`
+	Id          uuid.UUID `json:"userId" binding:"required"`
+	ResetCode   string    `json:"resetCode" binding:"required"`
+	NewPassword string    `json:"newPassword" binding:"required"`
 }
 
 type ChangePassword struct {

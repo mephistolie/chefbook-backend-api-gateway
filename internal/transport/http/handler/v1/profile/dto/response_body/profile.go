@@ -17,6 +17,7 @@ type Profile struct {
 	LastName              *string    `json:"lastName,omitempty"`
 	Description           *string    `json:"description,omitempty"`
 	Avatar                *string    `json:"avatar,omitempty"`
+	SubscriptionPlan      string     `json:"subscriptionPlan,omitempty"`
 }
 
 type OAuth struct {
@@ -26,15 +27,16 @@ type OAuth struct {
 
 func GetProfile(profile *api.GetProfileResponse) Profile {
 	res := Profile{
-		Id:          profile.Id,
-		Nickname:    profile.Nickname,
-		Email:       profile.Email,
-		Role:        profile.Role,
-		IsBlocked:   profile.IsBlocked,
-		FirstName:   profile.FirstName,
-		LastName:    profile.LastName,
-		Description: profile.Description,
-		Avatar:      profile.Avatar,
+		Id:               profile.Id,
+		Nickname:         profile.Nickname,
+		Email:            profile.Email,
+		Role:             profile.Role,
+		IsBlocked:        profile.IsBlocked,
+		FirstName:        profile.FirstName,
+		LastName:         profile.LastName,
+		Description:      profile.Description,
+		Avatar:           profile.Avatar,
+		SubscriptionPlan: profile.SubscriptionPlan,
 	}
 	if profile.OAuth != nil {
 		res.OAuth = &OAuth{

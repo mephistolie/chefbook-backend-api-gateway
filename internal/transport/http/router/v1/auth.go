@@ -1,7 +1,9 @@
 package v1
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/handler/v1/auth"
 )
 
 func (r *Router) initAuthRoutes(api *gin.RouterGroup) {
@@ -26,11 +28,11 @@ func (r *Router) initAuthRoutes(api *gin.RouterGroup) {
 		authGroup.GET("/sessions", r.authMiddleware.AuthorizeUser, r.handler.Auth.GetSessions)
 		authGroup.DELETE("/sessions", r.authMiddleware.AuthorizeUser, r.handler.Auth.EndSessions)
 
-		authGroup.GET("/password", r.handler.Auth.RequestPasswordReset)
-		authGroup.POST("/password", r.handler.Auth.ResetPassword)
+		authGroup.POST("/password", r.handler.Auth.RequestPasswordReset)
+		authGroup.PATCH("/password", r.handler.Auth.ResetPassword)
 		authGroup.PUT("/password", r.authMiddleware.AuthorizeUser, r.handler.Auth.ChangePassword)
 
-		authGroup.GET("/nickname", r.authMiddleware.AuthorizeUser, r.handler.Auth.CheckNicknameAvailability)
+		authGroup.GET(fmt.Sprintf("/nickname/:%s", auth.ParamNickname), r.authMiddleware.AuthorizeUser, r.handler.Auth.CheckNicknameAvailability)
 		authGroup.POST("/nickname", r.authMiddleware.AuthorizeUser, r.handler.Auth.SetNickname)
 	}
 }

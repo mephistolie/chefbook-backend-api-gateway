@@ -17,20 +17,16 @@ import (
 //	@Security		ApiKeyAuth
 //	@Accept			json
 //	@Produce		json
-//	@Param			input				body		request_body.Nickname	true	"Nickname"
-//	@Success		200					{object}	response_body.CheckNickname
-//	@Failure		400					{object}	fail.Response
-//	@Failure		401					{object}	fail.Response
-//	@Failure		500					{object}	fail.Response
-//	@Router			/v1/auth/nickname 	[get]
+//	@Param			nickname						path		string	true	"Nickname"
+//	@Success		200								{object}	response_body.CheckNickname
+//	@Failure		400								{object}	fail.Response
+//	@Failure		401								{object}	fail.Response
+//	@Failure		500								{object}	fail.Response
+//	@Router			/v1/auth/nickname/{nickname} 	[get]
 func (h *Handler) CheckNicknameAvailability(c *gin.Context) {
-	var body request_body.Nickname
-	if err := c.BindJSON(&body); err != nil {
-		response.Fail(c, response.InvalidBody)
-		return
-	}
-
-	res, err := h.service.CheckNicknameAvailability(c, &api.CheckNicknameAvailabilityRequest{Nickname: body.Nickname})
+	res, err := h.service.CheckNicknameAvailability(c, &api.CheckNicknameAvailabilityRequest{
+		Nickname: c.Param(ParamNickname),
+	})
 	if err != nil {
 		response.FailGrpc(c, err)
 		return

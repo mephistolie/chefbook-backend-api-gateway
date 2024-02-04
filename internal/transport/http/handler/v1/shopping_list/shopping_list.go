@@ -116,7 +116,7 @@ func (h *Handler) GetPersonalShoppingList(c *gin.Context) {
 //	@Security		ApiKeyAuth
 //	@Accept			json
 //	@Produce		json
-//	@Param			shopping_list_id						path		string							true	"Shopping list ID"
+//	@Param			shopping_list_id						path		string	true	"Shopping list ID"
 //	@Success		200										{object}	response_body.GetShoppingListBody
 //	@Failure		400										{object}	fail.Response
 //	@Failure		500										{object}	fail.Response

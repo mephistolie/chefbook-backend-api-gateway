@@ -19,7 +19,7 @@ import (
 //	@Success		200					{object}	response.MessageBody
 //	@Failure		400					{object}	fail.Response
 //	@Failure		500					{object}	fail.Response
-//	@Router			/v1/auth/password	[get]
+//	@Router			/v1/auth/password	[post]
 func (h *Handler) RequestPasswordReset(c *gin.Context) {
 	var body request_body.RequestPasswordReset
 	if err := c.BindJSON(&body); err != nil {
@@ -51,7 +51,7 @@ func (h *Handler) RequestPasswordReset(c *gin.Context) {
 //	@Success		200					{object}	response.MessageBody
 //	@Failure		400					{object}	fail.Response
 //	@Failure		500					{object}	fail.Response
-//	@Router			/v1/auth/password	[post]
+//	@Router			/v1/auth/password	[patch]
 func (h *Handler) ResetPassword(c *gin.Context) {
 	var body request_body.ResetPassword
 	if err := c.BindJSON(&body); err != nil {

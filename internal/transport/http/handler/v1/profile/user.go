@@ -115,9 +115,10 @@ func (h *Handler) GenerateAvatarUploadLink(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, response_body.GenerateAvatarUploadLink{
-		AvatarId: res.AvatarId,
-		Link:     res.Link,
-		FormData: res.FormData,
+		PictureLink: res.AvatarLink,
+		UploadLink:  res.UploadLink,
+		FormData:    res.FormData,
+		MaxSize:     res.MaxSize,
 	})
 }
 
@@ -148,8 +149,8 @@ func (h *Handler) ConfirmAvatarUploading(c *gin.Context) {
 	}
 
 	res, err := h.user.ConfirmUserAvatarUploading(c, &api.ConfirmUserAvatarUploadingRequest{
-		UserId:   payload.UserId.String(),
-		AvatarId: body.AvatarId.String(),
+		UserId:     payload.UserId.String(),
+		AvatarLink: body.AvatarLink,
 	})
 	if err != nil {
 		response.FailGrpc(c, err)

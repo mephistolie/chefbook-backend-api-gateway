@@ -13,6 +13,15 @@ definitions:
       oldPassword:
         type: string
     type: object
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.GoogleOAuth:
+    properties:
+      code:
+        type: string
+      idToken:
+        type: string
+      state:
+        type: string
+    type: object
   github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.Nickname:
     properties:
       nickname:
@@ -47,6 +56,10 @@ definitions:
         type: string
       userId:
         type: string
+    required:
+    - newPassword
+    - resetCode
+    - userId
     type: object
   github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.SignIn:
     properties:
@@ -377,8 +390,6 @@ definitions:
         type: string
       encrypted:
         type: boolean
-      id:
-        type: string
       ingredients:
         items:
           $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_common_body.IngredientItem'
@@ -388,6 +399,8 @@ definitions:
       macronutrients:
         $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_common_body.Macronutrients'
       name:
+        type: string
+      recipeId:
         type: string
       servings:
         type: integer
@@ -917,7 +930,7 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.OAuthCode'
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.GoogleOAuth'
       produces:
       - application/json
       responses:
@@ -991,42 +1004,6 @@ paths:
       tags:
       - auth
   /v1/auth/nickname:
-    get:
-      consumes:
-      - application/json
-      description: Check profile nickname availability
-      parameters:
-      - description: Nickname
-        in: body
-        name: input
-        required: true
-        schema:
-          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.Nickname'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_response_body.CheckNickname'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/fail.Response'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/fail.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/fail.Response'
-      security:
-      - ApiKeyAuth: []
-      summary: Check Nickname Availability
-      tags:
-      - auth
-      - profile
     post:
       consumes:
       - application/json
@@ -1063,37 +1040,44 @@ paths:
       tags:
       - auth
       - profile
-  /v1/auth/password:
+  /v1/auth/nickname/{nickname}:
     get:
       consumes:
       - application/json
-      description: Request password reset
+      description: Check profile nickname availability
       parameters:
-      - description: ProfileInfo identifier
-        in: body
-        name: input
+      - description: Nickname
+        in: path
+        name: nickname
         required: true
-        schema:
-          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.RequestPasswordReset'
+        type: string
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_response_body.CheckNickname'
         "400":
           description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "401":
+          description: Unauthorized
           schema:
             $ref: '#/definitions/fail.Response'
         "500":
           description: Internal Server Error
           schema:
             $ref: '#/definitions/fail.Response'
-      summary: Request Password Reset
+      security:
+      - ApiKeyAuth: []
+      summary: Check Nickname Availability
       tags:
       - auth
-    post:
+      - profile
+  /v1/auth/password:
+    patch:
       consumes:
       - application/json
       description: Reset password
@@ -1120,6 +1104,35 @@ paths:
           schema:
             $ref: '#/definitions/fail.Response'
       summary: Reset Password
+      tags:
+      - auth
+    post:
+      consumes:
+      - application/json
+      description: Request password reset
+      parameters:
+      - description: ProfileInfo identifier
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.RequestPasswordReset'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      summary: Request Password Reset
       tags:
       - auth
     put:
@@ -1796,7 +1809,7 @@ paths:
       - application/json
       description: Get profile
       parameters:
-      - description: Shopping list ID
+      - description: Profile ID
         in: path
         name: profile_id
         required: true
@@ -2390,6 +2403,44 @@ paths:
       - recipe
   /v1/recipes/{recipe_id}/pictures:
     post:
+      consumes:
+      - application/json
+      description: Generate recipe pictures upload links
+      parameters:
+      - description: Recipe ID
+        in: path
+        name: recipe_id
+        required: true
+        type: string
+      - description: Input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_request_body.GenerateRecipePicturesUploadLinks'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.RecipePictureUpload'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Generate recipe pictures upload links
+      tags:
+      - recipe
+    put:
       consumes:
       - application/json
       description: Set recipe pictures
@@ -3341,7 +3392,7 @@ paths:
       - application/json
       description: Confirm Google subscription
       parameters:
-      - description: Purchase Token
+      - description: Purchase IdToken
         in: body
         name: input
         required: true

@@ -6,7 +6,6 @@ import (
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/handler/v1/auth/dto/response_body"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/helpers/response"
 	api "github.com/mephistolie/chefbook-backend-auth/api/proto/implementation/v1"
-	"time"
 )
 
 // SignUp Swagger Documentation
@@ -113,18 +112,7 @@ func (h *Handler) SignIn(c *gin.Context) {
 		return
 	}
 
-	var profileDeletionTimestamp *time.Time
-	if res.ProfileDeletionTimestamp != nil {
-		timestamp := res.ProfileDeletionTimestamp.AsTime()
-		profileDeletionTimestamp = &timestamp
-	}
-
-	response.Success(c, response_body.Tokens{
-		Access:            res.AccessToken,
-		Refresh:           res.RefreshToken,
-		ExpiresAt:         res.ExpirationTimestamp.AsTime(),
-		ProfileDeletingAt: profileDeletionTimestamp,
-	})
+	response.Success(c, response_body.NewTokens(res))
 }
 
 // RefreshSession Swagger Documentation
@@ -156,18 +144,7 @@ func (h *Handler) RefreshSession(c *gin.Context) {
 		return
 	}
 
-	var profileDeletionTimestamp *time.Time
-	if res.ProfileDeletionTimestamp != nil {
-		timestamp := res.ProfileDeletionTimestamp.AsTime()
-		profileDeletionTimestamp = &timestamp
-	}
-
-	response.Success(c, response_body.Tokens{
-		Access:            res.AccessToken,
-		Refresh:           res.RefreshToken,
-		ExpiresAt:         res.ExpirationTimestamp.AsTime(),
-		ProfileDeletingAt: profileDeletionTimestamp,
-	})
+	response.Success(c, response_body.NewTokens(res))
 }
 
 // SignOut Swagger Documentation

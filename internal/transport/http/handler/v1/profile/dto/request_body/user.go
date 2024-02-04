@@ -1,7 +1,5 @@
 package request_body
 
-import "github.com/google/uuid"
-
 type SetName struct {
 	FirstName *string `json:"firstName,omitempty"`
 	LastName  *string `json:"lastName,omitempty"`
@@ -12,5 +10,5 @@ type SetDescription struct {
 }
 
 type ConfirmAvatarUploading struct {
-	AvatarId uuid.UUID `json:"avatarId"`
+	AvatarLink string `json:"avatarLink" binding:"required"`
 }

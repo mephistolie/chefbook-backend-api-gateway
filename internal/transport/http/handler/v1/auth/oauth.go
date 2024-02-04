@@ -7,7 +7,6 @@ import (
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/helpers/request"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/helpers/response"
 	api "github.com/mephistolie/chefbook-backend-auth/api/proto/implementation/v1"
-	"time"
 )
 
 // RequestGoogleOAuth Swagger Documentation
@@ -39,42 +38,46 @@ func (h *Handler) RequestGoogleOAuth(c *gin.Context) {
 //	@Tags			auth
 //	@Accept			json
 //	@Produce		json
-//	@Param			input			body		request_body.OAuthCode	true	"Code"
+//	@Param			input			body		request_body.GoogleOAuth	true	"Code"
 //	@Success		200				{object}	response_body.Tokens
 //	@Failure		400				{object}	fail.Response
 //	@Failure		500				{object}	fail.Response
 //	@Router			/v1/auth/google	[post]
 func (h *Handler) SignInGoogle(c *gin.Context) {
-	var body request_body.OAuthCode
-	if err := c.BindJSON(&body); err != nil {
+	var err error
+	var body request_body.GoogleOAuth
+	if err = c.BindJSON(&body); err != nil {
+		response.Fail(c, response.InvalidBody)
+		return
+	}
+	if body.IdToken == nil && (body.Code == nil || body.State == nil) {
 		response.Fail(c, response.InvalidBody)
 		return
 	}
 
-	res, err := h.service.SignInGoogle(c, &api.SignInGoogleRequest{
-		Code:        body.Code,
-		State:       body.State,
-		RedirectUrl: h.routes.SignInGoogle,
-		Ip:          c.ClientIP(),
-		UserAgent:   c.Request.UserAgent(),
-	})
+	var res *api.SessionResponse
+	if body.IdToken != nil {
+		res, err = h.service.SignInGoogleToken(c, &api.SignInGoogleTokenRequest{
+			Token:     *body.IdToken,
+			Ip:        c.ClientIP(),
+			UserAgent: c.Request.UserAgent(),
+		})
+	} else {
+		res, err = h.service.SignInGoogle(c, &api.SignInGoogleRequest{
+			Code:        *body.Code,
+			State:       *body.State,
+			RedirectUrl: h.routes.SignInGoogle,
+			Ip:          c.ClientIP(),
+			UserAgent:   c.Request.UserAgent(),
+		})
+	}
+
 	if err != nil {
 		response.FailGrpc(c, err)
 		return
 	}
 
-	var profileDeletionTimestamp *time.Time
-	if res.ProfileDeletionTimestamp != nil {
-		timestamp := res.ProfileDeletionTimestamp.AsTime()
-		profileDeletionTimestamp = &timestamp
-	}
-
-	response.Success(c, response_body.Tokens{
-		Access:            res.AccessToken,
-		Refresh:           res.RefreshToken,
-		ExpiresAt:         res.ExpirationTimestamp.AsTime(),
-		ProfileDeletingAt: profileDeletionTimestamp,
-	})
+	response.Success(c, response_body.NewTokens(res))
 }
 
 // ConnectGoogle Swagger Documentation
@@ -202,18 +205,7 @@ func (h *Handler) SignInVk(c *gin.Context) {
 		return
 	}
 
-	var profileDeletionTimestamp *time.Time
-	if res.ProfileDeletionTimestamp != nil {
-		timestamp := res.ProfileDeletionTimestamp.AsTime()
-		profileDeletionTimestamp = &timestamp
-	}
-
-	response.Success(c, response_body.Tokens{
-		Access:            res.AccessToken,
-		Refresh:           res.RefreshToken,
-		ExpiresAt:         res.ExpirationTimestamp.AsTime(),
-		ProfileDeletingAt: profileDeletionTimestamp,
-	})
+	response.Success(c, response_body.NewTokens(res))
 }
 
 // ConnectVk Swagger Documentation
