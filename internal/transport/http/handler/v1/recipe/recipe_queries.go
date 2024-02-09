@@ -33,7 +33,7 @@ func (h *Handler) GetRecipes(c *gin.Context) {
 	}
 
 	var body request_body.GetRecipes
-	if err = c.BindJSON(&body); err != nil {
+	if err = c.BindQuery(&body); err != nil {
 		response.Fail(c, response.InvalidBody)
 		return
 	}
