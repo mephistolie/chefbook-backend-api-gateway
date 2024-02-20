@@ -1,7 +1,6 @@
 package response_body
 
 import (
-	"github.com/mephistolie/chefbook-backend-common/log"
 	api "github.com/mephistolie/chefbook-backend-recipe/api/proto/implementation/v1"
 )
 
@@ -37,7 +36,6 @@ func GetRecipeBook(response *api.GetRecipeBookResponse) GetRecipeBookResponse {
 }
 
 func newRecipeStates(response []*api.RecipeState) []RecipeState {
-	log.Debugf("got %d recipes by request", len(response))
 	recipes := make([]RecipeState, len(response))
 	for id, recipe := range response {
 		recipes[id] = newRecipeState(recipe)

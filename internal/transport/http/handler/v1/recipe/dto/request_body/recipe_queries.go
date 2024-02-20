@@ -2,7 +2,6 @@ package request_body
 
 import (
 	"github.com/google/uuid"
-	"github.com/mephistolie/chefbook-backend-common/log"
 	api "github.com/mephistolie/chefbook-backend-recipe/api/proto/implementation/v1"
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"time"
@@ -16,6 +15,8 @@ type GetRecipes struct {
 
 	Owned bool `form:"owned,omitempty"`
 	Saved bool `form:"saved,omitempty"`
+
+	Tags []string `form:"tags,omitempty"`
 
 	Search *string `form:"search,omitempty"`
 
@@ -52,7 +53,6 @@ func GetRecipesRequest(query GetRecipes, userId uuid.UUID) *api.GetRecipesReques
 		updateTimestamp = timestamppb.New(*query.LastUpdateTimestamp)
 	}
 
-	log.Debugf("%d %s", query.RecipesCount, query.RecipeLanguages)
 	return &api.GetRecipesRequest{
 		UserId:                userId.String(),
 		RecipeIds:             query.RecipeIds,
@@ -60,6 +60,7 @@ func GetRecipesRequest(query GetRecipes, userId uuid.UUID) *api.GetRecipesReques
 		AuthorId:              query.AuthorId,
 		Owned:                 query.Owned,
 		Saved:                 query.Saved,
+		Tags:                  query.Tags,
 		Search:                query.Search,
 		Sorting:               query.Sorting,
 		LastRecipeId:          query.LastRecipeId,
