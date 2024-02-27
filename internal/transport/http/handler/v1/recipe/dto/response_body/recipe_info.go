@@ -40,6 +40,7 @@ type RecipeInfo struct {
 type GetRecipesResponse struct {
 	Recipes    []RecipeInfo        `json:"recipes"`
 	Tags       map[string]Tag      `json:"tags"`
+	TagGroups  map[string]string   `json:"tagGroups"`
 	Categories map[string]Category `json:"categories"`
 }
 
@@ -47,6 +48,7 @@ func GetRecipes(response *api.GetRecipesResponse) GetRecipesResponse {
 	return GetRecipesResponse{
 		Recipes:    newRecipeInfos(response.Recipes),
 		Tags:       newTags(response.Tags),
+		TagGroups:  response.TagGroups,
 		Categories: newCategoriesMap(response.Categories),
 	}
 }

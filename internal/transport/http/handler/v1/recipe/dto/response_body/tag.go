@@ -3,8 +3,9 @@ package response_body
 import api "github.com/mephistolie/chefbook-backend-recipe/api/proto/implementation/v1"
 
 type Tag struct {
-	Name  string  `json:"name"`
-	Emoji *string `json:"emoji"`
+	Name    string  `json:"name"`
+	Emoji   *string `json:"emoji"`
+	GroupId *string `json:"groupId"`
 }
 
 func newTags(response map[string]*api.RecipeTag) map[string]Tag {
@@ -17,7 +18,8 @@ func newTags(response map[string]*api.RecipeTag) map[string]Tag {
 
 func newTag(response *api.RecipeTag) Tag {
 	return Tag{
-		Name:  response.Name,
-		Emoji: response.Emoji,
+		Name:    response.Name,
+		Emoji:   response.Emoji,
+		GroupId: response.GroupId,
 	}
 }

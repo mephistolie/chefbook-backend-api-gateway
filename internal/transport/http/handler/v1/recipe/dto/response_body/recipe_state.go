@@ -15,21 +15,24 @@ type RecipeState struct {
 
 	Rating Rating `json:"rating"`
 
+	Tags        []string `json:"tags,omitempty"`
 	Categories  []string `json:"categories,omitempty"`
 	IsFavourite bool     `json:"favourite"`
 }
 
 type GetRecipeBookResponse struct {
-	Recipes                 []RecipeState  `json:"recipes"`
-	Tags                    map[string]Tag `json:"tags"`
-	Categories              []Category     `json:"categories"`
-	IsEncryptedVaultEnabled bool           `json:"isEncryptedVaultEnabled"`
+	Recipes                 []RecipeState     `json:"recipes"`
+	Tags                    map[string]Tag    `json:"tags"`
+	TagGroups               map[string]string `json:"tagGroups"`
+	Categories              []Category        `json:"categories"`
+	IsEncryptedVaultEnabled bool              `json:"isEncryptedVaultEnabled"`
 }
 
 func GetRecipeBook(response *api.GetRecipeBookResponse) GetRecipeBookResponse {
 	return GetRecipeBookResponse{
 		Recipes:                 newRecipeStates(response.Recipes),
 		Tags:                    newTags(response.Tags),
+		TagGroups:               response.TagGroups,
 		Categories:              newCategories(response.Categories),
 		IsEncryptedVaultEnabled: response.HasEncryptedVault,
 	}
@@ -67,6 +70,7 @@ func newRecipeState(response *api.RecipeState) RecipeState {
 			Votes: response.Votes,
 		},
 
+		Tags:        response.Tags,
 		Categories:  response.Categories,
 		IsFavourite: response.IsFavourite,
 	}
