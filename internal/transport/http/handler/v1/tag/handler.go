@@ -1,4 +1,4 @@
-package category
+package tag
 
 import (
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/service"

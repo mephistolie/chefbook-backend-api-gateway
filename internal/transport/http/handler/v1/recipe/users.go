@@ -50,7 +50,7 @@ func (h *Handler) RateRecipe(c *gin.Context) {
 	response.Message(c, res.Message)
 }
 
-// SaveRecipe Swagger Documentation
+// SaveRecipeToRecipeBook Swagger Documentation
 //
 //	@Summary		Save recipe
 //	@Description	Save recipe to user's recipe book
@@ -62,14 +62,14 @@ func (h *Handler) RateRecipe(c *gin.Context) {
 //	@Success		200								{object}	response.MessageBody
 //	@Failure		400								{object}	fail.Response
 //	@Failure		500								{object}	fail.Response
-//	@Router			/v1/recipes/{recipe_id}/save	[post]
-func (h *Handler) SaveRecipe(c *gin.Context) {
+//	@Router			/v1/recipes/{recipe_id}/book	[post]
+func (h *Handler) SaveRecipeToRecipeBook(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
 		return
 	}
 
-	res, err := h.service.SaveToRecipeBook(c, &api.SaveToRecipeBookRequest{
+	res, err := h.service.SaveRecipeToRecipeBook(c, &api.SaveRecipeToRecipeBookRequest{
 		RecipeId: c.Param(ParamRecipeId),
 		UserId:   payload.UserId.String(),
 	})
@@ -93,14 +93,14 @@ func (h *Handler) SaveRecipe(c *gin.Context) {
 //	@Success		200							{object}	response.MessageBody
 //	@Failure		400							{object}	fail.Response
 //	@Failure		500							{object}	fail.Response
-//	@Router			/v1/recipes{recipe_id}/save	[delete]
+//	@Router			/v1/recipes{recipe_id}/book	[delete]
 func (h *Handler) RemoveRecipeFromRecipeBook(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
 		return
 	}
 
-	res, err := h.service.RemoveFromRecipeBook(c, &api.RemoveFromRecipeBookRequest{
+	res, err := h.service.RemoveRecipeFromRecipeBook(c, &api.RemoveRecipeFromRecipeBookRequest{
 		RecipeId: c.Param(ParamRecipeId),
 		UserId:   payload.UserId.String(),
 	})
@@ -112,7 +112,7 @@ func (h *Handler) RemoveRecipeFromRecipeBook(c *gin.Context) {
 	response.Message(c, res.Message)
 }
 
-// AddRecipeToFavourite Swagger Documentation
+// SaveRecipeToFavourites Swagger Documentation
 //
 //	@Summary		Add recipe to favourite
 //	@Description	Add recipe to favourite
@@ -124,17 +124,16 @@ func (h *Handler) RemoveRecipeFromRecipeBook(c *gin.Context) {
 //	@Success		200									{object}	response.MessageBody
 //	@Failure		400									{object}	fail.Response
 //	@Failure		500									{object}	fail.Response
-//	@Router			/v1/recipes/{recipe_id}/favourite	[post]
-func (h *Handler) AddRecipeToFavourite(c *gin.Context) {
+//	@Router			/v1/recipes/{recipe_id}/favourites	[post]
+func (h *Handler) SaveRecipeToFavourites(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
 		return
 	}
 
-	res, err := h.service.SetRecipeFavouriteStatus(c, &api.SetRecipeFavouriteStatusRequest{
-		RecipeId:  c.Param(ParamRecipeId),
-		UserId:    payload.UserId.String(),
-		Favourite: true,
+	res, err := h.service.SaveRecipeToFavourites(c, &api.SaveRecipeToFavouritesRequest{
+		RecipeId: c.Param(ParamRecipeId),
+		UserId:   payload.UserId.String(),
 	})
 	if err != nil {
 		response.FailGrpc(c, err)
@@ -144,7 +143,7 @@ func (h *Handler) AddRecipeToFavourite(c *gin.Context) {
 	response.Message(c, res.Message)
 }
 
-// RemoveRecipeFromFavourite Swagger Documentation
+// RemoveRecipeFromFavourites Swagger Documentation
 //
 //	@Summary		Remove recipe from favourite
 //	@Description	Remove recipe from favourite
@@ -157,16 +156,15 @@ func (h *Handler) AddRecipeToFavourite(c *gin.Context) {
 //	@Failure		400									{object}	fail.Response
 //	@Failure		500									{object}	fail.Response
 //	@Router			/v1/recipes/{recipe_id}/favourite	[delete]
-func (h *Handler) RemoveRecipeFromFavourite(c *gin.Context) {
+func (h *Handler) RemoveRecipeFromFavourites(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
 		return
 	}
 
-	res, err := h.service.SetRecipeFavouriteStatus(c, &api.SetRecipeFavouriteStatusRequest{
-		RecipeId:  c.Param(ParamRecipeId),
-		UserId:    payload.UserId.String(),
-		Favourite: false,
+	res, err := h.service.RemoveRecipeFromFavourites(c, &api.RemoveRecipeFromFavouritesRequest{
+		RecipeId: c.Param(ParamRecipeId),
+		UserId:   payload.UserId.String(),
 	})
 	if err != nil {
 		response.FailGrpc(c, err)
@@ -176,10 +174,76 @@ func (h *Handler) RemoveRecipeFromFavourite(c *gin.Context) {
 	response.Message(c, res.Message)
 }
 
-// SetRecipeCategories Swagger Documentation
+// AddRecipeToCollection Swagger Documentation
 //
-//	@Summary		Set recipe categories
-//	@Description	Set recipe categories
+//	@Summary		Add recipe to collection
+//	@Description	Add recipe to collection
+//	@Tags			recipe
+//	@Security		ApiKeyAuth
+//	@Accept			json
+//	@Produce		json
+//	@Param			recipe_id											path		string	true	"Recipe ID"
+//	@Param			collection_id										path		string	true	"Collection ID"
+//	@Success		200													{object}	response.MessageBody
+//	@Failure		400													{object}	fail.Response
+//	@Failure		500													{object}	fail.Response
+//	@Router			/v1/recipes/{recipe_id}/collections/{collection_id}	[post]
+func (h *Handler) AddRecipeToCollection(c *gin.Context) {
+	payload, err := request.GetUserPayloadOrResponse(c)
+	if err != nil {
+		return
+	}
+
+	res, err := h.service.AddRecipeToCollection(c, &api.AddRecipeToCollectionRequest{
+		RecipeId:     c.Param(ParamRecipeId),
+		CollectionId: c.Param(ParamCollectionId),
+		UserId:       payload.UserId.String(),
+	})
+	if err != nil {
+		response.FailGrpc(c, err)
+		return
+	}
+
+	response.Message(c, res.Message)
+}
+
+// RemoveRecipeFromCollection Swagger Documentation
+//
+//	@Summary		Remove recipe from collection
+//	@Description	Remove recipe from collection
+//	@Tags			recipe
+//	@Security		ApiKeyAuth
+//	@Accept			json
+//	@Produce		json
+//	@Param			recipe_id											path		string	true	"Recipe ID"
+//	@Param			collection_id										path		string	true	"Collection ID"
+//	@Success		200													{object}	response.MessageBody
+//	@Failure		400													{object}	fail.Response
+//	@Failure		500													{object}	fail.Response
+//	@Router			/v1/recipes/{recipe_id}/collections/{collection_id}	[delete]
+func (h *Handler) RemoveRecipeFromCollection(c *gin.Context) {
+	payload, err := request.GetUserPayloadOrResponse(c)
+	if err != nil {
+		return
+	}
+
+	res, err := h.service.RemoveRecipeFromCollection(c, &api.RemoveRecipeFromCollectionRequest{
+		RecipeId:     c.Param(ParamRecipeId),
+		CollectionId: c.Param(ParamCollectionId),
+		UserId:       payload.UserId.String(),
+	})
+	if err != nil {
+		response.FailGrpc(c, err)
+		return
+	}
+
+	response.Message(c, res.Message)
+}
+
+// SetRecipeCollections Swagger Documentation
+//
+//	@Summary		Set recipe collections
+//	@Description	Set recipe collections
 //	@Tags			recipe
 //	@Security		ApiKeyAuth
 //	@Accept			json
@@ -188,27 +252,27 @@ func (h *Handler) RemoveRecipeFromFavourite(c *gin.Context) {
 //	@Success		200									{object}	response.MessageBody
 //	@Failure		400									{object}	fail.Response
 //	@Failure		500									{object}	fail.Response
-//	@Router			/v1/recipes/{recipe_id}/categories	[put]
-func (h *Handler) SetRecipeCategories(c *gin.Context) {
+//	@Router			/v1/recipes/{recipe_id}/collections	[put]
+func (h *Handler) SetRecipeCollections(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
 		return
 	}
 
-	var body request_body.SetRecipeCategories
+	var body request_body.SetRecipeCollections
 	if err = c.BindJSON(&body); err != nil {
 		response.Fail(c, response.InvalidBody)
 		return
 	}
-	var categories []string
-	if body.Categories != nil {
-		categories = *body.Categories
+	var collections []string
+	if body.Collections != nil {
+		collections = *body.Collections
 	}
 
-	res, err := h.service.SetRecipeCategories(c, &api.SetRecipeCategoriesRequest{
-		RecipeId:    c.Param(ParamRecipeId),
-		UserId:      payload.UserId.String(),
-		CategoryIds: categories,
+	res, err := h.service.SetRecipeCollections(c, &api.SetRecipeCollectionsRequest{
+		RecipeId:      c.Param(ParamRecipeId),
+		UserId:        payload.UserId.String(),
+		CollectionIds: collections,
 	})
 	if err != nil {
 		response.FailGrpc(c, err)

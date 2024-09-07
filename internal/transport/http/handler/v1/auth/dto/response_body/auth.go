@@ -12,10 +12,11 @@ type SignUp struct {
 }
 
 type Tokens struct {
+	ProfileId         string     `json:"profileId"`
 	Access            string     `json:"accessToken"`
 	Refresh           string     `json:"refreshToken"`
-	ExpiresAt         time.Time  `json:"expiresAt"`
-	ProfileDeletingAt *time.Time `json:"profileDeletingAt,omitempty"`
+	ExpiresAt         time.Time  `json:"expirationTimestamp"`
+	ProfileDeletingAt *time.Time `json:"profileDeletionTimestamp,omitempty"`
 }
 
 func NewTokens(res *api.SessionResponse) Tokens {
@@ -26,6 +27,7 @@ func NewTokens(res *api.SessionResponse) Tokens {
 	}
 
 	return Tokens{
+		ProfileId:         res.ProfileId,
 		Access:            res.AccessToken,
 		Refresh:           res.RefreshToken,
 		ExpiresAt:         res.ExpirationTimestamp.AsTime(),

@@ -4,6 +4,6 @@ type RateRecipe struct {
 	Score *int32 `json:"score,omitempty"`
 }
 
-type SetRecipeCategories struct {
-	Categories *[]string `json:"categories,omitempty"`
+type SetRecipeCollections struct {
+	Collections *[]string `json:"collections,omitempty"`
 }

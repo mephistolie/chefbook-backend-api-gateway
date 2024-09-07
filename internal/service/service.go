@@ -10,7 +10,6 @@ type Services struct {
 	Subscription *Subscription
 	Profile      *Profile
 	Tag          *Tag
-	Category     *Category
 	Recipe       *Recipe
 	Encryption   *Encryption
 	ShoppingList *ShoppingList
@@ -37,10 +36,6 @@ func NewServices(cfg *config.Config) (*Services, error) {
 	if err != nil {
 		return nil, err
 	}
-	categoryService, err := NewCategory(*cfg.CategoryService.Addr)
-	if err != nil {
-		return nil, err
-	}
 	recipeService, err := NewRecipe(*cfg.RecipeService.Addr)
 	if err != nil {
 		return nil, err
@@ -60,7 +55,6 @@ func NewServices(cfg *config.Config) (*Services, error) {
 		Subscription: subscriptionService,
 		Profile:      profileService,
 		Tag:          tagService,
-		Category:     categoryService,
 		Recipe:       recipeService,
 		Encryption:   encryptionService,
 		ShoppingList: shoppingList,
@@ -73,7 +67,6 @@ func (s *Services) Stop() error {
 	_ = s.Subscription.Conn.Close()
 	_ = s.Profile.Conn.Close()
 	_ = s.Tag.Conn.Close()
-	_ = s.Category.Conn.Close()
 	_ = s.Recipe.Conn.Close()
 	_ = s.Encryption.Conn.Close()
 	_ = s.ShoppingList.Conn.Close()

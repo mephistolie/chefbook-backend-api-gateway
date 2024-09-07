@@ -49,7 +49,3 @@ func newTag(tag *api.Tag) Tag {
 		GroupId: tag.GroupId,
 	}
 }
-
-type AddCategory struct {
-	Id string `json:"categoryId" binding:"required"`
-}

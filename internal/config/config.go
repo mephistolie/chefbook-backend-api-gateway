@@ -22,7 +22,6 @@ type Config struct {
 	SubscriptionService SubscriptionService
 	ProfileService      ProfileService
 	TagService          TagService
-	CategoryService     CategoryService
 	RecipeService       RecipeService
 	EncryptionService   EncryptionService
 	ShoppingListService ShoppingListService
@@ -57,10 +56,6 @@ type ProfileService struct {
 }
 
 type TagService struct {
-	Addr *string
-}
-
-type CategoryService struct {
 	Addr *string
 }
 
@@ -99,7 +94,6 @@ func (c Config) Print() {
 		"Subscription Service Address: %v\n"+
 		"Profile Service Address: %v\n"+
 		"Tag Service Address: %v\n"+
-		"Category Service Address: %v\n"+
 		"Recipe Service Address: %v\n"+
 		"Encryption Service Address: %v\n"+
 		"Shopping List Service Address: %v\n\n",
@@ -108,7 +102,7 @@ func (c Config) Print() {
 		*c.Limiter.RPS, *c.Limiter.Burst, *c.Limiter.TTL,
 		*c.AuthService.AccessTokenKeyUpdateInterval,
 		*c.AuthService.Addr, *c.UserService.Addr, *c.SubscriptionService.Addr, *c.ProfileService.Addr,
-		*c.TagService.Addr, *c.CategoryService.Addr, *c.RecipeService.Addr,
+		*c.TagService.Addr, *c.RecipeService.Addr,
 		*c.EncryptionService.Addr,
 		*c.ShoppingListService.Addr,
 	)

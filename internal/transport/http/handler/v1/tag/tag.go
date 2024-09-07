@@ -1,4 +1,4 @@
-package category
+package tag
 
 import (
 	"github.com/gin-gonic/gin"

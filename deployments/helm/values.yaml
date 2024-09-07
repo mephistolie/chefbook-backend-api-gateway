@@ -46,10 +46,6 @@ services:
     name: chefbook-backend-tag-service
     namespace: ""
     port: 8080
-  category:
-    name: chefbook-backend-category-service
-    namespace: ""
-    port: 8080
   recipe:
     name: chefbook-backend-recipe-service
     namespace: ""

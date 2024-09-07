@@ -6,6 +6,7 @@ import (
 
 const (
 	ParamRecipeId     = "recipe_id"
+	ParamCollectionId = "collection_id"
 	ParamLanguageCode = "language_code"
 )
 

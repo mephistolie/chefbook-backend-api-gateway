@@ -1,6 +1,7 @@
 package encryption
 
 import (
+	"encoding/base64"
 	"github.com/gin-gonic/gin"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/handler/v1/encryption/dto/request_body"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/handler/v1/encryption/dto/response_body"
@@ -41,7 +42,7 @@ func (h *Handler) GetRecipeKeyRequests(c *gin.Context) {
 	for i, keyRequest := range res.Requests {
 		var keyPtr *string
 		if len(keyRequest.PublicKey) > 0 {
-			key := string(keyRequest.PublicKey[:])
+			key := base64.StdEncoding.EncodeToString(keyRequest.PublicKey)
 			keyPtr = &key
 		}
 
@@ -117,7 +118,7 @@ func (h *Handler) GetRecipeKey(c *gin.Context) {
 	}
 	var keyPtr *string
 	if len(res.EncryptedKey) > 0 {
-		key := string(res.EncryptedKey[:])
+		key := base64.StdEncoding.EncodeToString(res.EncryptedKey)
 		keyPtr = &key
 	}
 
@@ -149,11 +150,16 @@ func (h *Handler) SetRecipeOwnerKey(c *gin.Context) {
 		response.Fail(c, response.InvalidBody)
 		return
 	}
+	key, err := base64.StdEncoding.DecodeString(body.Key)
+	if err != nil {
+		response.Fail(c, response.InvalidBody)
+		return
+	}
 
 	res, err := h.service.SetRecipeKey(c, &api.SetRecipeKeyRequest{
 		RecipeId:     c.Param(ParamRecipeId),
 		RequesterId:  payload.UserId.String(),
-		EncryptedKey: []byte(body.Key),
+		EncryptedKey: key,
 	})
 	if err != nil {
 		response.FailGrpc(c, err)
@@ -189,6 +195,11 @@ func (h *Handler) GrantRecipeKeyAccess(c *gin.Context) {
 		response.Fail(c, response.InvalidBody)
 		return
 	}
+	key, err := base64.StdEncoding.DecodeString(body.Key)
+	if err != nil {
+		response.Fail(c, response.InvalidBody)
+		return
+	}
 
 	userId := c.Param(ParamUserId)
 
@@ -196,7 +207,7 @@ func (h *Handler) GrantRecipeKeyAccess(c *gin.Context) {
 		RecipeId:     c.Param(ParamRecipeId),
 		UserId:       &userId,
 		RequesterId:  payload.UserId.String(),
-		EncryptedKey: []byte(body.Key),
+		EncryptedKey: key,
 	})
 	if err != nil {
 		response.FailGrpc(c, err)

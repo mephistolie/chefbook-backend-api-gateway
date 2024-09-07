@@ -44,11 +44,8 @@ func main() {
 		TagService: config.TagService{
 			Addr: fs.String("tag-addr", "", "tag service address"),
 		},
-		CategoryService: config.CategoryService{
-			Addr: fs.String("category-addr", "", "category service address"),
-		},
 		RecipeService: config.RecipeService{
-			Addr: fs.String("recipe-addr", "", "recipe service address"),
+			Addr: fs.String("recipe-addr", "", "recipe & collection service address"),
 		},
 		EncryptionService: config.EncryptionService{
 			Addr: fs.String("encryption-addr", "", "encryption service address"),

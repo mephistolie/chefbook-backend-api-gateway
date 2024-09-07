@@ -9,7 +9,6 @@ import (
 func (r *Router) initRecipesRoutes(api *gin.RouterGroup) {
 	recipesGroup := api.Group("/recipes", r.authMiddleware.AuthorizeUser)
 	r.initBaseRecipesRoutes(recipesGroup)
-	r.initCategoriesRoutes(recipesGroup)
 	r.initTagsRoutes(recipesGroup)
 }
 
@@ -27,11 +26,13 @@ func (r *Router) initBaseRecipesRoutes(recipesGroup *gin.RouterGroup) {
 	recipesGroup.PUT(fmt.Sprintf("/:%s/pictures", recipe.ParamRecipeId), r.handler.Recipe.SetRecipePictures)
 
 	recipesGroup.POST(fmt.Sprintf("/:%s/rate", recipe.ParamRecipeId), r.handler.Recipe.RateRecipe)
-	recipesGroup.POST(fmt.Sprintf("/:%s/save", recipe.ParamRecipeId), r.handler.Recipe.SaveRecipe)
-	recipesGroup.DELETE(fmt.Sprintf("/:%s/save", recipe.ParamRecipeId), r.handler.Recipe.RemoveRecipeFromRecipeBook)
-	recipesGroup.POST(fmt.Sprintf("/:%s/favourite", recipe.ParamRecipeId), r.handler.Recipe.AddRecipeToFavourite)
-	recipesGroup.DELETE(fmt.Sprintf("/:%s/favourite", recipe.ParamRecipeId), r.handler.Recipe.RemoveRecipeFromFavourite)
-	recipesGroup.PUT(fmt.Sprintf("/:%s/categories", recipe.ParamRecipeId), r.handler.Recipe.SetRecipeCategories)
+	recipesGroup.POST(fmt.Sprintf("/:%s/book", recipe.ParamRecipeId), r.handler.Recipe.SaveRecipeToRecipeBook)
+	recipesGroup.DELETE(fmt.Sprintf("/:%s/book", recipe.ParamRecipeId), r.handler.Recipe.RemoveRecipeFromRecipeBook)
+	recipesGroup.POST(fmt.Sprintf("/:%s/favourites", recipe.ParamRecipeId), r.handler.Recipe.SaveRecipeToFavourites)
+	recipesGroup.DELETE(fmt.Sprintf("/:%s/favourites", recipe.ParamRecipeId), r.handler.Recipe.RemoveRecipeFromFavourites)
+	recipesGroup.POST(fmt.Sprintf("/:%s/collections/:%s", recipe.ParamRecipeId, recipe.ParamCollectionId), r.handler.Recipe.AddRecipeToCollection)
+	recipesGroup.DELETE(fmt.Sprintf("/:%s/collections/:%s", recipe.ParamRecipeId, recipe.ParamCollectionId), r.handler.Recipe.RemoveRecipeFromCollection)
+	recipesGroup.PUT(fmt.Sprintf("/:%s/collections", recipe.ParamRecipeId), r.handler.Recipe.SetRecipeCollections)
 
 	recipesGroup.POST(fmt.Sprintf("/:%s/translations", recipe.ParamRecipeId), r.handler.Recipe.TranslateRecipe)
 	recipesGroup.DELETE(fmt.Sprintf("/:%s/translations/:%s", recipe.ParamRecipeId, recipe.ParamLanguageCode), r.handler.Recipe.DeleteRecipeTranslation)

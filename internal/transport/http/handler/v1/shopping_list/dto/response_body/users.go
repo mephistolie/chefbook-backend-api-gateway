@@ -20,6 +20,6 @@ func ShoppingListUsers(users []*api.ShoppingListUser) []response.ProfileInfo {
 }
 
 type GetShoppingListLink struct {
-	Link      string    `json:"link"`
-	ExpiresAt time.Time `json:"expiresAt"`
+	Link                string    `json:"link"`
+	ExpirationTimestamp time.Time `json:"expirationTimestamp"`
 }

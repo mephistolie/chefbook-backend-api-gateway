@@ -6,10 +6,10 @@ import (
 )
 
 type Subscription struct {
-	Plan           string     `json:"plan"`
-	Source         *string    `json:"source,omitempty"`
-	ExpirationDate *time.Time `json:"expirationDate,omitempty"`
-	AutoRenew      bool       `json:"autoRenew,omitempty"`
+	Plan                string     `json:"plan"`
+	Source              *string    `json:"source,omitempty"`
+	ExpirationTimestamp *time.Time `json:"expirationTimestamp,omitempty"`
+	AutoRenew           bool       `json:"autoRenew,omitempty"`
 }
 
 func GetSubscriptions(response []*api.Subscription) []Subscription {
@@ -22,10 +22,10 @@ func GetSubscriptions(response []*api.Subscription) []Subscription {
 		}
 
 		subscriptions[i] = Subscription{
-			Plan:           subscription.Plan,
-			Source:         subscription.Source,
-			ExpirationDate: expirationDatePtr,
-			AutoRenew:      subscription.AutoRenew,
+			Plan:                subscription.Plan,
+			Source:              subscription.Source,
+			ExpirationTimestamp: expirationDatePtr,
+			AutoRenew:           subscription.AutoRenew,
 		}
 	}
 	return subscriptions

@@ -114,47 +114,14 @@ definitions:
     properties:
       accessToken:
         type: string
-      expiresAt:
+      expirationTimestamp:
         type: string
-      profileDeletingAt:
+      profileDeletionTimestamp:
+        type: string
+      profileId:
         type: string
       refreshToken:
         type: string
-    type: object
-  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_category_dto_request_body.AddCategory:
-    properties:
-      categoryId:
-        type: string
-      emoji:
-        type: string
-      name:
-        type: string
-    type: object
-  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_category_dto_request_body.UpdateCategory:
-    properties:
-      emoji:
-        type: string
-      name:
-        type: string
-    type: object
-  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_category_dto_response_body.AddCategory:
-    properties:
-      categoryId:
-        type: string
-    required:
-    - categoryId
-    type: object
-  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_category_dto_response_body.Category:
-    properties:
-      categoryId:
-        type: string
-      emoji:
-        type: string
-      name:
-        type: string
-    required:
-    - categoryId
-    - name
     type: object
   ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_encryption_dto_request_body.CreateEncryptedVault
   : properties:
@@ -193,8 +160,10 @@ definitions:
     type: object
   ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_request_body.ConfirmAvatarUploading
   : properties:
-      avatarId:
+      avatarLink:
         type: string
+    required:
+    - avatarLink
     type: object
   github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_request_body.DeleteProfile:
     properties:
@@ -247,9 +216,11 @@ definitions:
         $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_response_body.OAuth'
       profileId:
         type: string
-      registeredAt:
+      registrationTimestamp:
         type: string
       role:
+        type: string
+      subscriptionPlan:
         type: string
     type: object
   ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_response_body.ProfileDeletionStatus
@@ -275,7 +246,7 @@ definitions:
   github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_common_body.IngredientItem:
     properties:
       amount:
-        type: integer
+        type: number
       id:
         type: string
       recipeId:
@@ -307,6 +278,17 @@ definitions:
       preview:
         type: string
     type: object
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_request_body.AddCollection:
+    properties:
+      collectionId:
+        type: string
+      name:
+        type: string
+      visibility:
+        type: string
+    required:
+    - name
+    type: object
   ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_request_body.GenerateRecipePicturesUploadLinks
   : properties:
       picturesCount:
@@ -316,47 +298,47 @@ definitions:
     type: object
   github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_request_body.GetRecipes:
     properties:
-      authorId:
+      author_id:
         type: string
-      lastCalories:
+      count:
         type: integer
-      lastCreationTimestamp:
+      last_calories:
+        type: integer
+      last_creation_timestamp:
         type: string
-      lastRating:
+      last_rating:
         type: number
-      lastRecipeId:
+      last_recipe_id:
         type: string
-      lastTime:
+      last_time:
         type: integer
-      lastUpdateTimestamp:
+      last_update_timestamp:
         type: string
-      lastVotes:
+      last_votes:
         type: integer
-      maxCalories:
+      max_calories:
         type: integer
-      maxRating:
+      max_rating:
         type: integer
-      maxServings:
+      max_servings:
         type: integer
-      maxTime:
+      max_time:
         type: integer
-      minCalories:
+      min_calories:
         type: integer
-      minRating:
+      min_rating:
         type: integer
-      minServings:
+      min_servings:
         type: integer
-      minTime:
+      min_time:
         type: integer
       owned:
         type: boolean
-      pageSize:
-        type: integer
-      recipeIds:
+      recipe_id:
         items:
           type: string
         type: array
-      recipeLanguages:
+      recipe_language:
         items:
           type: string
         type: array
@@ -366,7 +348,11 @@ definitions:
         type: string
       sorting:
         type: string
-      userLanguage:
+      tags:
+        items:
+          type: string
+        type: array
+      user_language:
         type: string
     type: object
   ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_request_body.IngredientTranslation
@@ -448,14 +434,57 @@ definitions:
     - language
     - name
     type: object
-  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Category:
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_request_body.UpdateCollection:
     properties:
-      emoji:
-        type: string
-      id:
-        type: string
       name:
         type: string
+      visibility:
+        type: string
+    required:
+    - name
+    type: object
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.AddCollection:
+    properties:
+      collectionId:
+        type: string
+    required:
+    - collectionId
+    type: object
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Collection:
+    properties:
+      collectionId:
+        type: string
+      contributors:
+        items:
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Contributor'
+        type: array
+      name:
+        type: string
+      recipes_count:
+        type: integer
+      visibility:
+        type: string
+    required:
+    - collectionId
+    - name
+    - visibility
+    type: object
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.CollectionInfo:
+    properties:
+      name:
+        type: string
+    required:
+    - name
+    type: object
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Contributor:
+    properties:
+      contributorId:
+        type: string
+      role:
+        type: string
+    required:
+    - contributorId
+    - role
     type: object
   github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.CreateRecipe:
     properties:
@@ -464,18 +493,37 @@ definitions:
       version:
         type: integer
     type: object
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.GetCollection:
+    properties:
+      collection:
+        $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Collection'
+      profilesInfo:
+        additionalProperties:
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.ProfileMinInfo'
+        type: object
+    required:
+    - collection
+    type: object
   ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.GetRecipeBookResponse
   : properties:
-      categories:
+      collections:
         items:
-          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Category'
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Collection'
         type: array
       isEncryptedVaultEnabled:
         type: boolean
+      profilesInfo:
+        additionalProperties:
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.ProfileMinInfo'
+        type: object
       recipes:
         items:
           $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.RecipeState'
         type: array
+      tagGroups:
+        additionalProperties:
+          type: string
+        type: object
       tags:
         additionalProperties:
           $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Tag'
@@ -483,12 +531,20 @@ definitions:
     type: object
   ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.GetRecipeResponse
   : properties:
-      categories:
+      collections:
         additionalProperties:
-          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Category'
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.CollectionInfo'
+        type: object
+      profilesInfo:
+        additionalProperties:
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.ProfileMinInfo'
         type: object
       recipe:
         $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Recipe'
+      tagGroups:
+        additionalProperties:
+          type: string
+        type: object
       tags:
         additionalProperties:
           $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Tag'
@@ -496,25 +552,26 @@ definitions:
     type: object
   ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.GetRecipesResponse
   : properties:
-      categories:
+      collections:
         additionalProperties:
-          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Category'
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.CollectionInfo'
+        type: object
+      profilesInfo:
+        additionalProperties:
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.ProfileMinInfo'
         type: object
       recipes:
         items:
           $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.RecipeInfo'
         type: array
+      tagGroups:
+        additionalProperties:
+          type: string
+        type: object
       tags:
         additionalProperties:
           $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Tag'
         type: object
-    type: object
-  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.OwnerInfo:
-    properties:
-      avatar:
-        type: string
-      name:
-        type: string
     type: object
   github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Rating:
     properties:
@@ -529,7 +586,7 @@ definitions:
     properties:
       calories:
         type: integer
-      categories:
+      collections:
         items:
           type: string
         type: array
@@ -559,8 +616,8 @@ definitions:
         type: string
       owned:
         type: boolean
-      owner:
-        $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.ProfileInfo'
+      ownerId:
+        type: string
       pictures:
         $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_common_body.RecipePictures'
       rating:
@@ -578,7 +635,7 @@ definitions:
       translations:
         additionalProperties:
           items:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.RecipeTranslation'
+            type: string
           type: array
         type: object
       updateTimestamp:
@@ -592,7 +649,7 @@ definitions:
     properties:
       calories:
         type: integer
-      categories:
+      collections:
         items:
           type: string
         type: array
@@ -610,8 +667,8 @@ definitions:
         type: string
       owned:
         type: boolean
-      owner:
-        $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.ProfileInfo'
+      ownerId:
+        type: string
       preview:
         type: string
       rating:
@@ -652,7 +709,7 @@ definitions:
     type: object
   github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.RecipeState:
     properties:
-      categories:
+      collections:
         items:
           type: string
         type: array
@@ -660,21 +717,20 @@ definitions:
         type: boolean
       id:
         type: string
-      owner:
-        $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.OwnerInfo'
       rating:
         $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Rating'
-      translations:
+      tags:
         items:
           type: string
         type: array
+      translations:
+        additionalProperties:
+          items:
+            type: string
+          type: array
+        type: object
       version:
         type: integer
-    type: object
-  ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.RecipeTranslation
-  : properties:
-      author:
-        $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.ProfileInfo'
     type: object
   ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.SetRecipePictures
   : properties:
@@ -687,6 +743,8 @@ definitions:
     properties:
       emoji:
         type: string
+      groupId:
+        type: string
       name:
         type: string
     type: object
@@ -698,7 +756,7 @@ definitions:
   github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_common_body.Purchase:
     properties:
       amount:
-        type: integer
+        type: number
       measureUnit:
         type: string
       multiplier:
@@ -759,7 +817,7 @@ definitions:
     type: object
   ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_shopping_list_dto_response_body.GetShoppingListLink
   : properties:
-      expiresAt:
+      expirationTimestamp:
         type: string
       link:
         type: string
@@ -793,7 +851,7 @@ definitions:
   : properties:
       autoRenew:
         type: boolean
-      expirationDate:
+      expirationTimestamp:
         type: string
       plan:
         type: string
@@ -850,6 +908,13 @@ definitions:
       avatar:
         type: string
       id:
+        type: string
+      name:
+        type: string
+    type: object
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.ProfileMinInfo:
+    properties:
+      avatar:
         type: string
       name:
         type: string
@@ -1470,6 +1535,231 @@ paths:
       summary: Request VK OAuth
       tags:
       - auth
+  /v1/collections:
+    get:
+      consumes:
+      - application/json
+      description: Get user recipe collections
+      parameters:
+      - description: User ID
+        in: query
+        name: user_id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.Collection'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Get user collections
+      tags:
+      - collection
+      - recipe
+    post:
+      consumes:
+      - application/json
+      description: Add recipes collection
+      parameters:
+      - description: Input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_request_body.AddCollection'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.AddCollection'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Add collection
+      tags:
+      - collection
+      - recipe
+  /v1/collections/{collection_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete recipes collection
+      parameters:
+      - description: Collection ID
+        in: path
+        name: collection_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete collection
+      tags:
+      - collection
+    get:
+      consumes:
+      - application/json
+      description: Get recipes collection
+      parameters:
+      - description: Collection ID
+        in: path
+        name: collection_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_response_body.GetCollection'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Get collection
+      tags:
+      - collection
+      - recipe
+    put:
+      consumes:
+      - application/json
+      description: Update recipes collection
+      parameters:
+      - description: Collection ID
+        in: path
+        name: collection_id
+        required: true
+        type: integer
+      - description: Input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_recipe_dto_request_body.UpdateCollection'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Update collection
+      tags:
+      - collection
+      - recipe
+  /v1/collections/{collection_id}/save:
+    delete:
+      consumes:
+      - application/json
+      description: Remove collection from recipe book
+      parameters:
+      - description: Collection ID
+        in: path
+        name: collection_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Remove collection from recipe book
+      tags:
+      - collection
+    post:
+      consumes:
+      - application/json
+      description: Save collection to recipe book
+      parameters:
+      - description: Collection ID
+        in: path
+        name: collection_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Save collection to recipe book
+      tags:
+      - collection
   /v1/encryption/recipes/{recipe_id}:
     get:
       consumes:
@@ -1808,12 +2098,6 @@ paths:
       consumes:
       - application/json
       description: Get profile
-      parameters:
-      - description: Profile ID
-        in: path
-        name: profile_id
-        required: true
-        type: integer
       produces:
       - application/json
       responses:
@@ -2309,11 +2593,11 @@ paths:
       summary: Update recipe
       tags:
       - recipe
-  /v1/recipes/{recipe_id}/categories:
-    put:
+  /v1/recipes/{recipe_id}/book:
+    post:
       consumes:
       - application/json
-      description: Set recipe categories
+      description: Save recipe to user's recipe book
       parameters:
       - description: Recipe ID
         in: path
@@ -2337,7 +2621,109 @@ paths:
             $ref: '#/definitions/fail.Response'
       security:
       - ApiKeyAuth: []
-      summary: Set recipe categories
+      summary: Save recipe
+      tags:
+      - recipe
+  /v1/recipes/{recipe_id}/collections:
+    put:
+      consumes:
+      - application/json
+      description: Set recipe collections
+      parameters:
+      - description: Recipe ID
+        in: path
+        name: recipe_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Set recipe collections
+      tags:
+      - recipe
+  /v1/recipes/{recipe_id}/collections/{collection_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Remove recipe from collection
+      parameters:
+      - description: Recipe ID
+        in: path
+        name: recipe_id
+        required: true
+        type: string
+      - description: Collection ID
+        in: path
+        name: collection_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Remove recipe from collection
+      tags:
+      - recipe
+    post:
+      consumes:
+      - application/json
+      description: Add recipe to collection
+      parameters:
+      - description: Recipe ID
+        in: path
+        name: recipe_id
+        required: true
+        type: string
+      - description: Collection ID
+        in: path
+        name: collection_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Add recipe to collection
       tags:
       - recipe
   /v1/recipes/{recipe_id}/favourite:
@@ -2371,6 +2757,7 @@ paths:
       summary: Remove recipe from favourite
       tags:
       - recipe
+  /v1/recipes/{recipe_id}/favourites:
     post:
       consumes:
       - application/json
@@ -2507,37 +2894,6 @@ paths:
       summary: Rate recipe
       tags:
       - recipe
-  /v1/recipes/{recipe_id}/save:
-    post:
-      consumes:
-      - application/json
-      description: Save recipe to user's recipe book
-      parameters:
-      - description: Recipe ID
-        in: path
-        name: recipe_id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/fail.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/fail.Response'
-      security:
-      - ApiKeyAuth: []
-      summary: Save recipe
-      tags:
-      - recipe
   /v1/recipes/{recipe_id}/translations:
     delete:
       consumes:
@@ -2639,165 +2995,6 @@ paths:
       - ApiKeyAuth: []
       summary: Get recipe book
       tags:
-      - recipe
-  /v1/recipes/categories:
-    get:
-      consumes:
-      - application/json
-      description: Get user recipe categories
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_category_dto_response_body.Category'
-            type: array
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/fail.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/fail.Response'
-      security:
-      - ApiKeyAuth: []
-      summary: Get user categories
-      tags:
-      - category
-      - recipe
-    post:
-      consumes:
-      - application/json
-      description: Add recipe category
-      parameters:
-      - description: Input
-        in: body
-        name: input
-        required: true
-        schema:
-          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_category_dto_request_body.AddCategory'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_category_dto_response_body.AddCategory'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/fail.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/fail.Response'
-      security:
-      - ApiKeyAuth: []
-      summary: Add category
-      tags:
-      - category
-      - recipe
-  /v1/recipes/categories/{category_id}:
-    delete:
-      consumes:
-      - application/json
-      description: Delete recipe category
-      parameters:
-      - description: Category ID
-        in: path
-        name: category_id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/fail.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/fail.Response'
-      security:
-      - ApiKeyAuth: []
-      summary: Delete category
-      tags:
-      - category
-    get:
-      consumes:
-      - application/json
-      description: Get recipe category
-      parameters:
-      - description: Category ID
-        in: path
-        name: category_id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_category_dto_response_body.Category'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/fail.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/fail.Response'
-      security:
-      - ApiKeyAuth: []
-      summary: Get category
-      tags:
-      - category
-      - recipe
-    put:
-      consumes:
-      - application/json
-      description: Update recipe category
-      parameters:
-      - description: Category ID
-        in: path
-        name: category_id
-        required: true
-        type: integer
-      - description: Input
-        in: body
-        name: input
-        required: true
-        schema:
-          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_category_dto_request_body.UpdateCategory'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/fail.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/fail.Response'
-      security:
-      - ApiKeyAuth: []
-      summary: Update category
-      tags:
-      - category
       - recipe
   /v1/recipes/random:
     get:
@@ -2943,7 +3140,7 @@ paths:
       tags:
       - tag
       - recipe
-  /v1/recipes{recipe_id}/save:
+  /v1/recipes{recipe_id}/book:
     delete:
       consumes:
       - application/json

@@ -69,7 +69,7 @@ func (h *Handler) GetSharedShoppingListLink(c *gin.Context) {
 		return
 	}
 
-	response.Success(c, response_body.GetShoppingListLink{Link: res.Link, ExpiresAt: res.ExpiresAt.AsTime()})
+	response.Success(c, response_body.GetShoppingListLink{Link: res.Link, ExpirationTimestamp: res.ExpiresAt.AsTime()})
 }
 
 // JoinShoppingList Swagger Documentation

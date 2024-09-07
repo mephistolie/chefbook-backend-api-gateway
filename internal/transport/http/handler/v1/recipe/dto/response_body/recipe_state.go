@@ -1,40 +1,41 @@
 package response_body
 
 import (
+	common "github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/helpers/response"
 	api "github.com/mephistolie/chefbook-backend-recipe/api/proto/implementation/v1"
 )
 
 type RecipeState struct {
 	Id string `json:"id"`
 
-	Owner *OwnerInfo `json:"owner,omitempty"`
-
 	Version int32 `json:"version"`
 
-	Translations []string `json:"translations"`
+	Translations map[string][]string `json:"translations,omitempty"`
 
 	Rating Rating `json:"rating"`
 
 	Tags        []string `json:"tags,omitempty"`
-	Categories  []string `json:"categories,omitempty"`
-	IsFavourite bool     `json:"favourite"`
+	Collections []string `json:"collections,omitempty"`
+	IsFavourite bool     `json:"favourite,omitempty"`
 }
 
 type GetRecipeBookResponse struct {
-	Recipes                 []RecipeState     `json:"recipes"`
-	Tags                    map[string]Tag    `json:"tags"`
-	TagGroups               map[string]string `json:"tagGroups"`
-	Categories              []Category        `json:"categories"`
-	IsEncryptedVaultEnabled bool              `json:"isEncryptedVaultEnabled"`
+	Recipes                 []RecipeState                    `json:"recipes"`
+	Tags                    map[string]Tag                   `json:"tags"`
+	TagGroups               map[string]string                `json:"tagGroups"`
+	Collections             []Collection                     `json:"collections"`
+	IsEncryptedVaultEnabled bool                             `json:"isEncryptedVaultEnabled"`
+	ProfilesInfo            map[string]common.ProfileMinInfo `json:"profilesInfo"`
 }
 
 func GetRecipeBook(response *api.GetRecipeBookResponse) GetRecipeBookResponse {
 	return GetRecipeBookResponse{
 		Recipes:                 newRecipeStates(response.Recipes),
 		Tags:                    newTags(response.Tags),
-		TagGroups:               response.TagGroups,
-		Categories:              newCategories(response.Categories),
+		TagGroups:               common.NonNilStringMap(response.TagGroups),
+		Collections:             newCollections(response.Collections),
 		IsEncryptedVaultEnabled: response.HasEncryptedVault,
+		ProfilesInfo:            newProfilesInfo(response.ProfilesInfo),
 	}
 }
 
@@ -47,22 +48,12 @@ func newRecipeStates(response []*api.RecipeState) []RecipeState {
 }
 
 func newRecipeState(response *api.RecipeState) RecipeState {
-	var owner *OwnerInfo
-	if response.OwnerName != nil || response.OwnerAvatar != nil {
-		owner = &OwnerInfo{
-			Name:   response.OwnerName,
-			Avatar: response.OwnerAvatar,
-		}
-	}
-
 	return RecipeState{
 		Id: response.RecipeId,
 
-		Owner: owner,
-
 		Version: response.Version,
 
-		Translations: response.Translations,
+		Translations: newRecipeTranslations(response.Translations),
 
 		Rating: Rating{
 			Index: response.Rating,
@@ -71,7 +62,7 @@ func newRecipeState(response *api.RecipeState) RecipeState {
 		},
 
 		Tags:        response.Tags,
-		Categories:  response.Categories,
+		Collections: response.Collections,
 		IsFavourite: response.IsFavourite,
 	}
 }

@@ -1,6 +1,7 @@
 package encryption
 
 import (
+	"encoding/base64"
 	"github.com/gin-gonic/gin"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/handler/v1/encryption/dto/request_body"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/handler/v1/encryption/dto/response_body"
@@ -34,7 +35,7 @@ func (h *Handler) GetEncryptedVaultKey(c *gin.Context) {
 	}
 	var keyPtr *string
 	if len(res.EncryptedPrivateKey) > 0 {
-		key := string(res.EncryptedPrivateKey[:])
+		key := base64.StdEncoding.EncodeToString(res.EncryptedPrivateKey)
 		keyPtr = &key
 	}
 
@@ -66,10 +67,21 @@ func (h *Handler) CreateEncryptedVault(c *gin.Context) {
 		return
 	}
 
+	publicKey, err := base64.StdEncoding.DecodeString(body.PublicKey)
+	if err != nil {
+		response.Fail(c, response.InvalidBody)
+		return
+	}
+	privateKey, err := base64.StdEncoding.DecodeString(body.PrivateKey)
+	if err != nil {
+		response.Fail(c, response.InvalidBody)
+		return
+	}
+
 	res, err := h.service.CreateEncryptedVault(c, &api.CreateEncryptedVaultRequest{
 		UserId:              payload.UserId.String(),
-		PublicKey:           []byte(body.PublicKey),
-		EncryptedPrivateKey: []byte(body.PrivateKey),
+		PublicKey:           publicKey,
+		EncryptedPrivateKey: privateKey,
 	})
 	if err != nil {
 		response.FailGrpc(c, err)

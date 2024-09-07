@@ -12,7 +12,7 @@ type Profile struct {
 	Role                  *string    `json:"role,omitempty"`
 	OAuth                 *OAuth     `json:"oAuth,omitempty"`
 	IsBlocked             bool       `json:"blocked"`
-	RegistrationTimestamp *time.Time `json:"registeredAt,omitempty"`
+	RegistrationTimestamp *time.Time `json:"registrationTimestamp,omitempty"`
 	FirstName             *string    `json:"firstName,omitempty"`
 	LastName              *string    `json:"lastName,omitempty"`
 	Description           *string    `json:"description,omitempty"`

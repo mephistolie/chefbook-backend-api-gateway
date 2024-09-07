@@ -10,15 +10,15 @@ type RecipeInfo struct {
 	Id   string `json:"id"`
 	Name string `json:"name"`
 
-	Owner common.ProfileInfo `json:"owner"`
+	OwnerId string `json:"ownerId"`
 
-	IsOwned     bool   `json:"owned"`
-	IsSaved     bool   `json:"saved"`
+	IsOwned     bool   `json:"owned,omitempty"`
+	IsSaved     bool   `json:"saved,omitempty"`
 	Visibility  string `json:"visibility"`
 	IsEncrypted bool   `json:"encrypted,omitempty"`
 
 	Language     string   `json:"language"`
-	Translations []string `json:"translations"`
+	Translations []string `json:"translations,omitempty"`
 	Preview      *string  `json:"preview,omitempty"`
 
 	CreationTimestamp time.Time `json:"creationTimestamp"`
@@ -28,8 +28,8 @@ type RecipeInfo struct {
 	Rating Rating `json:"rating"`
 
 	Tags        []string `json:"tags,omitempty"`
-	Categories  []string `json:"categories,omitempty"`
-	IsFavourite bool     `json:"favourite"`
+	Collections []string `json:"collections,omitempty"`
+	IsFavourite bool     `json:"favourite,omitempty"`
 
 	Servings *int32 `json:"servings,omitempty"`
 	Time     *int32 `json:"time,omitempty"`
@@ -38,18 +38,20 @@ type RecipeInfo struct {
 }
 
 type GetRecipesResponse struct {
-	Recipes    []RecipeInfo        `json:"recipes"`
-	Tags       map[string]Tag      `json:"tags"`
-	TagGroups  map[string]string   `json:"tagGroups"`
-	Categories map[string]Category `json:"categories"`
+	Recipes      []RecipeInfo                     `json:"recipes"`
+	Collections  map[string]CollectionInfo        `json:"collections"`
+	Tags         map[string]Tag                   `json:"tags"`
+	TagGroups    map[string]string                `json:"tagGroups"`
+	ProfilesInfo map[string]common.ProfileMinInfo `json:"profilesInfo"`
 }
 
 func GetRecipes(response *api.GetRecipesResponse) GetRecipesResponse {
 	return GetRecipesResponse{
-		Recipes:    newRecipeInfos(response.Recipes),
-		Tags:       newTags(response.Tags),
-		TagGroups:  response.TagGroups,
-		Categories: newCategoriesMap(response.Categories),
+		Recipes:      newRecipeInfos(response.Recipes),
+		Collections:  newCollectionsMap(response.Collections),
+		Tags:         newTags(response.Tags),
+		TagGroups:    common.NonNilStringMap(response.TagGroups),
+		ProfilesInfo: newProfilesInfo(response.ProfilesInfo),
 	}
 }
 
@@ -66,11 +68,7 @@ func newRecipeInfo(response *api.RecipeInfo) RecipeInfo {
 		Id:   response.RecipeId,
 		Name: response.Name,
 
-		Owner: common.ProfileInfo{
-			Id:     response.OwnerId,
-			Name:   response.OwnerName,
-			Avatar: response.OwnerAvatar,
-		},
+		OwnerId: response.OwnerId,
 
 		IsOwned:     response.IsOwned,
 		IsSaved:     response.IsSaved,
@@ -92,7 +90,7 @@ func newRecipeInfo(response *api.RecipeInfo) RecipeInfo {
 		},
 
 		Tags:        response.Tags,
-		Categories:  response.Categories,
+		Collections: response.Collections,
 		IsFavourite: response.IsFavourite,
 
 		Servings: response.Servings,
