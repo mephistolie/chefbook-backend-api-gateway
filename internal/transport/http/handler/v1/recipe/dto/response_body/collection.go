@@ -10,7 +10,7 @@ type Collection struct {
 	Name         string        `json:"name" binding:"required"`
 	Visibility   string        `json:"visibility" binding:"required"`
 	Contributors []Contributor `json:"contributors"`
-	RecipesCount int32         `json:"recipes_count"`
+	RecipesCount int32         `json:"recipesCount"`
 }
 
 type CollectionInfo struct {
@@ -22,7 +22,7 @@ type AddCollection struct {
 }
 
 type GetCollections struct {
-	Collections  []Collection                       `json:"collection" binding:"required"`
+	Collections  []Collection                       `json:"collections" binding:"required"`
 	ProfilesInfo map[string]response.ProfileMinInfo `json:"profilesInfo"`
 }
 
