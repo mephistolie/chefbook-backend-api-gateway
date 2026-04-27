@@ -2,6 +2,7 @@ package encryption
 
 import (
 	"encoding/base64"
+
 	"github.com/gin-gonic/gin"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/handler/v1/encryption/dto/request_body"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/handler/v1/encryption/dto/response_body"

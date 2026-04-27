@@ -2,6 +2,7 @@ package encryption
 
 import (
 	"encoding/base64"
+
 	"github.com/gin-gonic/gin"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/handler/v1/encryption/dto/request_body"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/handler/v1/encryption/dto/response_body"
@@ -38,8 +39,13 @@ func (h *Handler) GetEncryptedVaultKey(c *gin.Context) {
 		key := base64.StdEncoding.EncodeToString(res.EncryptedPrivateKey)
 		keyPtr = &key
 	}
+	var saltPtr *string
+	if len(res.Salt) > 0 {
+		salt := base64.StdEncoding.EncodeToString(res.Salt)
+		saltPtr = &salt
+	}
 
-	response.Success(c, response_body.GetEncryptedVaultKey{Key: keyPtr})
+	response.Success(c, response_body.GetEncryptedVaultKey{Key: keyPtr, Salt: saltPtr})
 }
 
 // CreateEncryptedVault Swagger Documentation
@@ -77,11 +83,17 @@ func (h *Handler) CreateEncryptedVault(c *gin.Context) {
 		response.Fail(c, response.InvalidBody)
 		return
 	}
+	salt, err := base64.StdEncoding.DecodeString(body.Salt)
+	if err != nil {
+		response.Fail(c, response.InvalidBody)
+		return
+	}
 
 	res, err := h.service.CreateEncryptedVault(c, &api.CreateEncryptedVaultRequest{
 		UserId:              payload.UserId.String(),
 		PublicKey:           publicKey,
 		EncryptedPrivateKey: privateKey,
+		Salt:                salt,
 	})
 	if err != nil {
 		response.FailGrpc(c, err)
