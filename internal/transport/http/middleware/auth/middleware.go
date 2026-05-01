@@ -64,9 +64,11 @@ func (m *Middleware) authorizeUser(c *gin.Context, allowDeleted bool) {
 	payload, err := m.parseAuthHeader(c)
 	if err != nil {
 		response.Unauthorized(c, err)
+		return
 	}
 	if !allowDeleted && payload.Deleted {
 		response.Fail(c, response.ProfileDeleting)
+		return
 	}
 	request.PutUserPayload(c, payload)
 }
