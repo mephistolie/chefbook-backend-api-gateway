@@ -9,7 +9,7 @@ require (
 	github.com/mephistolie/chefbook-backend-common/log v0.6.0
 	github.com/mephistolie/chefbook-backend-common/responses v0.9.0
 	github.com/mephistolie/chefbook-backend-common/shutdown v0.6.0
-	github.com/mephistolie/chefbook-backend-common/tokens v0.9.0
+	github.com/mephistolie/chefbook-backend-common/tokens v0.10.0
 	github.com/mephistolie/chefbook-backend-encryption/api v1.1.3
 	github.com/mephistolie/chefbook-backend-profile/api v1.3.1
 	github.com/mephistolie/chefbook-backend-recipe/api v1.7.8
@@ -49,7 +49,7 @@ require (
 	github.com/go-playground/validator/v10 v10.30.2 // indirect
 	github.com/goccy/go-json v0.10.6 // indirect
 	github.com/goccy/go-yaml v1.19.2 // indirect
-	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
+	github.com/golang-jwt/jwt/v5 v5.3.1 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware v1.4.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
