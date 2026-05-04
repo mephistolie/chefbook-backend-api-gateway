@@ -24,7 +24,7 @@ func Run(cfg *config.Config) {
 		log.Fatal("error during service initialization: ", err)
 	}
 
-	authMiddleware, err := auth.NewMiddleware(services.Auth, *cfg.AuthService.AccessTokenKeyUpdateInterval)
+	authMiddleware, err := auth.NewMiddleware(context.Background(), services.Auth, *cfg.AuthService.AccessTokenKeyUpdateInterval)
 	if err != nil {
 		log.Fatal("error during auth middleware initialization: ", err)
 	}

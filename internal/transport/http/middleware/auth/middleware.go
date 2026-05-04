@@ -23,12 +23,12 @@ type Middleware struct {
 	keyUpdateInterval  time.Duration
 }
 
-func NewMiddleware(service *service.Auth, keyUpdateInterval time.Duration) (*Middleware, error) {
+func NewMiddleware(ctx context.Context, service *service.Auth, keyUpdateInterval time.Duration) (*Middleware, error) {
 	var res *auth.GetAccessTokenPublicKeyResponse = nil
 	var err error
 
 	for i := 0; i < 6; i++ {
-		if res, err = service.GetAccessTokenPublicKey(context.Background(), &auth.GetAccessTokenPublicKeyRequest{}); err == nil {
+		if res, err = service.GetAccessTokenPublicKey(ctx, &auth.GetAccessTokenPublicKeyRequest{}); err == nil {
 			break
 		} else if i+1 < 6 {
 			log.Warn("failed to retrieve access token signing key; retry in 10 seconds...")
@@ -61,7 +61,7 @@ func (m *Middleware) AuthorizeDeletedUser(c *gin.Context) {
 }
 
 func (m *Middleware) authorizeUser(c *gin.Context, allowDeleted bool) {
-	payload, err := m.parseAuthHeader(c)
+	payload, err := m.parseAuthHeader(c.Request.Context(), c)
 	if err != nil {
 		response.Unauthorized(c, err)
 		return
@@ -73,8 +73,8 @@ func (m *Middleware) authorizeUser(c *gin.Context, allowDeleted bool) {
 	request.PutUserPayload(c, payload)
 }
 
-func (m *Middleware) parseAuthHeader(c *gin.Context) (access.Payload, error) {
-	parser := m.fetchPublicKey()
+func (m *Middleware) parseAuthHeader(ctx context.Context, c *gin.Context) (access.Payload, error) {
+	parser := m.fetchPublicKey(ctx)
 
 	header := c.GetHeader("Authorization")
 	if header == "" {
@@ -93,10 +93,10 @@ func (m *Middleware) parseAuthHeader(c *gin.Context) (access.Payload, error) {
 	return parser.Parse(headerParts[1])
 }
 
-func (m *Middleware) fetchPublicKey() access.Parser {
+func (m *Middleware) fetchPublicKey(ctx context.Context) access.Parser {
 	m.Lock()
 	if time.Now().UnixMilli()-m.keyUpdateTimestamp.UnixMilli() > m.keyUpdateInterval.Milliseconds() {
-		if res, err := m.authService.GetAccessTokenPublicKey(context.Background(), &auth.GetAccessTokenPublicKeyRequest{}); err == nil {
+		if res, err := m.authService.GetAccessTokenPublicKey(ctx, &auth.GetAccessTokenPublicKeyRequest{}); err == nil {
 			if parser, err := access.NewParserByRawKey(res.PublicKey); err == nil {
 				m.tokenParser = parser
 			}
