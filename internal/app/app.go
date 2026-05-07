@@ -18,15 +18,24 @@ import (
 func Run(cfg *config.Config) {
 	log.InitWithService("api-gateway", *cfg.LogsPath, *cfg.Environment == config.EnvDev)
 	cfg.Print()
+	ctx := context.Background()
 
 	services, err := service.NewServices(cfg)
 	if err != nil {
-		log.Fatal("error during service initialization: ", err)
+		log.LogFatal(ctx, log.Event{
+			Event:     "api_gateway.services.init_failed",
+			Message:   "error during service initialization",
+			Component: "app",
+		}, err)
 	}
 
-	authMiddleware, err := auth.NewMiddleware(context.Background(), services.Auth, *cfg.AuthService.AccessTokenKeyUpdateInterval)
+	authMiddleware, err := auth.NewMiddleware(ctx, services.Auth, *cfg.AuthService.AccessTokenKeyUpdateInterval)
 	if err != nil {
-		log.Fatal("error during auth middleware initialization: ", err)
+		log.LogFatal(ctx, log.Event{
+			Event:     "api_gateway.auth_middleware.init_failed",
+			Message:   "error during auth middleware initialization",
+			Component: log.ComponentHTTP,
+		}, err)
 	}
 
 	h := handler.NewHandler(services, cfg)
@@ -36,7 +45,7 @@ func Run(cfg *config.Config) {
 
 	go runServer(srv)
 
-	wait := shutdown.Graceful(context.Background(), 5*time.Second, map[string]shutdown.Operation{
+	wait := shutdown.Graceful(ctx, 5*time.Second, map[string]shutdown.Operation{
 		"services": func(ctx context.Context) error {
 			return services.Stop()
 		},
@@ -49,6 +58,10 @@ func Run(cfg *config.Config) {
 
 func runServer(srv *server.Server) {
 	if err := srv.Run(); !errors.Is(err, http.ErrServerClosed) {
-		log.Error("error occurred while running http server: ", err.Error())
+		log.LogError(context.Background(), log.Event{
+			Event:     "http.server.failed",
+			Message:   "error occurred while running http server",
+			Component: log.ComponentHTTP,
+		}, err)
 	}
 }

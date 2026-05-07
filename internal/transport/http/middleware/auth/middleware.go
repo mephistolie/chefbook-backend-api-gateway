@@ -31,7 +31,16 @@ func NewMiddleware(ctx context.Context, service *service.Auth, keyUpdateInterval
 		if res, err = service.GetAccessTokenPublicKey(ctx, &auth.GetAccessTokenPublicKeyRequest{}); err == nil {
 			break
 		} else if i+1 < 6 {
-			log.Warn("failed to retrieve access token signing key; retry in 10 seconds...")
+			log.LogWarnError(ctx, log.Event{
+				Event:     "auth.access_token_key.refresh_failed",
+				Message:   "failed to retrieve access token signing key; retry in 10 seconds",
+				Component: log.ComponentHTTP,
+				Payload: map[string]any{
+					"attempt":      i + 1,
+					"max_attempts": 6,
+					"retry_after":  "10s",
+				},
+			}, err)
 			time.Sleep(10 * time.Second)
 		}
 	}

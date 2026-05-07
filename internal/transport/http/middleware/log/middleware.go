@@ -1,25 +1,10 @@
 package log
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/mephistolie/chefbook-backend-common/log"
 	"time"
 )
-
-var format = func(param gin.LogFormatterParams) string {
-	if param.Latency > time.Minute {
-		param.Latency = param.Latency.Truncate(time.Second)
-	}
-	return fmt.Sprintf("[HTTP] %3d | %13v | %15s | %-7s %#v\n%s",
-		param.StatusCode,
-		param.Latency,
-		param.ClientIP,
-		param.Method,
-		param.Path,
-		param.ErrorMessage,
-	)
-}
 
 func Middleware(skipPath []string) gin.HandlerFunc {
 	var skip map[string]struct{}
@@ -41,25 +26,24 @@ func Middleware(skipPath []string) gin.HandlerFunc {
 		// Process request
 		c.Next()
 		if _, ok := skip[path]; !ok {
-			param := gin.LogFormatterParams{
-				Request: c.Request,
-				Keys:    c.Keys,
-			}
-
-			param.Latency = time.Now().Sub(start)
-
-			param.ClientIP = c.ClientIP()
-			param.Method = c.Request.Method
-			param.StatusCode = c.Writer.Status()
-			param.ErrorMessage = c.Errors.ByType(gin.ErrorTypePrivate).String()
-
 			if raw != "" {
 				path = path + "?" + raw
 			}
 
-			param.Path = path
-
-			log.Info(format(param))
+			event := log.Event{
+				Event:      "http.request.completed",
+				Message:    "http request completed",
+				Component:  log.ComponentHTTP,
+				Duration:   time.Since(start),
+				HTTPMethod: c.Request.Method,
+				HTTPPath:   path,
+				HTTPStatus: c.Writer.Status(),
+			}
+			if len(c.Errors) > 0 {
+				log.LogWarn(c.Request.Context(), event)
+			} else {
+				log.Log(c.Request.Context(), event)
+			}
 		}
 	}
 }
