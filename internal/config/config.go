@@ -1,6 +1,7 @@
 package config
 
 import (
+	"context"
 	"github.com/mephistolie/chefbook-backend-common/log"
 	"time"
 )
@@ -79,31 +80,9 @@ func (c Config) Validate() error {
 }
 
 func (c Config) Print() {
-	log.Infof("API GATEWAY CONFIGURATION\n"+
-		"Environment: %v\n"+
-		"Port: %v\n"+
-		"Logs path: %v\n\n"+
-		"Frontend Domain: %v\n"+
-		"Backend Domain: %v\n\n"+
-		"Limiter RPS: %v\n"+
-		"Limiter Burst: %v\n"+
-		"Limiter TTL: %v\n\n"+
-		"Access Token Key Refresh Interval: %v\n\n"+
-		"Auth Service Address: %v\n"+
-		"User Service Address: %v\n"+
-		"Subscription Service Address: %v\n"+
-		"Profile Service Address: %v\n"+
-		"Tag Service Address: %v\n"+
-		"Recipe Service Address: %v\n"+
-		"Encryption Service Address: %v\n"+
-		"Shopping List Service Address: %v\n\n",
-		*c.Environment, *c.Port, *c.LogsPath,
-		*c.Domains.Frontend, *c.Domains.Backend,
-		*c.Limiter.RPS, *c.Limiter.Burst, *c.Limiter.TTL,
-		*c.AuthService.AccessTokenKeyUpdateInterval,
-		*c.AuthService.Addr, *c.UserService.Addr, *c.SubscriptionService.Addr, *c.ProfileService.Addr,
-		*c.TagService.Addr, *c.RecipeService.Addr,
-		*c.EncryptionService.Addr,
-		*c.ShoppingListService.Addr,
-	)
+	log.Log(context.Background(), log.Event{
+		Event:     "config.loaded",
+		Message:   "service configuration loaded",
+		Component: "config",
+	})
 }

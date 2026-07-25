@@ -19,7 +19,7 @@ func PutUserPayload(c *gin.Context, payload access.Payload) {
 func GetUserPayloadOrResponse(c *gin.Context) (*access.Payload, error) {
 	payload, err := getUserPayload(c)
 	if err != nil {
-		log.Errorf("error while get user data by context: %s", err)
+		log.AutoErrorf("error while get user data by context: %s", err)
 		response.Unknown(c, err)
 	}
 	return payload, err
