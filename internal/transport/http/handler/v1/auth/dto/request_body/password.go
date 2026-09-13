@@ -4,7 +4,7 @@ import "github.com/google/uuid"
 
 type RequestPasswordReset struct {
 	Email    string `json:"email,omitempty"`
-	Nickname string `json:"nickname,omitempty"`
+	Username string `json:"username,omitempty"`
 }
 
 type ResetPassword struct {

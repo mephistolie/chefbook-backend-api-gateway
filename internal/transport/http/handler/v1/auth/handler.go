@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	ParamNickname = "nickname"
+	ParamUsername = "username"
 )
 
 type Handler struct {

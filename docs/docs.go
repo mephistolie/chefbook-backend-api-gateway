@@ -9,7 +9,10 @@ const docTemplate = `{
     "info": {
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
-        "contact": {},
+        "contact": {
+            "name": "ChefBook API Support",
+            "email": "support@chefbook.space"
+        },
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
@@ -68,11 +71,6 @@ const docTemplate = `{
         },
         "/v1/auth/google": {
             "put": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "Connect Google to existing profile",
                 "consumes": [
                     "application/json"
@@ -120,7 +118,12 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ]
             },
             "post": {
                 "description": "Sign in to profile via Google Account",
@@ -167,11 +170,6 @@ const docTemplate = `{
                 }
             },
             "delete": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "Delete Google connection for profile",
                 "consumes": [
                     "application/json"
@@ -208,7 +206,12 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ]
             }
         },
         "/v1/auth/google/request": {
@@ -240,127 +243,8 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/auth/nickname": {
-            "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Set profile nickname",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "auth",
-                    "profile"
-                ],
-                "summary": "Set Nickname",
-                "parameters": [
-                    {
-                        "description": "Nickname",
-                        "name": "input",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.Nickname"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/fail.Response"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "schema": {
-                            "$ref": "#/definitions/fail.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/fail.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/v1/auth/nickname/{nickname}": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Check profile nickname availability",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "auth",
-                    "profile"
-                ],
-                "summary": "Check Nickname Availability",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Nickname",
-                        "name": "nickname",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_response_body.CheckNickname"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/fail.Response"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "schema": {
-                            "$ref": "#/definitions/fail.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/fail.Response"
-                        }
-                    }
-                }
-            }
-        },
         "/v1/auth/password": {
             "put": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "Change password",
                 "consumes": [
                     "application/json"
@@ -408,7 +292,12 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ]
             },
             "post": {
                 "description": "Request password reset",
@@ -547,11 +436,6 @@ const docTemplate = `{
         },
         "/v1/auth/sessions": {
             "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "Get profile active sessions",
                 "consumes": [
                     "application/json"
@@ -591,14 +475,14 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            },
-            "delete": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            },
+            "delete": {
                 "description": "End selected sessions",
                 "consumes": [
                     "application/json"
@@ -635,7 +519,12 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ]
             }
         },
         "/v1/auth/sign-in": {
@@ -776,13 +665,122 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/auth/vk": {
-            "put": {
+        "/v1/auth/username": {
+            "post": {
+                "description": "Set profile username",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth",
+                    "profile"
+                ],
+                "summary": "Set Username",
+                "parameters": [
+                    {
+                        "description": "Username",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.Username"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
+                ]
+            }
+        },
+        "/v1/auth/username/{username}": {
+            "get": {
+                "description": "Check profile username availability",
+                "consumes": [
+                    "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth",
+                    "profile"
+                ],
+                "summary": "Check Username Availability",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Username",
+                        "name": "username",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_response_body.CheckUsername"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/fail.Response"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/auth/vk": {
+            "put": {
                 "description": "Connect VK to existing profile",
                 "consumes": [
                     "application/json"
@@ -830,7 +828,12 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ]
             },
             "post": {
                 "description": "Sign in to profile via VK Account",
@@ -877,11 +880,6 @@ const docTemplate = `{
                 }
             },
             "delete": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "Delete VK connection for profile",
                 "consumes": [
                     "application/json"
@@ -918,7 +916,12 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ]
             }
         },
         "/v1/auth/vk/request": {
@@ -966,11 +969,6 @@ const docTemplate = `{
         },
         "/v1/collections": {
             "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "Get user recipe collections",
                 "consumes": [
                     "application/json"
@@ -1013,14 +1011,14 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            },
-            "post": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            },
+            "post": {
                 "description": "Add recipes collection",
                 "consumes": [
                     "application/json"
@@ -1063,16 +1061,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/collections/{collection_id}": {
-            "get": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/collections/{collection_id}": {
+            "get": {
                 "description": "Get recipes collection",
                 "consumes": [
                     "application/json"
@@ -1113,14 +1111,14 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            },
-            "put": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            },
+            "put": {
                 "description": "Update recipes collection",
                 "consumes": [
                     "application/json"
@@ -1170,14 +1168,14 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            },
-            "delete": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            },
+            "delete": {
                 "description": "Delete recipes collection",
                 "consumes": [
                     "application/json"
@@ -1217,16 +1215,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/collections/{collection_id}/save": {
-            "post": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/collections/{collection_id}/save": {
+            "post": {
                 "description": "Save collection to recipe book",
                 "consumes": [
                     "application/json"
@@ -1266,14 +1264,14 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            },
-            "delete": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            },
+            "delete": {
                 "description": "Remove collection from recipe book",
                 "consumes": [
                     "application/json"
@@ -1313,16 +1311,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/encryption/recipes/{recipe_id}": {
-            "get": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/encryption/recipes/{recipe_id}": {
+            "get": {
                 "description": "Get recipe encrypted key",
                 "consumes": [
                     "application/json"
@@ -1366,14 +1364,14 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            },
-            "post": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            },
+            "post": {
                 "description": "Set recipe owner key",
                 "consumes": [
                     "application/json"
@@ -1423,16 +1421,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/encryption/recipes/{recipe_id}/users": {
-            "get": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/encryption/recipes/{recipe_id}/users": {
+            "get": {
                 "description": "Get recipe key access requests",
                 "consumes": [
                     "application/json"
@@ -1476,14 +1474,14 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            },
-            "post": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            },
+            "post": {
                 "description": "Request recipe key access",
                 "consumes": [
                     "application/json"
@@ -1524,16 +1522,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/encryption/recipes/{recipe_id}/users/{user_id}": {
-            "post": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/encryption/recipes/{recipe_id}/users/{user_id}": {
+            "post": {
                 "description": "Set recipe user key",
                 "consumes": [
                     "application/json"
@@ -1590,14 +1588,14 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            },
-            "delete": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            },
+            "delete": {
                 "description": "Delete recipe key",
                 "consumes": [
                     "application/json"
@@ -1645,16 +1643,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/encryption/vault": {
-            "get": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/encryption/vault": {
+            "get": {
                 "description": "Get profile  encrypted vault key",
                 "consumes": [
                     "application/json"
@@ -1689,14 +1687,14 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            },
-            "post": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            },
+            "post": {
                 "description": "Create profile encrypted vault",
                 "consumes": [
                     "application/json"
@@ -1739,14 +1737,14 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            },
-            "delete": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            },
+            "delete": {
                 "description": "Delete profile encrypted vault",
                 "consumes": [
                     "application/json"
@@ -1789,16 +1787,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/encryption/vault/delete": {
-            "post": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/encryption/vault/delete": {
+            "post": {
                 "description": "Request profile encrypted vault deletion",
                 "consumes": [
                     "application/json"
@@ -1830,16 +1828,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/profile": {
-            "get": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/profile": {
+            "get": {
                 "description": "Get profile",
                 "consumes": [
                     "application/json"
@@ -1878,16 +1876,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/profile/avatar": {
-            "put": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/profile/avatar": {
+            "put": {
                 "description": "Confirm avatar uploading",
                 "consumes": [
                     "application/json"
@@ -1936,14 +1934,14 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            },
-            "post": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            },
+            "post": {
                 "description": "Delete avatar",
                 "consumes": [
                     "application/json"
@@ -1981,14 +1979,14 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            },
-            "delete": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            },
+            "delete": {
                 "description": "Delete avatar",
                 "consumes": [
                     "application/json"
@@ -2026,16 +2024,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/profile/delete": {
-            "get": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/profile/delete": {
+            "get": {
                 "description": "Get profile deletion status",
                 "consumes": [
                     "application/json"
@@ -2073,14 +2071,14 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            },
-            "post": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            },
+            "post": {
                 "description": "Request profile deletion",
                 "consumes": [
                     "application/json"
@@ -2129,14 +2127,14 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            },
-            "delete": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            },
+            "delete": {
                 "description": "Cancel profile deletion request",
                 "consumes": [
                     "application/json"
@@ -2174,16 +2172,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/profile/description": {
-            "put": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/profile/description": {
+            "put": {
                 "description": "Set profile description",
                 "consumes": [
                     "application/json"
@@ -2232,16 +2230,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/profile/name": {
-            "put": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/profile/display-name": {
+            "put": {
                 "description": "Set profile name",
                 "consumes": [
                     "application/json"
@@ -2261,7 +2259,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_request_body.SetName"
+                            "$ref": "#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_request_body.SetDisplayName"
                         }
                     }
                 ],
@@ -2290,17 +2288,17 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/profiles/{profile_id}": {
-            "get": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
-                "description": "Get profile by ID or nickname",
+                ]
+            }
+        },
+        "/v1/profiles/{profile_id}": {
+            "get": {
+                "description": "Get profile by ID or username",
                 "consumes": [
                     "application/json"
                 ],
@@ -2316,7 +2314,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Profile ID or nickname",
+                        "description": "Profile ID or username",
                         "name": "profile_id",
                         "in": "path",
                         "required": true
@@ -2347,16 +2345,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/recipes": {
-            "get": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/recipes": {
+            "get": {
                 "description": "Get recipes by query",
                 "consumes": [
                     "application/json"
@@ -2398,14 +2396,14 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            },
-            "post": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            },
+            "post": {
                 "description": "Create recipe",
                 "consumes": [
                     "application/json"
@@ -2447,16 +2445,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/recipes/book": {
-            "get": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/recipes/book": {
+            "get": {
                 "description": "Get user recipe book",
                 "consumes": [
                     "application/json"
@@ -2495,16 +2493,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/recipes/random": {
-            "get": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/recipes/random": {
+            "get": {
                 "description": "Get random recipe",
                 "consumes": [
                     "application/json"
@@ -2553,16 +2551,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/recipes/tags": {
-            "get": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/recipes/tags": {
+            "get": {
                 "description": "Get recipe tags",
                 "consumes": [
                     "application/json"
@@ -2612,16 +2610,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/recipes/tags/groups": {
-            "get": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/recipes/tags/groups": {
+            "get": {
                 "description": "Get recipe tag groups",
                 "consumes": [
                     "application/json"
@@ -2664,16 +2662,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/recipes/tags/{tag_id}": {
-            "get": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/recipes/tags/{tag_id}": {
+            "get": {
                 "description": "Get recipe tag",
                 "consumes": [
                     "application/json"
@@ -2720,16 +2718,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/recipes/{recipe_id}": {
-            "get": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/recipes/{recipe_id}": {
+            "get": {
                 "description": "Get recipe",
                 "consumes": [
                     "application/json"
@@ -2781,14 +2779,14 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            },
-            "put": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            },
+            "put": {
                 "description": "Update recipe",
                 "consumes": [
                     "application/json"
@@ -2837,14 +2835,14 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            },
-            "delete": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            },
+            "delete": {
                 "description": "Delete recipe",
                 "consumes": [
                     "application/json"
@@ -2884,16 +2882,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/recipes/{recipe_id}/book": {
-            "post": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/recipes/{recipe_id}/book": {
+            "post": {
                 "description": "Save recipe to user's recipe book",
                 "consumes": [
                     "application/json"
@@ -2933,16 +2931,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/recipes/{recipe_id}/collections": {
-            "put": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/recipes/{recipe_id}/collections": {
+            "put": {
                 "description": "Set recipe collections",
                 "consumes": [
                     "application/json"
@@ -2982,16 +2980,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/recipes/{recipe_id}/collections/{collection_id}": {
-            "post": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/recipes/{recipe_id}/collections/{collection_id}": {
+            "post": {
                 "description": "Add recipe to collection",
                 "consumes": [
                     "application/json"
@@ -3038,14 +3036,14 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            },
-            "delete": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            },
+            "delete": {
                 "description": "Remove recipe from collection",
                 "consumes": [
                     "application/json"
@@ -3092,16 +3090,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/recipes/{recipe_id}/favourite": {
-            "delete": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/recipes/{recipe_id}/favourite": {
+            "delete": {
                 "description": "Remove recipe from favourite",
                 "consumes": [
                     "application/json"
@@ -3141,16 +3139,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/recipes/{recipe_id}/favourites": {
-            "post": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/recipes/{recipe_id}/favourites": {
+            "post": {
                 "description": "Add recipe to favourite",
                 "consumes": [
                     "application/json"
@@ -3190,16 +3188,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/recipes/{recipe_id}/pictures": {
-            "put": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/recipes/{recipe_id}/pictures": {
+            "put": {
                 "description": "Set recipe pictures",
                 "consumes": [
                     "application/json"
@@ -3248,14 +3246,14 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            },
-            "post": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            },
+            "post": {
                 "description": "Generate recipe pictures upload links",
                 "consumes": [
                     "application/json"
@@ -3307,16 +3305,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/recipes/{recipe_id}/rate": {
-            "post": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/recipes/{recipe_id}/rate": {
+            "post": {
                 "description": "Rate recipe",
                 "consumes": [
                     "application/json"
@@ -3356,16 +3354,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/recipes/{recipe_id}/translations": {
-            "post": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/recipes/{recipe_id}/translations": {
+            "post": {
                 "description": "Translate recipe",
                 "consumes": [
                     "application/json"
@@ -3414,14 +3412,14 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            },
-            "delete": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            },
+            "delete": {
                 "description": "Delete recipe translation",
                 "consumes": [
                     "application/json"
@@ -3468,16 +3466,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/recipes{recipe_id}/book": {
-            "delete": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/recipes{recipe_id}/book": {
+            "delete": {
                 "description": "Remove recipe from recipe book",
                 "consumes": [
                     "application/json"
@@ -3517,16 +3515,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/shopping-lists": {
-            "get": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/shopping-lists": {
+            "get": {
                 "description": "Get personal shopping list",
                 "consumes": [
                     "application/json"
@@ -3560,14 +3558,14 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            },
-            "post": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            },
+            "post": {
                 "description": "Create shared shopping list",
                 "consumes": [
                     "application/json"
@@ -3609,16 +3607,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/shopping-lists/personal": {
-            "get": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/shopping-lists/personal": {
+            "get": {
                 "description": "Get personal shopping list",
                 "consumes": [
                     "application/json"
@@ -3649,16 +3647,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/shopping-lists/{shopping_list_id}": {
-            "get": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/shopping-lists/{shopping_list_id}": {
+            "get": {
                 "description": "Get shopping list",
                 "consumes": [
                     "application/json"
@@ -3698,14 +3696,14 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            },
-            "put": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            },
+            "put": {
                 "description": "Set shopping list",
                 "consumes": [
                     "application/json"
@@ -3754,14 +3752,14 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            },
-            "delete": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            },
+            "delete": {
                 "description": "Delete shared shopping list",
                 "consumes": [
                     "application/json"
@@ -3801,14 +3799,14 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            },
-            "patch": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            },
+            "patch": {
                 "description": "Add new purchases to shopping list",
                 "consumes": [
                     "application/json"
@@ -3857,16 +3855,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/shopping-lists/{shopping_list_id}/link": {
-            "get": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/shopping-lists/{shopping_list_id}/link": {
+            "get": {
                 "description": "Get shared shopping list link",
                 "consumes": [
                     "application/json"
@@ -3906,16 +3904,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/shopping-lists/{shopping_list_id}/name": {
-            "put": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/shopping-lists/{shopping_list_id}/name": {
+            "put": {
                 "description": "Set shopping list",
                 "consumes": [
                     "application/json"
@@ -3964,16 +3962,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/shopping-lists/{shopping_list_id}/users": {
-            "get": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/shopping-lists/{shopping_list_id}/users": {
+            "get": {
                 "description": "Get shopping list users",
                 "consumes": [
                     "application/json"
@@ -4016,14 +4014,14 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            },
-            "post": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            },
+            "post": {
                 "description": "Join shared shopping list",
                 "consumes": [
                     "application/json"
@@ -4072,16 +4070,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/shopping-lists/{shopping_list_id}/users/{user_id}": {
-            "delete": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/shopping-lists/{shopping_list_id}/users/{user_id}": {
+            "delete": {
                 "description": "Delete user from shared shopping list",
                 "consumes": [
                     "application/json"
@@ -4122,16 +4120,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/subscriptions": {
-            "get": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/subscriptions": {
+            "get": {
                 "description": "Get subscriptions",
                 "consumes": [
                     "application/json"
@@ -4165,16 +4163,16 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
-            }
-        },
-        "/v1/subscriptions/google": {
-            "post": {
+                },
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
-                ],
+                ]
+            }
+        },
+        "/v1/subscriptions/google": {
+            "post": {
                 "description": "Confirm Google subscription",
                 "consumes": [
                     "application/json"
@@ -4216,7 +4214,12 @@ const docTemplate = `{
                             "$ref": "#/definitions/fail.Response"
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ]
             }
         }
     },
@@ -4257,14 +4260,6 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.Nickname": {
-            "type": "object",
-            "properties": {
-                "nickname": {
-                    "type": "string"
-                }
-            }
-        },
         "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.OAuthCode": {
             "type": "object",
             "properties": {
@@ -4293,7 +4288,7 @@ const docTemplate = `{
                 "email": {
                     "type": "string"
                 },
-                "nickname": {
+                "username": {
                     "type": "string"
                 }
             }
@@ -4323,10 +4318,10 @@ const docTemplate = `{
                 "email": {
                     "type": "string"
                 },
-                "nickname": {
+                "password": {
                     "type": "string"
                 },
-                "password": {
+                "username": {
                     "type": "string"
                 }
             }
@@ -4345,7 +4340,15 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_response_body.CheckNickname": {
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.Username": {
+            "type": "object",
+            "properties": {
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_response_body.CheckUsername": {
             "type": "object",
             "properties": {
                 "available": {
@@ -4421,6 +4424,9 @@ const docTemplate = `{
                 },
                 "publicKey": {
                     "type": "string"
+                },
+                "salt": {
+                    "type": "string"
                 }
             }
         },
@@ -4436,6 +4442,9 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "key": {
+                    "type": "string"
+                },
+                "salt": {
                     "type": "string"
                 }
             }
@@ -4498,13 +4507,10 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_request_body.SetName": {
+        "github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_request_body.SetDisplayName": {
             "type": "object",
             "properties": {
-                "firstName": {
-                    "type": "string"
-                },
-                "lastName": {
+                "displayName": {
                     "type": "string"
                 }
             }
@@ -4540,16 +4546,10 @@ const docTemplate = `{
                 "description": {
                     "type": "string"
                 },
+                "displayName": {
+                    "type": "string"
+                },
                 "email": {
-                    "type": "string"
-                },
-                "firstName": {
-                    "type": "string"
-                },
-                "lastName": {
-                    "type": "string"
-                },
-                "nickname": {
                     "type": "string"
                 },
                 "oAuth": {
@@ -4565,6 +4565,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "subscriptionPlan": {
+                    "type": "string"
+                },
+                "username": {
                     "type": "string"
                 }
             }
@@ -4934,7 +4937,7 @@ const docTemplate = `{
                 "name": {
                     "type": "string"
                 },
-                "recipes_count": {
+                "recipesCount": {
                     "type": "integer"
                 },
                 "visibility": {
@@ -5632,17 +5635,24 @@ const docTemplate = `{
                 }
             }
         }
+    },
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
     }
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "",
-	Host:             "",
-	BasePath:         "",
+	Version:          "1.0",
+	Host:             "api.chefbook.io",
+	BasePath:         "/",
 	Schemes:          []string{},
-	Title:            "",
-	Description:      "",
+	Title:            "ChefBook API",
+	Description:      "ChefBook API Server",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

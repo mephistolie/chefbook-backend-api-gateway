@@ -9,61 +9,61 @@ import (
 	api "github.com/mephistolie/chefbook-backend-auth/api/proto/implementation/v1"
 )
 
-// CheckNicknameAvailability Swagger Documentation
+// CheckUsernameAvailability Swagger Documentation
 //
-//	@Summary		Check Nickname Availability
-//	@Description	Check profile nickname availability
+//	@Summary		Check Username Availability
+//	@Description	Check profile username availability
 //	@Tags			auth, profile
 //	@Security		ApiKeyAuth
 //	@Accept			json
 //	@Produce		json
-//	@Param			nickname						path		string	true	"Nickname"
-//	@Success		200								{object}	response_body.CheckNickname
+//	@Param			username						path		string	true	"Username"
+//	@Success		200								{object}	response_body.CheckUsername
 //	@Failure		400								{object}	fail.Response
 //	@Failure		401								{object}	fail.Response
 //	@Failure		500								{object}	fail.Response
-//	@Router			/v1/auth/nickname/{nickname} 	[get]
-func (h *Handler) CheckNicknameAvailability(c *gin.Context) {
-	res, err := h.service.CheckNicknameAvailability(c, &api.CheckNicknameAvailabilityRequest{
-		Nickname: c.Param(ParamNickname),
+//	@Router			/v1/auth/username/{username} 	[get]
+func (h *Handler) CheckUsernameAvailability(c *gin.Context) {
+	res, err := h.service.CheckUsernameAvailability(c, &api.CheckUsernameAvailabilityRequest{
+		Username: c.Param(ParamUsername),
 	})
 	if err != nil {
 		response.FailGrpc(c, err)
 		return
 	}
 
-	response.Success(c, response_body.CheckNickname{Available: res.Available})
+	response.Success(c, response_body.CheckUsername{Available: res.Available})
 }
 
-// SetNickname Swagger Documentation
+// SetUsername Swagger Documentation
 //
-//	@Summary		Set Nickname
-//	@Description	Set profile nickname
+//	@Summary		Set Username
+//	@Description	Set profile username
 //	@Tags			auth, profile
 //	@Security		ApiKeyAuth
 //	@Accept			json
 //	@Produce		json
-//	@Param			input				body		request_body.Nickname	true	"Nickname"
+//	@Param			input				body		request_body.Username	true	"Username"
 //	@Success		200					{object}	response.MessageBody
 //	@Failure		400					{object}	fail.Response
 //	@Failure		401					{object}	fail.Response
 //	@Failure		500					{object}	fail.Response
-//	@Router			/v1/auth/nickname 	[post]
-func (h *Handler) SetNickname(c *gin.Context) {
+//	@Router			/v1/auth/username 	[post]
+func (h *Handler) SetUsername(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
 		return
 	}
 
-	var body request_body.Nickname
+	var body request_body.Username
 	if err := c.BindJSON(&body); err != nil {
 		response.Fail(c, response.InvalidBody)
 		return
 	}
 
-	res, err := h.service.SetNickname(c, &api.SetNicknameRequest{
+	res, err := h.service.SetUsername(c, &api.SetUsernameRequest{
 		Id:       payload.UserId.String(),
-		Nickname: body.Nickname,
+		Username: body.Username,
 	})
 	if err != nil {
 		response.FailGrpc(c, err)

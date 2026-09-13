@@ -3,13 +3,15 @@ package auth
 import (
 	"context"
 	"errors"
+
 	"github.com/gin-gonic/gin"
+	eventlog "github.com/mephistolie/chefbook-backend-api-gateway/internal/logging"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/service"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/helpers/request"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/helpers/response"
 	auth "github.com/mephistolie/chefbook-backend-auth/api/proto/implementation/v1"
-	"github.com/mephistolie/chefbook-backend-common/log"
 	"github.com/mephistolie/chefbook-backend-common/tokens/access"
+
 	"strings"
 	"sync"
 	"time"
@@ -31,17 +33,14 @@ func NewMiddleware(ctx context.Context, service *service.Auth, keyUpdateInterval
 		if res, err = service.GetAccessTokenPublicKey(ctx, &auth.GetAccessTokenPublicKeyRequest{}); err == nil {
 			break
 		} else if i+1 < 6 {
-			log.LogWarnError(ctx, log.Event{
-				Event:     "auth.access_token_key.refresh_failed",
-				Message:   "failed to retrieve access token signing key; retry in 10 seconds",
-				Component: log.ComponentHTTP,
-				Payload: map[string]any{
-					"attempt":      i + 1,
-					"max_attempts": 6,
-					"retry_after":  "10s",
-				},
+			eventlog.NewEvents().AccessTokenKeyRefreshFailed(ctx, eventlog.KeyRefreshFailure{
+				Attempt:     i + 1,
+				MaxAttempts: 6,
+				RetryAfter:  10 * time.Second,
 			}, err)
-			time.Sleep(10 * time.Second)
+			if err := waitForRetry(ctx, 10*time.Second); err != nil {
+				return nil, err
+			}
 		}
 	}
 	if err != nil {
@@ -59,6 +58,18 @@ func NewMiddleware(ctx context.Context, service *service.Auth, keyUpdateInterval
 		keyUpdateTimestamp: time.Now(),
 		keyUpdateInterval:  keyUpdateInterval,
 	}, nil
+}
+
+func waitForRetry(ctx context.Context, delay time.Duration) error {
+	timer := time.NewTimer(delay)
+	defer timer.Stop()
+
+	select {
+	case <-ctx.Done():
+		return ctx.Err()
+	case <-timer.C:
+		return nil
+	}
 }
 
 func (m *Middleware) AuthorizeUser(c *gin.Context) {

@@ -5,18 +5,18 @@ go 1.26.2
 require (
 	github.com/gin-gonic/gin v1.12.0
 	github.com/google/uuid v1.6.0
-	github.com/mephistolie/chefbook-backend-auth/api v1.8.2
-	github.com/mephistolie/chefbook-backend-common/log v0.9.0
-	github.com/mephistolie/chefbook-backend-common/responses v0.9.0
-	github.com/mephistolie/chefbook-backend-common/shutdown v0.6.0
-	github.com/mephistolie/chefbook-backend-common/tokens v0.10.0
-	github.com/mephistolie/chefbook-backend-encryption/api v1.1.3
-	github.com/mephistolie/chefbook-backend-profile/api v1.3.1
-	github.com/mephistolie/chefbook-backend-recipe/api v1.7.8
-	github.com/mephistolie/chefbook-backend-shopping-list/api/v2 v2.4.3
-	github.com/mephistolie/chefbook-backend-subscription/api v1.0.0
-	github.com/mephistolie/chefbook-backend-tag/api v1.1.0
-	github.com/mephistolie/chefbook-backend-user/api v1.4.0
+	github.com/mephistolie/chefbook-backend-auth/api v1.9.0-rc.1
+	github.com/mephistolie/chefbook-backend-common/log v0.10.0
+	github.com/mephistolie/chefbook-backend-common/responses v0.10.0
+	github.com/mephistolie/chefbook-backend-common/shutdown v0.7.0
+	github.com/mephistolie/chefbook-backend-common/tokens v0.11.0
+	github.com/mephistolie/chefbook-backend-encryption/api v1.2.0-rc.1
+	github.com/mephistolie/chefbook-backend-profile/api v1.4.0-rc.1
+	github.com/mephistolie/chefbook-backend-recipe/api v1.8.0-rc.1
+	github.com/mephistolie/chefbook-backend-shopping-list/api/v2 v2.5.0-rc.1
+	github.com/mephistolie/chefbook-backend-subscription/api v1.1.0-rc.1
+	github.com/mephistolie/chefbook-backend-tag/api v1.2.0-rc.1
+	github.com/mephistolie/chefbook-backend-user/api v1.5.0-rc.1
 	github.com/peterbourgon/ff/v3 v3.4.0
 	github.com/swaggo/files v1.0.1
 	github.com/swaggo/gin-swagger v1.6.1
@@ -50,8 +50,6 @@ require (
 	github.com/goccy/go-json v0.10.6 // indirect
 	github.com/goccy/go-yaml v1.19.2 // indirect
 	github.com/golang-jwt/jwt/v5 v5.3.1 // indirect
-	github.com/golang/protobuf v1.5.4 // indirect
-	github.com/grpc-ecosystem/go-grpc-middleware v1.4.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.3.0 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
@@ -63,7 +61,6 @@ require (
 	github.com/quic-go/qpack v0.6.0 // indirect
 	github.com/quic-go/quic-go v0.59.0 // indirect
 	github.com/rs/zerolog v1.35.1 // indirect
-	github.com/sirupsen/logrus v1.9.4 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.3.1 // indirect
 	go.mongodb.org/mongo-driver/v2 v2.6.0 // indirect

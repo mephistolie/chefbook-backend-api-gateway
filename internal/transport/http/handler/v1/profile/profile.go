@@ -28,37 +28,37 @@ func (h *Handler) GetProfile(c *gin.Context) {
 		return
 	}
 
-	h.getProfileByIdOrNickname(c, payload.UserId)
+	h.getProfileByIdOrUsername(c, payload.UserId)
 }
 
-// getProfileByIdOrNickname Swagger Documentation
+// getProfileByIdOrUsername Swagger Documentation
 //
 //	@Summary		Get profile by ID
-//	@Description	Get profile by ID or nickname
+//	@Description	Get profile by ID or username
 //	@Tags			profile, auth, user
 //	@Security		ApiKeyAuth
 //	@Accept			json
 //	@Produce		json
-//	@Param			profile_id					path		string	true	"Profile ID or nickname"
+//	@Param			profile_id					path		string	true	"Profile ID or username"
 //	@Success		200							{object}	response_body.Profile
 //	@Failure		400							{object}	fail.Response
 //	@Failure		401							{object}	fail.Response
 //	@Failure		500							{object}	fail.Response
 //	@Router			/v1/profiles/{profile_id}	[get]
-func (h *Handler) getProfileByIdOrNickname(c *gin.Context, requesterId uuid.UUID) {
+func (h *Handler) getProfileByIdOrUsername(c *gin.Context, requesterId uuid.UUID) {
 	profileId := ""
-	nickname := ""
+	username := ""
 
 	idOrName := c.Param(ParamProfileId)
 	if id, err := uuid.Parse(idOrName); err == nil {
 		profileId = id.String()
 	} else {
-		nickname = idOrName
+		username = idOrName
 	}
 
 	res, err := h.profile.GetProfile(c, &api.GetProfileRequest{
 		ProfileId:       profileId,
-		ProfileNickname: nickname,
+		ProfileUsername: username,
 		RequesterId:     requesterId.String(),
 	})
 	if err != nil {

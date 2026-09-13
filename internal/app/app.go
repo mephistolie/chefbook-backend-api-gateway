@@ -3,7 +3,9 @@ package app
 import (
 	"context"
 	"errors"
+
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/config"
+	eventlog "github.com/mephistolie/chefbook-backend-api-gateway/internal/logging"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/server"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/service"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/handler"
@@ -11,31 +13,29 @@ import (
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/router"
 	"github.com/mephistolie/chefbook-backend-common/log"
 	"github.com/mephistolie/chefbook-backend-common/shutdown"
+
 	"net/http"
 	"time"
 )
 
 func Run(cfg *config.Config) {
 	log.InitWithService("api-gateway", *cfg.LogsPath, *cfg.Environment == config.EnvDev)
-	cfg.Print()
-	ctx := context.Background()
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	events := eventlog.NewEvents()
+	cfg.Print(ctx)
 
 	services, err := service.NewServices(cfg)
 	if err != nil {
-		log.LogFatal(ctx, log.Event{
-			Event:     "api_gateway.services.init_failed",
-			Message:   "error during service initialization",
-			Component: "app",
-		}, err)
+		events.ServiceDependenciesInitializationFailed(ctx, err)
+		return
 	}
 
 	authMiddleware, err := auth.NewMiddleware(ctx, services.Auth, *cfg.AuthService.AccessTokenKeyUpdateInterval)
 	if err != nil {
-		log.LogFatal(ctx, log.Event{
-			Event:     "api_gateway.auth_middleware.init_failed",
-			Message:   "error during auth middleware initialization",
-			Component: log.ComponentHTTP,
-		}, err)
+		events.AuthMiddlewareInitializationFailed(ctx, err)
+		return
 	}
 
 	h := handler.NewHandler(services, cfg)
@@ -43,7 +43,7 @@ func Run(cfg *config.Config) {
 
 	srv := server.NewServer(*cfg.Port, r.Init(cfg))
 
-	go runServer(srv)
+	go runServer(ctx, srv)
 
 	wait := shutdown.Graceful(ctx, 5*time.Second, map[string]shutdown.Operation{
 		"services": func(ctx context.Context) error {
@@ -56,12 +56,8 @@ func Run(cfg *config.Config) {
 	<-wait
 }
 
-func runServer(srv *server.Server) {
+func runServer(ctx context.Context, srv *server.Server) {
 	if err := srv.Run(); !errors.Is(err, http.ErrServerClosed) {
-		log.LogError(context.Background(), log.Event{
-			Event:     "http.server.failed",
-			Message:   "error occurred while running http server",
-			Component: log.ComponentHTTP,
-		}, err)
+		eventlog.NewEvents().HTTPServerFailed(ctx, err)
 	}
 }

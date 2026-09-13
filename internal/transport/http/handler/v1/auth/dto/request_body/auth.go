@@ -12,7 +12,7 @@ type SignUp struct {
 
 type SignIn struct {
 	Email    string `json:"email,omitempty"`
-	Nickname string `json:"nickname,omitempty"`
+	Username string `json:"username,omitempty"`
 	Password string `json:"password"`
 }
 

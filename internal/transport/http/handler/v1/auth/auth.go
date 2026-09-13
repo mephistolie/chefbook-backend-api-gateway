@@ -102,7 +102,7 @@ func (h *Handler) SignIn(c *gin.Context) {
 
 	res, err := h.service.SignIn(c, &api.SignInRequest{
 		Email:     body.Email,
-		Nickname:  body.Nickname,
+		Username:  body.Username,
 		Password:  body.Password,
 		Ip:        c.ClientIP(),
 		UserAgent: c.Request.UserAgent(),

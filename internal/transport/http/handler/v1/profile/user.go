@@ -10,7 +10,7 @@ import (
 	"net/http"
 )
 
-// SetName Swagger Documentation
+// SetDisplayName Swagger Documentation
 //
 //	@Summary		Set name
 //	@Description	Set profile name
@@ -18,28 +18,27 @@ import (
 //	@Security		ApiKeyAuth
 //	@Accept			json
 //	@Produce		json
-//	@Param			input				body		request_body.SetName	true	"Name"
+//	@Param			input				body		request_body.SetDisplayName	true	"Name"
 //	@Success		200					{object}	response.MessageBody
 //	@Failure		400					{object}	fail.Response
 //	@Failure		401					{object}	fail.Response
 //	@Failure		500					{object}	fail.Response
-//	@Router			/v1/profile/name	[put]
-func (h *Handler) SetName(c *gin.Context) {
+//	@Router			/v1/profile/display-name	[put]
+func (h *Handler) SetDisplayName(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
 		return
 	}
 
-	var body request_body.SetName
+	var body request_body.SetDisplayName
 	if err := c.BindJSON(&body); err != nil {
 		response.Fail(c, response.InvalidBody)
 		return
 	}
 
-	res, err := h.user.SetUserName(c, &api.SetUserNameRequest{
-		UserId:    payload.UserId.String(),
-		FirstName: body.FirstName,
-		LastName:  body.LastName,
+	res, err := h.user.SetUserDisplayName(c, &api.SetUserDisplayNameRequest{
+		UserId:      payload.UserId.String(),
+		DisplayName: body.DisplayName,
 	})
 	if err != nil {
 		response.FailGrpc(c, err)

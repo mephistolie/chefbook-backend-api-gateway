@@ -32,7 +32,7 @@ func (r *Router) initAuthRoutes(api *gin.RouterGroup) {
 		authGroup.PATCH("/password", r.handler.Auth.ResetPassword)
 		authGroup.PUT("/password", r.authMiddleware.AuthorizeUser, r.handler.Auth.ChangePassword)
 
-		authGroup.GET(fmt.Sprintf("/nickname/:%s", auth.ParamNickname), r.authMiddleware.AuthorizeUser, r.handler.Auth.CheckNicknameAvailability)
-		authGroup.POST("/nickname", r.authMiddleware.AuthorizeUser, r.handler.Auth.SetNickname)
+		authGroup.GET(fmt.Sprintf("/username/:%s", auth.ParamUsername), r.authMiddleware.AuthorizeUser, r.handler.Auth.CheckUsernameAvailability)
+		authGroup.POST("/username", r.authMiddleware.AuthorizeUser, r.handler.Auth.SetUsername)
 	}
 }

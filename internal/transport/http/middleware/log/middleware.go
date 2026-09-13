@@ -2,9 +2,12 @@ package log
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/mephistolie/chefbook-backend-common/log"
+	eventlog "github.com/mephistolie/chefbook-backend-api-gateway/internal/logging"
+
 	"time"
 )
+
+const unmatchedRoute = "unmatched"
 
 func Middleware(skipPath []string) gin.HandlerFunc {
 	var skip map[string]struct{}
@@ -21,29 +24,22 @@ func Middleware(skipPath []string) gin.HandlerFunc {
 		// Start timer
 		start := time.Now()
 		path := c.Request.URL.Path
-		raw := c.Request.URL.RawQuery
-
 		// Process request
 		c.Next()
 		if _, ok := skip[path]; !ok {
-			if raw != "" {
-				path = path + "?" + raw
+			if routePattern := c.FullPath(); routePattern != "" {
+				path = routePattern
+			} else {
+				path = unmatchedRoute
 			}
 
-			event := log.Event{
-				Event:      "http.request.completed",
-				Message:    "http request completed",
-				Component:  log.ComponentHTTP,
-				Duration:   time.Since(start),
-				HTTPMethod: c.Request.Method,
-				HTTPPath:   path,
-				HTTPStatus: c.Writer.Status(),
-			}
-			if len(c.Errors) > 0 {
-				log.LogWarn(c.Request.Context(), event)
-			} else {
-				log.Log(c.Request.Context(), event)
-			}
+			eventlog.NewEvents().HTTPRequestCompleted(c.Request.Context(), eventlog.HTTPRequest{
+				Duration: time.Since(start),
+				Method:   c.Request.Method,
+				Path:     path,
+				Status:   c.Writer.Status(),
+				Failed:   c.Writer.Status() >= 500 || len(c.Errors) > 0,
+			})
 		}
 	}
 }

@@ -1,8 +1,7 @@
 package request_body
 
-type SetName struct {
-	FirstName *string `json:"firstName,omitempty"`
-	LastName  *string `json:"lastName,omitempty"`
+type SetDisplayName struct {
+	DisplayName *string `json:"displayName,omitempty"`
 }
 
 type SetDescription struct {

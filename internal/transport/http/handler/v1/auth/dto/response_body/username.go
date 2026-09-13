@@ -1,5 +1,5 @@
 package response_body
 
-type CheckNickname struct {
+type CheckUsername struct {
 	Available bool `json:"available"`
 }

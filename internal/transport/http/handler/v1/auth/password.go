@@ -29,7 +29,7 @@ func (h *Handler) RequestPasswordReset(c *gin.Context) {
 
 	res, err := h.service.RequestPasswordReset(c, &api.RequestPasswordResetRequest{
 		Email:                    body.Email,
-		Nickname:                 body.Nickname,
+		Username:                 body.Username,
 		ResetPasswordLinkPattern: h.routes.ResetPassword,
 	})
 	if err != nil {

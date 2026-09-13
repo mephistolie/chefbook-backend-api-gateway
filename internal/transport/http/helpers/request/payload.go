@@ -3,8 +3,8 @@ package request
 import (
 	"errors"
 	"github.com/gin-gonic/gin"
+	eventlog "github.com/mephistolie/chefbook-backend-api-gateway/internal/logging"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/helpers/response"
-	"github.com/mephistolie/chefbook-backend-common/log"
 	"github.com/mephistolie/chefbook-backend-common/tokens/access"
 )
 
@@ -19,7 +19,7 @@ func PutUserPayload(c *gin.Context, payload access.Payload) {
 func GetUserPayloadOrResponse(c *gin.Context) (*access.Payload, error) {
 	payload, err := getUserPayload(c)
 	if err != nil {
-		log.AutoErrorf("error while get user data by context: %s", err)
+		eventlog.NewEvents().UserPayloadReadFailed(c.Request.Context(), err)
 		response.Unknown(c, err)
 	}
 	return payload, err

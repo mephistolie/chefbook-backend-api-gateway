@@ -1,3 +1,4 @@
+basePath: /
 definitions:
   fail.Response:
     properties:
@@ -22,11 +23,6 @@ definitions:
       state:
         type: string
     type: object
-  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.Nickname:
-    properties:
-      nickname:
-        type: string
-    type: object
   github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.OAuthCode:
     properties:
       code:
@@ -45,7 +41,7 @@ definitions:
   : properties:
       email:
         type: string
-      nickname:
+      username:
         type: string
     type: object
   github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.ResetPassword:
@@ -65,9 +61,9 @@ definitions:
     properties:
       email:
         type: string
-      nickname:
-        type: string
       password:
+        type: string
+      username:
         type: string
     type: object
   github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.SignUp:
@@ -79,7 +75,12 @@ definitions:
       userId:
         type: string
     type: object
-  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_response_body.CheckNickname:
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.Username:
+    properties:
+      username:
+        type: string
+    type: object
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_response_body.CheckUsername:
     properties:
       available:
         type: boolean
@@ -129,6 +130,8 @@ definitions:
         type: string
       publicKey:
         type: string
+      salt:
+        type: string
     type: object
   github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_encryption_dto_request_body.SetRecipeKey:
     properties:
@@ -138,6 +141,8 @@ definitions:
   ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_encryption_dto_response_body.GetEncryptedVaultKey
   : properties:
       key:
+        type: string
+      salt:
         type: string
     type: object
   github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_encryption_dto_response_body.GetRecipeKey:
@@ -177,11 +182,9 @@ definitions:
       description:
         type: string
     type: object
-  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_request_body.SetName:
+  github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_request_body.SetDisplayName:
     properties:
-      firstName:
-        type: string
-      lastName:
+      displayName:
         type: string
     type: object
   github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_response_body.DeleteProfile:
@@ -204,13 +207,9 @@ definitions:
         type: boolean
       description:
         type: string
+      displayName:
+        type: string
       email:
-        type: string
-      firstName:
-        type: string
-      lastName:
-        type: string
-      nickname:
         type: string
       oAuth:
         $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_response_body.OAuth'
@@ -221,6 +220,8 @@ definitions:
       role:
         type: string
       subscriptionPlan:
+        type: string
+      username:
         type: string
     type: object
   ? github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_response_body.ProfileDeletionStatus
@@ -460,7 +461,7 @@ definitions:
         type: array
       name:
         type: string
-      recipes_count:
+      recipesCount:
         type: integer
       visibility:
         type: string
@@ -919,8 +920,14 @@ definitions:
       name:
         type: string
     type: object
+host: api.chefbook.io
 info:
-  contact: {}
+  contact:
+    email: support@chefbook.space
+    name: ChefBook API Support
+  description: ChefBook API Server
+  title: ChefBook API
+  version: "1.0"
 paths:
   /v1/auth/activate:
     get:
@@ -1068,79 +1075,6 @@ paths:
       summary: Request Google OAuth
       tags:
       - auth
-  /v1/auth/nickname:
-    post:
-      consumes:
-      - application/json
-      description: Set profile nickname
-      parameters:
-      - description: Nickname
-        in: body
-        name: input
-        required: true
-        schema:
-          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.Nickname'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/fail.Response'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/fail.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/fail.Response'
-      security:
-      - ApiKeyAuth: []
-      summary: Set Nickname
-      tags:
-      - auth
-      - profile
-  /v1/auth/nickname/{nickname}:
-    get:
-      consumes:
-      - application/json
-      description: Check profile nickname availability
-      parameters:
-      - description: Nickname
-        in: path
-        name: nickname
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_response_body.CheckNickname'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/fail.Response'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/fail.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/fail.Response'
-      security:
-      - ApiKeyAuth: []
-      summary: Check Nickname Availability
-      tags:
-      - auth
-      - profile
   /v1/auth/password:
     patch:
       consumes:
@@ -1414,6 +1348,79 @@ paths:
       summary: Sign Up
       tags:
       - auth
+  /v1/auth/username:
+    post:
+      consumes:
+      - application/json
+      description: Set profile username
+      parameters:
+      - description: Username
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_request_body.Username'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_helpers_response.MessageBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Set Username
+      tags:
+      - auth
+      - profile
+  /v1/auth/username/{username}:
+    get:
+      consumes:
+      - application/json
+      description: Check profile username availability
+      parameters:
+      - description: Username
+        in: path
+        name: username
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_auth_dto_response_body.CheckUsername'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/fail.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fail.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: Check Username Availability
+      tags:
+      - auth
+      - profile
   /v1/auth/vk:
     delete:
       consumes:
@@ -2351,7 +2358,7 @@ paths:
       tags:
       - user
       - profile
-  /v1/profile/name:
+  /v1/profile/display-name:
     put:
       consumes:
       - application/json
@@ -2362,7 +2369,7 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_request_body.SetName'
+          $ref: '#/definitions/github_com_mephistolie_chefbook-backend-api-gateway_internal_transport_http_handler_v1_profile_dto_request_body.SetDisplayName'
       produces:
       - application/json
       responses:
@@ -2392,9 +2399,9 @@ paths:
     get:
       consumes:
       - application/json
-      description: Get profile by ID or nickname
+      description: Get profile by ID or username
       parameters:
-      - description: Profile ID or nickname
+      - description: Profile ID or username
         in: path
         name: profile_id
         required: true
@@ -3615,4 +3622,9 @@ paths:
       summary: Confirm Google subscription
       tags:
       - subscription
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

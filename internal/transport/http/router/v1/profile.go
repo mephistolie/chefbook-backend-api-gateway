@@ -10,7 +10,7 @@ func (r *Router) initProfileRoutes(api *gin.RouterGroup) {
 	profileGroup := api.Group("/profile", r.authMiddleware.AuthorizeUser)
 	{
 		profileGroup.GET("", r.handler.Profile.GetProfile)
-		profileGroup.PUT("/name", r.handler.Profile.SetName)
+		profileGroup.PUT("/display-name", r.handler.Profile.SetDisplayName)
 		profileGroup.PUT("/description", r.handler.Profile.SetDescription)
 		profileGroup.POST("/avatar", r.handler.Profile.GenerateAvatarUploadLink)
 		profileGroup.PUT("/avatar", r.handler.Profile.ConfirmAvatarUploading)

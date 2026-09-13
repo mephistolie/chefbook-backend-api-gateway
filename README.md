@@ -14,7 +14,7 @@ The API gateway is the public HTTP entrypoint for ChefBook clients. It owns REST
 
 ## HTTP Route Groups
 
-- `/auth` - sign-up, activation, sign-in, refresh, sign-out, OAuth, sessions, password flows, nickname flows.
+- `/auth` - sign-up, activation, sign-in, refresh, sign-out, OAuth, sessions, password flows, username flows.
 - `/subscriptions` - subscription reads and Google subscription confirmation.
 - `/profile` - current user profile and avatar management.
 - `/profiles/:profileId` - another user's profile.
@@ -27,7 +27,7 @@ The API gateway is the public HTTP entrypoint for ChefBook clients. It owns REST
 
 ## Downstream Services
 
-- `auth` for account, session, OAuth, password, nickname, public key, and auth-info RPCs.
+- `auth` for account, session, OAuth, password, username, public key, and auth-info RPCs.
 - `user` for social profile fields and avatar lifecycle RPCs.
 - `profile` for aggregated profile read models.
 - `tag` for tag and tag-group lookup.

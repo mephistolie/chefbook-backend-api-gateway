@@ -2,7 +2,7 @@ package config
 
 import (
 	"context"
-	"github.com/mephistolie/chefbook-backend-common/log"
+	"github.com/mephistolie/chefbook-backend-api-gateway/internal/logging"
 	"time"
 )
 
@@ -79,10 +79,6 @@ func (c Config) Validate() error {
 	return nil
 }
 
-func (c Config) Print() {
-	log.Log(context.Background(), log.Event{
-		Event:     "config.loaded",
-		Message:   "service configuration loaded",
-		Component: "config",
-	})
+func (c Config) Print(ctx context.Context) {
+	logging.NewEvents().ConfigLoaded(ctx)
 }
