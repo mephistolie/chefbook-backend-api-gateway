@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 
+	"github.com/mephistolie/chefbook-backend-api-gateway/docs"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/config"
 	eventlog "github.com/mephistolie/chefbook-backend-api-gateway/internal/logging"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/server"
@@ -19,6 +20,7 @@ import (
 )
 
 func Run(cfg *config.Config) {
+	docs.SwaggerInfo.Host = *cfg.Domains.Backend
 	log.InitWithService("api-gateway", *cfg.LogsPath, *cfg.Environment == config.EnvDev)
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
