@@ -8,19 +8,6 @@ import (
 	api "github.com/mephistolie/chefbook-backend-recipe/api/proto/implementation/v1"
 )
 
-// SaveCollectionToRecipeBook Swagger Documentation
-//
-//	@Summary		Save collection to recipe book
-//	@Description	Save collection to recipe book
-//	@Tags			collection
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Param			collection_id							path		int	true	"Collection ID"
-//	@Success		200										{object}	response.MessageBody
-//	@Failure		400										{object}	fail.Response
-//	@Failure		500										{object}	fail.Response
-//	@Router			/v1/collections/{collection_id}/save	[post]
 func (h *Handler) SaveCollectionToRecipeBook(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
@@ -46,19 +33,6 @@ func (h *Handler) SaveCollectionToRecipeBook(c *gin.Context) {
 	response.Message(c, res.Message)
 }
 
-// RemoveCollectionFromRecipeBook Swagger Documentation
-//
-//	@Summary		Remove collection from recipe book
-//	@Description	Remove collection from recipe book
-//	@Tags			collection
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Param			collection_id							path		int	true	"Collection ID"
-//	@Success		200										{object}	response.MessageBody
-//	@Failure		400										{object}	fail.Response
-//	@Failure		500										{object}	fail.Response
-//	@Router			/v1/collections/{collection_id}/save	[delete]
 func (h *Handler) RemoveCollectionFromRecipeBook(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {

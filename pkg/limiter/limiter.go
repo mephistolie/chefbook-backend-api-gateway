@@ -84,7 +84,8 @@ func Limit(rps int, burst int, ttl time.Duration) gin.HandlerFunc {
 		}
 
 		if !l.getVisitor(ip).Allow() {
-			c.AbortWithStatus(http.StatusTooManyRequests)
+			c.Header("Retry-After", "1")
+			c.AbortWithStatusJSON(http.StatusTooManyRequests, gin.H{"error": "rate_limited", "message": "too many requests"})
 			return
 		}
 

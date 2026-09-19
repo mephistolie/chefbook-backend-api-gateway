@@ -7,7 +7,7 @@ import (
 )
 
 type ShoppingListInfo struct {
-	Id      string             `json:"shoppingListId"`
+	Id      string             `json:"id"`
 	Name    *string            `json:"name,omitempty"`
 	Type    string             `json:"type"`
 	Owner   common.ProfileInfo `json:"owner"`
@@ -33,11 +33,11 @@ func GetShoppingLists(response *api.GetShoppingListsResponse) []ShoppingListInfo
 }
 
 type CreateShoppingList struct {
-	Id string `json:"shoppingListId"`
+	Id string `json:"id"`
 }
 
 type GetShoppingListBody struct {
-	Id          string                 `json:"shoppingListId"`
+	Id          string                 `json:"id"`
 	Name        *string                `json:"name,omitempty"`
 	Type        string                 `json:"type"`
 	Owner       common.ProfileInfo     `json:"owner"`

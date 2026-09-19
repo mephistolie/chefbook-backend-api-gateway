@@ -10,20 +10,6 @@ import (
 	api "github.com/mephistolie/chefbook-backend-recipe/api/proto/implementation/v1"
 )
 
-// GenerateRecipePicturesUploadLinks Swagger Documentation
-//
-//	@Summary		Generate recipe pictures upload links
-//	@Description	Generate recipe pictures upload links
-//	@Tags			recipe
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Param			recipe_id	path		string											true	"Recipe ID"
-//	@Param			input		body		request_body.GenerateRecipePicturesUploadLinks	true	"Input"
-//	@Success		200			{object}	[]response_body.RecipePictureUpload
-//	@Failure		400			{object}	fail.Response
-//	@Failure		500			{object}	fail.Response
-//	@Router			/v1/recipes/{recipe_id}/pictures [post]
 func (h *Handler) GenerateRecipePicturesUploadLinks(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
@@ -52,28 +38,14 @@ func (h *Handler) GenerateRecipePicturesUploadLinks(c *gin.Context) {
 		uploads[i] = response_body.RecipePictureUpload{
 			PictureLink: upload.PictureLink,
 			UploadLink:  upload.UploadLink,
-			FormData:    upload.FormData,
+			FormData:    response.NonNilStringMap(upload.FormData),
 			MaxSize:     upload.MaxSize,
 		}
 	}
 
-	response.Success(c, uploads)
+	response.Success(c, gin.H{"uploads": uploads})
 }
 
-// SetRecipePictures Swagger Documentation
-//
-//	@Summary		Set recipe pictures
-//	@Description	Set recipe pictures
-//	@Tags			recipe
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Param			recipe_id	path		string							true	"Recipe ID"
-//	@Param			input		body		request_body.SetRecipePictures	true	"Pictures"
-//	@Success		200			{object}	response_body.SetRecipePictures
-//	@Failure		400			{object}	fail.Response
-//	@Failure		500			{object}	fail.Response
-//	@Router			/v1/recipes/{recipe_id}/pictures [put]
 func (h *Handler) SetRecipePictures(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {

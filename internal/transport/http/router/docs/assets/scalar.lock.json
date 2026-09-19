@@ -1,0 +1,8 @@
+{
+  "package": "@scalar/api-reference",
+  "version": "1.69.0",
+  "url": "https://registry.npmjs.org/@scalar/api-reference/-/api-reference-1.69.0.tgz",
+  "integrity": "sha512-N+prEf0YjQByZ9JmiQhrJoSrv2UgIPcD9VPE4JTf3rWkdRNESiVBM4J/rUi9hO6JGo7eDcdEMLhQ3Md26LiXdg==",
+  "js_sha256": "48289f8a965d73ae510c469462cac0d8f72865de705e186278d5485058b2a5fc",
+  "gzip_sha256": "e0bbbeae55faa97bb321bcf13da628c5f016b47988afc55af845babc3838c27c"
+}

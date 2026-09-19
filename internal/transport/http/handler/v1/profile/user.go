@@ -10,20 +10,6 @@ import (
 	"net/http"
 )
 
-// SetDisplayName Swagger Documentation
-//
-//	@Summary		Set name
-//	@Description	Set profile name
-//	@Tags			user, profile
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Param			input				body		request_body.SetDisplayName	true	"Name"
-//	@Success		200					{object}	response.MessageBody
-//	@Failure		400					{object}	fail.Response
-//	@Failure		401					{object}	fail.Response
-//	@Failure		500					{object}	fail.Response
-//	@Router			/v1/profile/display-name	[put]
 func (h *Handler) SetDisplayName(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
@@ -48,20 +34,6 @@ func (h *Handler) SetDisplayName(c *gin.Context) {
 	response.Message(c, res.Message)
 }
 
-// SetDescription Swagger Documentation
-//
-//	@Summary		Set description
-//	@Description	Set profile description
-//	@Tags			user, profile
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Param			input					body		request_body.SetDescription	true	"Description"
-//	@Success		200						{object}	response.MessageBody
-//	@Failure		400						{object}	fail.Response
-//	@Failure		401						{object}	fail.Response
-//	@Failure		500						{object}	fail.Response
-//	@Router			/v1/profile/description	[put]
 func (h *Handler) SetDescription(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
@@ -86,19 +58,6 @@ func (h *Handler) SetDescription(c *gin.Context) {
 	response.Message(c, res.Message)
 }
 
-// GenerateAvatarUploadLink Swagger Documentation
-//
-//	@Summary		Delete avatar
-//	@Description	Delete avatar
-//	@Tags			user, profile
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Success		200					{object}	response.LinkBody
-//	@Failure		400					{object}	fail.Response
-//	@Failure		401					{object}	fail.Response
-//	@Failure		500					{object}	fail.Response
-//	@Router			/v1/profile/avatar	[post]
 func (h *Handler) GenerateAvatarUploadLink(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
@@ -116,25 +75,11 @@ func (h *Handler) GenerateAvatarUploadLink(c *gin.Context) {
 	c.JSON(http.StatusOK, response_body.GenerateAvatarUploadLink{
 		PictureLink: res.AvatarLink,
 		UploadLink:  res.UploadLink,
-		FormData:    res.FormData,
+		FormData:    response.NonNilStringMap(res.FormData),
 		MaxSize:     res.MaxSize,
 	})
 }
 
-// ConfirmAvatarUploading Swagger Documentation
-//
-//	@Summary		Confirm avatar uploading
-//	@Description	Confirm avatar uploading
-//	@Tags			user, profile
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Param			input				body		request_body.ConfirmAvatarUploading	true	"Avatar ID"
-//	@Success		200					{object}	response.MessageBody
-//	@Failure		400					{object}	fail.Response
-//	@Failure		401					{object}	fail.Response
-//	@Failure		500					{object}	fail.Response
-//	@Router			/v1/profile/avatar	[put]
 func (h *Handler) ConfirmAvatarUploading(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
@@ -159,19 +104,6 @@ func (h *Handler) ConfirmAvatarUploading(c *gin.Context) {
 	response.Message(c, res.Message)
 }
 
-// DeleteAvatar Swagger Documentation
-//
-//	@Summary		Delete avatar
-//	@Description	Delete avatar
-//	@Tags			user, profile
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Success		200					{object}	response.MessageBody
-//	@Failure		400					{object}	fail.Response
-//	@Failure		401					{object}	fail.Response
-//	@Failure		500					{object}	fail.Response
-//	@Router			/v1/profile/avatar	[delete]
 func (h *Handler) DeleteAvatar(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {

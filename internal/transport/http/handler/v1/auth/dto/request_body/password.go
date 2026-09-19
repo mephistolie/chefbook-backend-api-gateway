@@ -1,19 +1,7 @@
 package request_body
 
-import "github.com/google/uuid"
+import "github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/contract"
 
-type RequestPasswordReset struct {
-	Email    string `json:"email,omitempty"`
-	Username string `json:"username,omitempty"`
-}
-
-type ResetPassword struct {
-	Id          uuid.UUID `json:"userId" binding:"required"`
-	ResetCode   string    `json:"resetCode" binding:"required"`
-	NewPassword string    `json:"newPassword" binding:"required"`
-}
-
-type ChangePassword struct {
-	OldPassword string `json:"oldPassword"`
-	NewPassword string `json:"newPassword"`
-}
+type RequestPasswordReset = contract.RequestPasswordResetRequest
+type ResetPassword = contract.ConfirmPasswordResetRequest
+type ChangePassword = contract.SetPasswordRequest

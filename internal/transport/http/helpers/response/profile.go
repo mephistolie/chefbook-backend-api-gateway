@@ -6,7 +6,7 @@ type ProfileMinInfo struct {
 }
 
 type ProfileInfo struct {
-	Id     string  `json:"id,omitempty"`
+	Id     string  `json:"id"`
 	Name   *string `json:"name,omitempty"`
 	Avatar *string `json:"avatar,omitempty"`
 }

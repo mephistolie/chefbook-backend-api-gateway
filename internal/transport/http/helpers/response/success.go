@@ -24,3 +24,15 @@ func Message(c *gin.Context, message string) {
 func Link(c *gin.Context, link string) {
 	Success(c, LinkBody{Link: link})
 }
+
+// Created returns the created representation and its canonical resource URI.
+func Created(c *gin.Context, location string, data interface{}) {
+	c.Header("Location", location)
+	c.JSON(http.StatusCreated, data)
+}
+
+// Accepted returns scheduling information while the operation is still pending.
+func Accepted(c *gin.Context, location string, data interface{}) {
+	c.Header("Location", location)
+	c.JSON(http.StatusAccepted, data)
+}

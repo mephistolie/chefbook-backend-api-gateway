@@ -17,22 +17,32 @@ require (
 	github.com/mephistolie/chefbook-backend-subscription/api v1.1.0-rc.1
 	github.com/mephistolie/chefbook-backend-tag/api v1.2.0-rc.1
 	github.com/mephistolie/chefbook-backend-user/api v1.5.0-rc.1
+	github.com/oapi-codegen/runtime v1.1.1
 	github.com/peterbourgon/ff/v3 v3.4.0
-	github.com/swaggo/files v1.0.1
-	github.com/swaggo/gin-swagger v1.6.1
-	github.com/swaggo/swag v1.16.6
+	go.yaml.in/yaml/v3 v3.0.4
 	golang.org/x/time v0.15.0
 	google.golang.org/grpc v1.80.0
 	google.golang.org/protobuf v1.36.11
 )
 
 require (
+	github.com/invopop/yaml v0.3.1 // indirect
+	github.com/josharian/intern v1.0.0 // indirect
+	github.com/mailru/easyjson v0.7.7 // indirect
+	github.com/mohae/deepcopy v0.0.0-20170929034955-c48cc78d4826 // indirect
+	github.com/perimeterx/marshmallow v1.1.5 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
+)
+
+require (
 	github.com/KyleBanks/depth v1.2.1 // indirect
+	github.com/apapsch/go-jsonmerge/v2 v2.0.0 // indirect
 	github.com/bytedance/gopkg v0.1.4 // indirect
 	github.com/bytedance/sonic v1.15.1 // indirect
 	github.com/bytedance/sonic/loader v0.5.1 // indirect
 	github.com/cloudwego/base64x v0.1.7 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.13 // indirect
+	github.com/getkin/kin-openapi v0.127.0
 	github.com/gin-contrib/sse v1.1.1 // indirect
 	github.com/go-openapi/jsonpointer v0.23.1 // indirect
 	github.com/go-openapi/jsonreference v0.21.5 // indirect
@@ -61,10 +71,10 @@ require (
 	github.com/quic-go/qpack v0.6.0 // indirect
 	github.com/quic-go/quic-go v0.59.0 // indirect
 	github.com/rs/zerolog v1.35.1 // indirect
+	github.com/swaggo/swag v1.16.6 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.3.1 // indirect
 	go.mongodb.org/mongo-driver/v2 v2.6.0 // indirect
-	go.yaml.in/yaml/v3 v3.0.4 // indirect
 	golang.org/x/arch v0.26.0 // indirect
 	golang.org/x/crypto v0.50.0 // indirect
 	golang.org/x/mod v0.35.0 // indirect

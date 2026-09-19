@@ -9,19 +9,6 @@ import (
 	api "github.com/mephistolie/chefbook-backend-shopping-list/api/v2/proto/implementation/v1"
 )
 
-// GetShoppingListUsers Swagger Documentation
-//
-//	@Summary		Get shopping list users
-//	@Description	Get shopping list users
-//	@Tags			shopping-list
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Param			shopping_list_id							path		string	true	"Shopping list ID"
-//	@Success		200											{object}	[]response.ProfileInfo
-//	@Failure		400											{object}	fail.Response
-//	@Failure		500											{object}	fail.Response
-//	@Router			/v1/shopping-lists/{shopping_list_id}/users	[get]
 func (h *Handler) GetShoppingListUsers(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
@@ -37,22 +24,9 @@ func (h *Handler) GetShoppingListUsers(c *gin.Context) {
 		return
 	}
 
-	response.Success(c, response_body.ShoppingListUsers(res.Users))
+	response.Success(c, gin.H{"users": response_body.ShoppingListUsers(res.Users)})
 }
 
-// GetSharedShoppingListLink Swagger Documentation
-//
-//	@Summary		Get shared shopping list link
-//	@Description	Get shared shopping list link
-//	@Tags			shopping-list
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Param			shopping_list_id							path		int	true	"Shopping list ID"
-//	@Success		200											{object}	response_body.GetShoppingListLink
-//	@Failure		400											{object}	fail.Response
-//	@Failure		500											{object}	fail.Response
-//	@Router			/v1/shopping-lists/{shopping_list_id}/link	[get]
 func (h *Handler) GetSharedShoppingListLink(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
@@ -72,20 +46,6 @@ func (h *Handler) GetSharedShoppingListLink(c *gin.Context) {
 	response.Success(c, response_body.GetShoppingListLink{Link: res.Link, ExpirationTimestamp: res.ExpiresAt.AsTime()})
 }
 
-// JoinShoppingList Swagger Documentation
-//
-//	@Summary		Join shared shopping list
-//	@Description	Join shared shopping list
-//	@Tags			shopping-list
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Param			shopping_list_id							path		string							true	"Shopping list ID"
-//	@Param			input										body		request_body.JoinShoppingList	true	"Key"
-//	@Success		200											{object}	response.MessageBody
-//	@Failure		400											{object}	fail.Response
-//	@Failure		500											{object}	fail.Response
-//	@Router			/v1/shopping-lists/{shopping_list_id}/users	[post]
 func (h *Handler) JoinShoppingList(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
@@ -111,19 +71,6 @@ func (h *Handler) JoinShoppingList(c *gin.Context) {
 	response.Message(c, res.Message)
 }
 
-// DeleteUserFromShoppingList Swagger Documentation
-//
-//	@Summary		Delete user from shared shopping list
-//	@Description	Delete user from shared shopping list
-//	@Tags			shopping-list
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Param			shopping_list_id										path		string	true	"Shopping list ID"
-//	@Param			user_id													path		string	true	"User ID"
-//	@Failure		400														{object}	fail.Response
-//	@Failure		500														{object}	fail.Response
-//	@Router			/v1/shopping-lists/{shopping_list_id}/users/{user_id}	[delete]
 func (h *Handler) DeleteUserFromShoppingList(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {

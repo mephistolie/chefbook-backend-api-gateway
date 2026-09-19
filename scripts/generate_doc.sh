@@ -1,6 +1,4 @@
-dir=$(basename "$(pwd)")
-if [ "$dir" == "scripts" ]
-then
-cd ..
-fi
-swag init -q --parseDependency -g internal/transport/http/handler/handler.go
+#!/bin/sh
+set -eu
+cd "$(dirname "$0")/.."
+exec python3 scripts/generate_contract.py "$@"

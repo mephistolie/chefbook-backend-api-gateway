@@ -6,7 +6,7 @@ import (
 )
 
 type Profile struct {
-	Id                    string     `json:"profileId,omitempty"`
+	Id                    string     `json:"id"`
 	Username              *string    `json:"username,omitempty"`
 	Email                 *string    `json:"email,omitempty"`
 	Role                  *string    `json:"role,omitempty"`

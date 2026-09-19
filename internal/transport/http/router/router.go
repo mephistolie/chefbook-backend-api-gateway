@@ -36,8 +36,9 @@ func (r *Router) Init(cfg *config.Config) *gin.Engine {
 	engine := gin.New()
 
 	engine.Use(
+		v1.AuthCacheHeaders,
 		gin.Recovery(),
-		log.Middleware([]string{"/healthz", "/doc"}),
+		log.Middleware([]string{"/healthz", "/docs"}),
 		limiter.Limit(*cfg.Limiter.RPS, *cfg.Limiter.Burst, *cfg.Limiter.TTL),
 	)
 

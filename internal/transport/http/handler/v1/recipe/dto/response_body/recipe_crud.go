@@ -8,7 +8,7 @@ import (
 )
 
 type CreateRecipe struct {
-	RecipeId string `json:"recipeId"`
+	RecipeId string `json:"id"`
 	Version  int32  `json:"version"`
 }
 

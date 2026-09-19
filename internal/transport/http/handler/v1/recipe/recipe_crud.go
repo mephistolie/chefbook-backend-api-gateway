@@ -7,21 +7,9 @@ import (
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/helpers/request"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/helpers/response"
 	api "github.com/mephistolie/chefbook-backend-recipe/api/proto/implementation/v1"
+	"net/url"
 )
 
-// CreateRecipe Swagger Documentation
-//
-//	@Summary		Create recipe
-//	@Description	Create recipe
-//	@Tags			recipe
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Param			input		body		request_body.RecipeInput	true	"Input"
-//	@Success		200			{object}	response_body.CreateRecipe
-//	@Failure		400			{object}	fail.Response
-//	@Failure		500			{object}	fail.Response
-//	@Router			/v1/recipes	[post]
 func (h *Handler) CreateRecipe(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
@@ -40,27 +28,12 @@ func (h *Handler) CreateRecipe(c *gin.Context) {
 		return
 	}
 
-	response.Success(c, response_body.CreateRecipe{
+	response.Created(c, "/v1/recipes/"+url.PathEscape(res.RecipeId), response_body.CreateRecipe{
 		RecipeId: res.RecipeId,
 		Version:  res.Version,
 	})
 }
 
-// GetRecipe Swagger Documentation
-//
-//	@Summary		Get recipe
-//	@Description	Get recipe
-//	@Tags			shopping-list
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Param			recipe_id				path		string	true	"Recipe ID"
-//	@Param			userLanguage			query		string	false	"User language code"
-//	@Param			translated				query		boolean	false	"Translate recipe"
-//	@Success		200						{object}	response_body.GetRecipeResponse
-//	@Failure		400						{object}	fail.Response
-//	@Failure		500						{object}	fail.Response
-//	@Router			/v1/recipes/{recipe_id}	[get]
 func (h *Handler) GetRecipe(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
@@ -92,20 +65,6 @@ func (h *Handler) GetRecipe(c *gin.Context) {
 	response.Success(c, response_body.GetRecipe(res))
 }
 
-// UpdateRecipe Swagger Documentation
-//
-//	@Summary		Update recipe
-//	@Description	Update recipe
-//	@Tags			recipe
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Param			recipe_id				path		string						true	"Recipe ID"
-//	@Param			input					body		request_body.RecipeInput	true	"Input"
-//	@Success		200						{object}	response_body.UpdateRecipe
-//	@Failure		400						{object}	fail.Response
-//	@Failure		500						{object}	fail.Response
-//	@Router			/v1/recipes/{recipe_id}	[put]
 func (h *Handler) UpdateRecipe(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
@@ -131,19 +90,6 @@ func (h *Handler) UpdateRecipe(c *gin.Context) {
 	})
 }
 
-// DeleteRecipe Swagger Documentation
-//
-//	@Summary		Delete recipe
-//	@Description	Delete recipe
-//	@Tags			recipe
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Param			recipe_id				path		string	true	"Recipe ID"
-//	@Success		200						{object}	response.MessageBody
-//	@Failure		400						{object}	fail.Response
-//	@Failure		500						{object}	fail.Response
-//	@Router			/v1/recipes/{recipe_id}	[delete]
 func (h *Handler) DeleteRecipe(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {

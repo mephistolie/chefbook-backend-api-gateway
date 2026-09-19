@@ -1,0 +1,7 @@
+{
+  "repository": "https://github.com/mephistolie/chefbook-contracts.git",
+  "commit": "0c8ad2d4bf002a2925d93893726a6f110b087329",
+  "path": "openapi/chefbook.yaml",
+  "sha256": "ceca254a292784d193819f8a8e843b51c62809ea9ddec4dfff4be8ef6b2b5d2b",
+  "workingTree": true
+}

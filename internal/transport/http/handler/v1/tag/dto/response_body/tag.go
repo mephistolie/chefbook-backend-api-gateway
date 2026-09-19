@@ -5,7 +5,7 @@ import (
 )
 
 type Tag struct {
-	Id      string  `json:"tagId"`
+	Id      string  `json:"id"`
 	Name    string  `json:"name"`
 	Emoji   *string `json:"emoji,omitempty"`
 	GroupId *string `json:"groupId,omitempty"`

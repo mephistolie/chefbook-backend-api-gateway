@@ -1,16 +1,14 @@
-FROM golang:alpine as builder
-
+# Build from the backend workspace: docker build -f api-gateway/Dockerfile .
+FROM golang:1.26.2-alpine AS builder
 WORKDIR /build
+COPY api-gateway ./api-gateway
+COPY services/auth/api ./services/auth/api
+COPY common/tokens ./common/tokens
+WORKDIR /build/api-gateway
+RUN CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o /out/gateway ./cmd
 
-COPY go.mod go.sum ./
-RUN go mod download
-
-COPY . .
-
-RUN CGO_ENABLED=0 go build -ldflags "-s -w" -o /main cmd/main.go
-
-FROM alpine:latest
-
-COPY --from=builder main /bin/main
-COPY --from=builder build/docs /docs
-ENTRYPOINT ["/bin/main"]
+FROM alpine:3.23
+RUN apk add --no-cache ca-certificates && adduser -D -u 10001 app
+COPY --from=builder /out/gateway /bin/gateway
+USER app
+ENTRYPOINT ["/bin/gateway"]

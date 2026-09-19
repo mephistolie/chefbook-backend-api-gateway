@@ -11,19 +11,6 @@ import (
 	api "github.com/mephistolie/chefbook-backend-encryption/api/proto/implementation/v1"
 )
 
-// GetRecipeKeyRequests Swagger Documentation
-//
-//	@Summary		Get recipe key requests
-//	@Description	Get recipe key access requests
-//	@Tags			encryption, recipe
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Param			recipe_id									path		string	true	"Recipe ID"
-//	@Success		200											{object}	[]response_body.RecipeKeyRequest
-//	@Failure		400											{object}	fail.Response
-//	@Failure		500											{object}	fail.Response
-//	@Router			/v1/encryption/recipes/{recipe_id}/users	[get]
 func (h *Handler) GetRecipeKeyRequests(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
@@ -56,22 +43,9 @@ func (h *Handler) GetRecipeKeyRequests(c *gin.Context) {
 		}
 	}
 
-	response.Success(c, requests)
+	response.Success(c, gin.H{"requests": requests})
 }
 
-// RequestRecipeKeyAccess Swagger Documentation
-//
-//	@Summary		Request recipe key access
-//	@Description	Request recipe key access
-//	@Tags			encryption, recipe
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Param			recipe_id									path		string	true	"Recipe ID"
-//	@Success		200											{object}	response.MessageBody
-//	@Failure		400											{object}	fail.Response
-//	@Failure		500											{object}	fail.Response
-//	@Router			/v1/encryption/recipes/{recipe_id}/users	[post]
 func (h *Handler) RequestRecipeKeyAccess(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
@@ -90,19 +64,6 @@ func (h *Handler) RequestRecipeKeyAccess(c *gin.Context) {
 	response.Message(c, res.Message)
 }
 
-// GetRecipeKey Swagger Documentation
-//
-//	@Summary		Get recipe key
-//	@Description	Get recipe encrypted key
-//	@Tags			encryption, recipe
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Param			recipe_id							path		string	true	"Recipe ID"
-//	@Success		200									{object}	[]response_body.GetRecipeKey
-//	@Failure		400									{object}	fail.Response
-//	@Failure		500									{object}	fail.Response
-//	@Router			/v1/encryption/recipes/{recipe_id}	[get]
 func (h *Handler) GetRecipeKey(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
@@ -126,20 +87,6 @@ func (h *Handler) GetRecipeKey(c *gin.Context) {
 	response.Success(c, response_body.GetEncryptedVaultKey{Key: keyPtr})
 }
 
-// SetRecipeOwnerKey Swagger Documentation
-//
-//	@Summary		Set recipe owner key
-//	@Description	Set recipe owner key
-//	@Tags			encryption, recipe
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Param			recipe_id							path		string						true	"Recipe ID"
-//	@Param			input								body		request_body.SetRecipeKey	true	"Key"
-//	@Success		200									{object}	response.MessageBody
-//	@Failure		400									{object}	fail.Response
-//	@Failure		500									{object}	fail.Response
-//	@Router			/v1/encryption/recipes/{recipe_id}	[post]
 func (h *Handler) SetRecipeOwnerKey(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
@@ -170,21 +117,6 @@ func (h *Handler) SetRecipeOwnerKey(c *gin.Context) {
 	response.Message(c, res.Message)
 }
 
-// GrantRecipeKeyAccess Swagger Documentation
-//
-//	@Summary		Set recipe user key
-//	@Description	Set recipe user key
-//	@Tags			encryption, recipe
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Param			recipe_id											path		string						true	"Recipe ID"
-//	@Param			user_id												path		string						true	"User ID"
-//	@Param			input												body		request_body.SetRecipeKey	true	"Key"
-//	@Success		200													{object}	response.MessageBody
-//	@Failure		400													{object}	fail.Response
-//	@Failure		500													{object}	fail.Response
-//	@Router			/v1/encryption/recipes/{recipe_id}/users/{user_id}	[post]
 func (h *Handler) GrantRecipeKeyAccess(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
@@ -218,20 +150,6 @@ func (h *Handler) GrantRecipeKeyAccess(c *gin.Context) {
 	response.Message(c, res.Message)
 }
 
-// DeclineRecipeKeyAccess Swagger Documentation
-//
-//	@Summary		Delete recipe key
-//	@Description	Delete recipe key
-//	@Tags			encryption, recipe
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Param			recipe_id											path		string	true	"Recipe ID"
-//	@Param			user_id												path		string	true	"User ID"
-//	@Success		200													{object}	response.MessageBody
-//	@Failure		400													{object}	fail.Response
-//	@Failure		500													{object}	fail.Response
-//	@Router			/v1/encryption/recipes/{recipe_id}/users/{user_id}	[delete]
 func (h *Handler) DeclineRecipeKeyAccess(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {

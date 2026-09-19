@@ -9,18 +9,6 @@ import (
 	api "github.com/mephistolie/chefbook-backend-subscription/api/proto/implementation/v1"
 )
 
-// GetSubscriptions Swagger Documentation
-//
-//	@Summary		Get subscriptions
-//	@Description	Get subscriptions
-//	@Tags			subscription
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Success		200					{object}	[]response_body.Subscription
-//	@Failure		400					{object}	fail.Response
-//	@Failure		500					{object}	fail.Response
-//	@Router			/v1/subscriptions	[get]
 func (h *Handler) GetSubscriptions(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
@@ -33,22 +21,9 @@ func (h *Handler) GetSubscriptions(c *gin.Context) {
 		return
 	}
 
-	response.Success(c, response_body.GetSubscriptions(res.Subscriptions))
+	response.Success(c, gin.H{"subscriptions": response_body.GetSubscriptions(res.Subscriptions)})
 }
 
-// ConfirmGoogleSubscription Swagger Documentation
-//
-//	@Summary		Confirm Google subscription
-//	@Description	Confirm Google subscription
-//	@Tags			subscription
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Param			input						body		request_body.ConfirmGoogleSubscription	true	"Purchase IdToken"
-//	@Success		200							{object}	response.MessageBody
-//	@Failure		400							{object}	fail.Response
-//	@Failure		500							{object}	fail.Response
-//	@Router			/v1/subscriptions/google	[post]
 func (h *Handler) ConfirmGoogleSubscription(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {

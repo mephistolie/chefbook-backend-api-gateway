@@ -1,7 +1,7 @@
 package request_body
 
 type AddCollection struct {
-	Id         *string `json:"collectionId,omitempty"`
+	Id         *string `json:"id,omitempty"`
 	Name       string  `json:"name" binding:"required"`
 	Visibility string  `json:"visibility,omitempty"`
 }

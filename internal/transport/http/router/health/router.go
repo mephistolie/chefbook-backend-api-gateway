@@ -2,7 +2,6 @@ package health
 
 import (
 	"github.com/gin-gonic/gin"
-	_ "github.com/mephistolie/chefbook-backend-api-gateway/docs"
 	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/helpers/response"
 )
 

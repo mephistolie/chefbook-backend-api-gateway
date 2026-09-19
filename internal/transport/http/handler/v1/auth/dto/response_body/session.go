@@ -1,35 +1,35 @@
 package response_body
 
 import (
+	"github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/contract"
 	api "github.com/mephistolie/chefbook-backend-auth/api/proto/implementation/v1"
-	"time"
 )
 
-type Sessions []Session
+type Session = contract.Session
+type Sessions = contract.SessionsResponse
 
-type Session struct {
-	Id          int64     `json:"id"`
-	Current     bool      `json:"current"`
-	Ip          string    `json:"ip"`
-	AccessPoint string    `json:"accessPoint"`
-	Mobile      bool      `json:"mobile"`
-	AccessTime  time.Time `json:"accessTime"`
-	Location    string    `json:"location"`
-}
-
-func BySessions(sessions []*api.Session, ip string) Sessions {
-	dtos := Sessions{}
-	for _, session := range sessions {
-		dto := Session{
-			Id:          session.Id,
-			Current:     session.Ip == ip,
-			Ip:          session.Ip,
-			AccessPoint: session.AccessPoint,
-			Mobile:      session.Mobile,
-			AccessTime:  session.AccessTime.AsTime(),
-			Location:    session.Location,
+func BySessions(sessions []*api.Session) Sessions {
+	dtos := make([]contract.Session, 0, len(sessions))
+	for _, s := range sessions {
+		client := contract.SessionClient{Platform: "unknown", Type: "unknown"}
+		if s.Client != nil {
+			if s.Client.Name != "" {
+				name := s.Client.Name
+				client.Name = &name
+			}
+			if s.Client.Platform != "" {
+				client.Platform = contract.SessionClientPlatform(s.Client.Platform)
+			}
+			if s.Client.Type != "" {
+				client.Type = contract.SessionClientType(s.Client.Type)
+			}
 		}
-		dtos = append(dtos, dto)
+		var location *string
+		if s.Location != "" {
+			l := s.Location
+			location = &l
+		}
+		dtos = append(dtos, contract.Session{Id: s.Id, Ip: s.Ip, LastRefreshTimestamp: s.AccessTime.AsTime(), Location: location, Client: client})
 	}
-	return dtos
+	return Sessions{Sessions: dtos}
 }

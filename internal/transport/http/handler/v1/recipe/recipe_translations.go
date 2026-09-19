@@ -13,20 +13,6 @@ const (
 	queryTranslated   = "translated"
 )
 
-// TranslateRecipe Swagger Documentation
-//
-//	@Summary		Translate recipe
-//	@Description	Translate recipe
-//	@Tags			recipe
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Param			recipe_id								path		string							true	"Recipe ID"
-//	@Param			input									body		request_body.TranslateRecipe	true	"Input"
-//	@Success		200										{object}	response.MessageBody
-//	@Failure		400										{object}	fail.Response
-//	@Failure		500										{object}	fail.Response
-//	@Router			/v1/recipes/{recipe_id}/translations	[post]
 func (h *Handler) TranslateRecipe(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
@@ -64,20 +50,6 @@ func (h *Handler) TranslateRecipe(c *gin.Context) {
 	response.Message(c, res.Message)
 }
 
-// DeleteRecipeTranslation Swagger Documentation
-//
-//	@Summary		Delete recipe translation
-//	@Description	Delete recipe translation
-//	@Tags			recipe
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Param			recipe_id								path		string	true	"Recipe ID"
-//	@Param			language_code							path		string	true	"Recipe ID"
-//	@Success		200										{object}	response.MessageBody
-//	@Failure		400										{object}	fail.Response
-//	@Failure		500										{object}	fail.Response
-//	@Router			/v1/recipes/{recipe_id}/translations	[delete]
 func (h *Handler) DeleteRecipeTranslation(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {

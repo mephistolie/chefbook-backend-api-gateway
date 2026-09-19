@@ -3,6 +3,10 @@ package auth
 import (
 	"context"
 	"errors"
+	"github.com/mephistolie/chefbook-backend-common/responses/fail"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 	eventlog "github.com/mephistolie/chefbook-backend-api-gateway/internal/logging"
@@ -86,10 +90,40 @@ func (m *Middleware) authorizeUser(c *gin.Context, allowDeleted bool) {
 		response.Unauthorized(c, err)
 		return
 	}
-	if !allowDeleted && payload.Deleted {
+	if payload.SessionID <= 0 {
+		response.Unauthorized(c, errors.New("session-bound access token required"))
+		return
+	}
+	// Account state must be current even when this JWT predates deletion or blocking.
+	ctx, cancel := context.WithTimeout(c.Request.Context(), 5*time.Second)
+	defer cancel()
+	if _, err := m.authService.Authentication.ValidateSession(ctx, &auth.AuthPrincipal{AccountId: payload.UserId.String(), SessionId: payload.SessionID}); err != nil {
+		if status.Code(err) == codes.Unauthenticated || status.Code(err) == codes.NotFound || fail.ParseGrpc(err).Code == 401 {
+			response.Unauthorized(c, errors.New("invalid or revoked session"))
+		} else {
+			response.FailGrpc(c, err)
+		}
+		return
+	}
+	info, err := m.authService.GetAuthInfo(ctx, &auth.GetAuthInfoRequest{Id: payload.UserId.String()})
+	if err != nil {
+		if status.Code(err) == codes.NotFound || fail.ParseGrpc(err).ErrorType == fail.TypeNotFound {
+			response.Unauthorized(c, errors.New("invalid access token"))
+		} else {
+			response.FailGrpc(c, err)
+		}
+		return
+	}
+	revoking := c.Request.Method == http.MethodDelete && (c.FullPath() == "/v1/sessions" || strings.HasPrefix(c.FullPath(), "/v1/sessions/"))
+	if info.IsBlocked && !revoking {
+		response.Fail(c, fail.Response{Code: 403, ErrorType: "profile_blocked", Message: "account blocked"})
+		return
+	}
+	if !allowDeleted && info.DeletionTimestamp != nil {
 		response.Fail(c, response.ProfileDeleting)
 		return
 	}
+	payload.Deleted = info.DeletionTimestamp != nil
 	request.PutUserPayload(c, payload)
 }
 
@@ -101,8 +135,8 @@ func (m *Middleware) parseAuthHeader(ctx context.Context, c *gin.Context) (acces
 		return access.Payload{}, errors.New("empty Authorization header")
 	}
 
-	headerParts := strings.Split(header, " ")
-	if len(headerParts) != 2 || headerParts[0] != "Bearer" {
+	headerParts := strings.Fields(header)
+	if len(headerParts) != 2 || !strings.EqualFold(headerParts[0], "Bearer") {
 		return access.Payload{}, errors.New("invalid Authorization header")
 	}
 

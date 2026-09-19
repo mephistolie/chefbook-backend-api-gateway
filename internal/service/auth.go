@@ -8,7 +8,8 @@ import (
 
 type Auth struct {
 	api.AuthServiceClient
-	Conn *grpc.ClientConn
+	Authentication api.AuthenticationServiceClient
+	Conn           *grpc.ClientConn
 }
 
 func NewAuth(addr string) (*Auth, error) {
@@ -19,6 +20,7 @@ func NewAuth(addr string) (*Auth, error) {
 	}
 	return &Auth{
 		AuthServiceClient: api.NewAuthServiceClient(conn),
+		Authentication:    api.NewAuthenticationServiceClient(conn),
 		Conn:              conn,
 	}, nil
 }

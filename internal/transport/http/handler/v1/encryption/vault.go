@@ -11,18 +11,6 @@ import (
 	api "github.com/mephistolie/chefbook-backend-encryption/api/proto/implementation/v1"
 )
 
-// GetEncryptedVaultKey Swagger Documentation
-//
-//	@Summary		Get encrypted vault key
-//	@Description	Get profile  encrypted vault key
-//	@Tags			encryption, profile
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Success		200						{object}	[]response_body.GetEncryptedVaultKey
-//	@Failure		400						{object}	fail.Response
-//	@Failure		500						{object}	fail.Response
-//	@Router			/v1/encryption/vault	[get]
 func (h *Handler) GetEncryptedVaultKey(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
@@ -48,19 +36,6 @@ func (h *Handler) GetEncryptedVaultKey(c *gin.Context) {
 	response.Success(c, response_body.GetEncryptedVaultKey{Key: keyPtr, Salt: saltPtr})
 }
 
-// CreateEncryptedVault Swagger Documentation
-//
-//	@Summary		Create encrypted vault
-//	@Description	Create profile encrypted vault
-//	@Tags			encryption, profile
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Param			input					body		request_body.CreateEncryptedVault	true	"Keys"
-//	@Success		200						{object}	response.MessageBody
-//	@Failure		400						{object}	fail.Response
-//	@Failure		500						{object}	fail.Response
-//	@Router			/v1/encryption/vault	[post]
 func (h *Handler) CreateEncryptedVault(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
@@ -103,18 +78,6 @@ func (h *Handler) CreateEncryptedVault(c *gin.Context) {
 	response.Message(c, res.Message)
 }
 
-// RequestEncryptedVaultDeletion Swagger Documentation
-//
-//	@Summary		Request encrypted vault deletion
-//	@Description	Request profile encrypted vault deletion
-//	@Tags			encryption, profile
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Success		200							{object}	response.MessageBody
-//	@Failure		400							{object}	fail.Response
-//	@Failure		500							{object}	fail.Response
-//	@Router			/v1/encryption/vault/delete	[post]
 func (h *Handler) RequestEncryptedVaultDeletion(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
@@ -132,19 +95,6 @@ func (h *Handler) RequestEncryptedVaultDeletion(c *gin.Context) {
 	response.Message(c, res.Message)
 }
 
-// DeleteEncryptedVault Swagger Documentation
-//
-//	@Summary		Delete encrypted vault
-//	@Description	Delete profile encrypted vault
-//	@Tags			encryption, profile
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Param			input					body		request_body.CreateEncryptedVault	true	"Keys"
-//	@Success		200						{object}	response.MessageBody
-//	@Failure		400						{object}	fail.Response
-//	@Failure		500						{object}	fail.Response
-//	@Router			/v1/encryption/vault	[delete]
 func (h *Handler) DeleteEncryptedVault(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {

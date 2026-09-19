@@ -1,21 +1,17 @@
 package request_body
 
-import (
-	"github.com/google/uuid"
-)
+import "github.com/mephistolie/chefbook-backend-api-gateway/internal/transport/http/contract"
 
 type SignUp struct {
-	Id       *uuid.UUID `json:"userId"`
-	Email    string     `json:"email"`
-	Password string     `json:"password"`
-}
-
-type SignIn struct {
-	Email    string `json:"email,omitempty"`
-	Username string `json:"username,omitempty"`
+	Email    string `json:"email"`
 	Password string `json:"password"`
 }
-
-type RefreshToken struct {
-	RefreshToken string `json:"refreshToken" binding:"required"`
+type RefreshToken = contract.RefreshSessionTokensRequest
+type SignIn struct {
+	Method   string `json:"method"`
+	Login    string `json:"login"`
+	Password string `json:"password"`
+	IdToken  string `json:"idToken"`
+	Code     string `json:"code"`
+	State    string `json:"state"`
 }

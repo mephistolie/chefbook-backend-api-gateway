@@ -7,7 +7,7 @@ import (
 )
 
 func ShoppingListUsers(users []*api.ShoppingListUser) []response.ProfileInfo {
-	var dtos []response.ProfileInfo
+	dtos := make([]response.ProfileInfo, 0, len(users))
 	for _, user := range users {
 		dtos = append(dtos, response.ProfileInfo{
 			Id:     user.Id,

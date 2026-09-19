@@ -6,7 +6,7 @@ import (
 )
 
 type CreateSharedShoppingList struct {
-	ShoppingListId *string `json:"shoppingListId,omitempty"`
+	ShoppingListId *string `json:"id,omitempty"`
 	Name           *string `json:"name,omitempty"`
 }
 

@@ -10,19 +10,6 @@ import (
 	"time"
 )
 
-// GetProfileDeletionStatus Swagger Documentation
-//
-//	@Summary		Get profile deletion status
-//	@Description	Get profile deletion status
-//	@Tags			auth, profile
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Success		200					{object}	response_body.ProfileDeletionStatus
-//	@Failure		400					{object}	fail.Response
-//	@Failure		401					{object}	fail.Response
-//	@Failure		500					{object}	fail.Response
-//	@Router			/v1/profile/delete	[get]
 func (h *Handler) GetProfileDeletionStatus(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
@@ -49,20 +36,6 @@ func (h *Handler) GetProfileDeletionStatus(c *gin.Context) {
 	})
 }
 
-// DeleteProfile Swagger Documentation
-//
-//	@Summary		Delete profile
-//	@Description	Request profile deletion
-//	@Tags			auth, profile
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Param			input				body		request_body.DeleteProfile	true	"ProfileInfo password"
-//	@Success		200					{object}	response_body.DeleteProfile
-//	@Failure		400					{object}	fail.Response
-//	@Failure		401					{object}	fail.Response
-//	@Failure		500					{object}	fail.Response
-//	@Router			/v1/profile/delete	[post]
 func (h *Handler) DeleteProfile(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {
@@ -85,24 +58,11 @@ func (h *Handler) DeleteProfile(c *gin.Context) {
 		return
 	}
 
-	response.Success(c, response_body.DeleteProfile{
+	response.Accepted(c, "/v1/profile/delete", response_body.DeleteProfile{
 		DeletionTimestamp: res.DeletionTimestamp.AsTime(),
 	})
 }
 
-// CancelProfileDeletion Swagger Documentation
-//
-//	@Summary		Cancel profile deletion
-//	@Description	Cancel profile deletion request
-//	@Tags			auth, profile
-//	@Security		ApiKeyAuth
-//	@Accept			json
-//	@Produce		json
-//	@Success		200					{object}	response.MessageBody
-//	@Failure		400					{object}	fail.Response
-//	@Failure		401					{object}	fail.Response
-//	@Failure		500					{object}	fail.Response
-//	@Router			/v1/profile/delete	[delete]
 func (h *Handler) CancelProfileDeletion(c *gin.Context) {
 	payload, err := request.GetUserPayloadOrResponse(c)
 	if err != nil {

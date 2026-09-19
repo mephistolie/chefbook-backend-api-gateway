@@ -6,7 +6,7 @@ import (
 )
 
 type Collection struct {
-	Id           string        `json:"collectionId" binding:"required"`
+	Id           string        `json:"id" binding:"required"`
 	Name         string        `json:"name" binding:"required"`
 	Visibility   string        `json:"visibility" binding:"required"`
 	Contributors []Contributor `json:"contributors"`
@@ -18,7 +18,7 @@ type CollectionInfo struct {
 }
 
 type AddCollection struct {
-	Id string `json:"collectionId" binding:"required"`
+	Id string `json:"id" binding:"required"`
 }
 
 type GetCollections struct {
